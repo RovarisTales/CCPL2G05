@@ -4,6 +4,14 @@
 #include <math.h>
 #include "parser.h"
 
+int convertbinário(int x){  
+int a[10],x,i;     
+for(i=0;x>0;i++){    
+a[i]=x%2;    
+x=x/2;}    
+return a[10];  
+}
+
 void parser (char *line){
     char *delimit = " /n/t";
     
@@ -41,7 +49,7 @@ void parser (char *line){
         PUSH (X--);
     } else if (strcmp(token, ")") == 0) {
         long  X = POP ();
-        PUSH (X+);
+        PUSH (X++);
         }
     }
 }

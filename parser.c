@@ -12,30 +12,36 @@ void parser (char *line){
         long valint = strtol(token; &sobra; 10);
         if (strlen(sobra) == 0){
             PUSH(valint);
-}else if (strcmp(token, "-") == 0) {
+    }else if (strcmp(token, "-") == 0) {
         long  Y = POP ();
         long  X = POP ();
         PUSH (X - Y);
-} else if (strcmp(token, "+") == 0) {
+    } else if (strcmp(token, "+") == 0) {
         long  Y = POP ();
         long  X = POP ();
         PUSH (X + Y);
-} else if (strcmp(token, "*") == 0) {
+    } else if (strcmp(token, "*") == 0) {
         long  Y = POP ();
         long  X = POP ();
         PUSH (X * Y);
-} else if (strcmp(token, "/") == 0) {
+    } else if (strcmp(token, "/") == 0) {
         long  Y = POP ();
         long  X = POP ();
         PUSH (X / Y);
-} else if (strcmp(token, "#") == 0) {
+    } else if (strcmp(token, "#") == 0) {
         long  Y = POP ();
         long  X = POP ();
         PUSH (pow (X,Y));
-} else if (strcmp(token, "%") == 0) {
+    } else if (strcmp(token, "%") == 0) {
         long  Y = POP ();
         long  X = POP ();
         PUSH (X % Y);
+    } else if (strcmp(token, "(") == 0) {
+        long  X = POP ();
+        PUSH (X--);
+    } else if (strcmp(token, ")") == 0) {
+        long  X = POP ();
+        PUSH (X+);
         }
     }
 }

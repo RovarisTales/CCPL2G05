@@ -5,11 +5,11 @@
 #include "parser.h"
 
 int convertbinário(int x){  
-int a[10],x,i;     
+int a[16],x,i;     
 for(i=0;x>0;i++){    
 a[i]=x%2;    
 x=x/2;}    
-return a[10];  
+return a[16];  
 }
 
 void parser (char *line){

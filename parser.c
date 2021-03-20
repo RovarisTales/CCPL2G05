@@ -10,6 +10,9 @@ void parser (char *line){
     for(char *token = strtok(line, demilit);token != NULL; token = strtok(NULL, demilit)){
         char *sobra;
         long valint = strtol(token; &sobra; 10);
+        if (strlen(sobra) == 0){
+            PUSH(valint)
+        }
     }
 }
 

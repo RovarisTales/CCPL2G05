@@ -4,6 +4,17 @@
 #include <math.h>
 #include "parser.h"
 
+void inverteArray (int v[], int N){
+    int i,j;
+    j = N-1;
+    i=0;
+    while(i<j){
+        swap(v,i,j);
+        i++;
+        j--;
+    }
+}
+
 int convertbinário(int x){  
 int a[16],x,i;     
 for(i=0;x>0;i++){    

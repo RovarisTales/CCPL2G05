@@ -4,6 +4,12 @@
 #include <math.h>
 #include "parser.h"
 
+void swap (int *x, int *y){
+    int t = *x; 
+    *x = *y; 
+    *y = t; 
+}
+
 void inverteArray (int v[], int N){
     int i,j;
     j = N-1;

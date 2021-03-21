@@ -5,10 +5,14 @@
 #include "parser.h"
 #include "stack.h"
 
-void swap (int *x, int *y){
+void swapM (int *x, int *y){
     int t = *x; 
     *x = *y; 
     *y = t; 
+}
+
+void swap (int v[], int i, int j){
+    swapM(v+i,v+j);
 }
 
 void inverteArray (int v[], int N){
@@ -21,29 +25,29 @@ void inverteArray (int v[], int N){
         j--;
     }
 }
-int convertdecimal(int a[16]){
+int convertedecimal(int a[]){
 int i;
 long x=0;
 
-for(i=0;i<=16;i++){
+for(i=0;i<16;i++){
  if (a[i]==1){x=x+pow(2,i);}
 }
 return x;
 }
-int convertbinario(int x){  
-    int a[16],x,i;     
-    for(i=0;x>0;i++){    
-    a[i]=x%2;    
-    x=x/2;}    
-    return a[16];  
+void convertebinario(long x, int a[]){
+    int i;
+    for(i=0;x>0;i++){
+    a[i]=x%2;
+    x=x/2;
+    }
 }
 
 void parser (char *line){
     char *delimit = " /n/t";
     
-    for(char *token = strtok(line, demilit);token != NULL; token = strtok(NULL, demilit)){
+    for(char *token = strtok(line, delimit);token != NULL; token = strtok(NULL, delimit)){
         char *sobra;
-        long valint = strtol(token; &sobra; 10);
+        long valint = strtol(token, &sobra, 10);
         if (strlen(sobra) == 0){
             PUSH(valint);
     }else if (strcmp(token, "-") == 0) {
@@ -79,66 +83,72 @@ void parser (char *line){
     }else if (strcmp(token, "&") == 0) {
         long  X = POP ();
         long  Y = POP ();
-        *int a[16] = convertebinario (X);
-        *int b[16] = convertebinario (Y);
+        int a[16];
+        convertebinario (X, a);
+        int b[16];
+        convertebinario (Y, b);
 
-        a = inverteArray (a,16);
-        b = inverteArray (b,16);
+        inverteArray (a,16);
+        inverteArray (b,16);
 
         int i;
-        int resultado[16]
+        int resultado[16];
         for(i=0;i<16;i++){
             if(a[i]==b[i]==1) resultado[i] = 1;
             else resultado[i] = 0;
         }
 
-        long A = convertedecimal (resultado,16);
+        long A = convertedecimal (resultado);
 
         PUSH(A);
 
     }else if (strcmp(token, "|") == 0) {
         long  X = POP ();
         long  Y = POP ();
-        *int a[16] = convertebinario (X);
-        *int b[16] = convertebinario (Y);
+        int a[16];
+        convertebinario (X, a);
+        int b[16];
+        convertebinario (Y, b);
 
-        a = inverteArray (a,16);
-        b = inverteArray (b,16);
+        inverteArray (a,16);
+        inverteArray (b,16);
 
         int i;
-        int resultado[16]
+        int resultado[16];
         for(i=0;i<16;i++){
             if(a[i]==1 || b[i]==1) resultado[i] = 1;
             else resultado[i] = 0;
         }
 
-        long A = convertedecimal (resultado,16);
+        long A = convertedecimal (resultado);
 
         PUSH(A);
 
     }else if (strcmp(token, "^") == 0) {
         long  X = POP ();
         long  Y = POP ();
-        *int a[16] = convertebinario (X);
-        *int b[16] = convertebinario (Y);
+        int a[16];
+        convertebinario (X, a);
+        int b[16];
+        convertebinario (Y, b);
 
-        a = inverteArray (a,16);
-        b = inverteArray (b,16);
+        inverteArray (a,16);
+        inverteArray (b,16);
 
         int i;
-        int resultado[16]
+        int resultado[16];
         for(i=0;i<16;i++){
             if(a[i] == b[i]) resultado[i] = 1;
             else resultado[i] = 0;
         }
 
-        long A = convertedecimal (resultado,16);
+        long A = convertedecimal (resultado);
 
         PUSH(A);
 
        }
     }
-    Print_stack();
+    print_stack();
 }
 
 

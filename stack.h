@@ -3,5 +3,5 @@ int vazio();
 int cheio();
 int POP();
 int PUSH(int data);
-void printstack(int *a);
+void print_stack();
 

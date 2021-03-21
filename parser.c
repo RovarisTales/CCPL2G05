@@ -16,11 +16,11 @@ void inverteArray (int v[], int N){
 }
 
 int convertbinário(int x){  
-int a[16],x,i;     
-for(i=0;x>0;i++){    
-a[i]=x%2;    
-x=x/2;}    
-return a[16];  
+    int a[16],x,i;     
+    for(i=0;x>0;i++){    
+    a[i]=x%2;    
+    x=x/2;}    
+    return a[16];  
 }
 
 void parser (char *line){

@@ -26,7 +26,7 @@ int i;
 long x=0;
 
 for(i=0;i<=16;i++){
- if (a[i]==1){x=x+powerbruh(2,i);}
+ if (a[i]==1){x=x+pow(2,i);}
 }
 return x;
 }

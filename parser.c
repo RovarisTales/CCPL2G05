@@ -30,7 +30,7 @@ for(i=0;i<=16;i++){
 }
 return x;
 }
-int convertbinário(int x){  
+int convertbinario(int x){  
     int a[16],x,i;     
     for(i=0;x>0;i++){    
     a[i]=x%2;    

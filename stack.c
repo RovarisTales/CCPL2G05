@@ -1,4 +1,4 @@
-
+#include <stdio.h>
 int MAXSIZE = 10240;
 int stack[10240];
 int top = -1;
@@ -11,7 +11,7 @@ int vazio() {
         return 0;
 }
 
- {
+
 int cheio(){
     if(top == MAXSIZE)
         return 1;
@@ -20,7 +20,7 @@ int cheio(){
 }
 
 
-int pop() {
+int POP() {
     int data;
 
     if(!vazio()) {
@@ -30,7 +30,7 @@ int pop() {
     }
 }
 
-int push(int data) {
+int PUSH(int data) {
 
     if(!cheio()) {
         top = top + 1;
@@ -38,9 +38,11 @@ int push(int data) {
     }
 }
 
-void printstack(int *a){
+void print_stack(int stack ){
     while(!vazio()) {
-        int data = pop();
-        }
+        int data;
+        data = POP();
+        printf("%d ", data);
+        }putchar('\n');
     }
 

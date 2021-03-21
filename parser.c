@@ -5,26 +5,6 @@
 #include "parser.h"
 #include "stack.h"
 
-void swapM (int *x, int *y){
-    int t = *x; 
-    *x = *y; 
-    *y = t; 
-}
-
-void swap (int v[], int i, int j){
-    swapM(v+i,v+j);
-}
-
-void inverteArray (int v[], int N){
-    int i,j;
-    j = N-1;
-    i=0;
-    while(i<j){
-        swap(v,i,j);
-        i++;
-        j--;
-    }
-}
 int convertedecimal(int a[]){
 int i;
 long x=0;
@@ -83,18 +63,14 @@ void parser (char *line){
     }else if (strcmp(token, "&") == 0) {
         long  X = POP ();
         long  Y = POP ();
-        int a[16];
+        int a[16]={0};
         convertebinario (X, a);
-        int b[16];
+        int b[16]={0};
         convertebinario (Y, b);
-
-        inverteArray (a,16);
-        inverteArray (b,16);
-
         int i;
-        int resultado[16];
+        int resultado[16]={0};
         for(i=0;i<16;i++){
-            if(a[i]==b[i]==1) resultado[i] = 1;
+            if(a[i]==1 && b[i]==1) resultado[i] = 1;
             else resultado[i] = 0;
         }
 
@@ -105,16 +81,12 @@ void parser (char *line){
     }else if (strcmp(token, "|") == 0) {
         long  X = POP ();
         long  Y = POP ();
-        int a[16];
+        int a[16]={0};
         convertebinario (X, a);
-        int b[16];
+        int b[16]={0};
         convertebinario (Y, b);
-
-        inverteArray (a,16);
-        inverteArray (b,16);
-
         int i;
-        int resultado[16];
+        int resultado[16]={0};
         for(i=0;i<16;i++){
             if(a[i]==1 || b[i]==1) resultado[i] = 1;
             else resultado[i] = 0;
@@ -127,18 +99,14 @@ void parser (char *line){
     }else if (strcmp(token, "^") == 0) {
         long  X = POP ();
         long  Y = POP ();
-        int a[16];
+        int a[16]={0};
         convertebinario (X, a);
-        int b[16];
+        int b[16]={0};
         convertebinario (Y, b);
-
-        inverteArray (a,16);
-        inverteArray (b,16);
-
         int i;
-        int resultado[16];
+        int resultado[16]={0};
         for(i=0;i<16;i++){
-            if(a[i] == b[i]) resultado[i] = 1;
+            if(a[i] != b[i]) resultado[i] = 1;
             else resultado[i] = 0;
         }
 

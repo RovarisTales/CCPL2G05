@@ -21,7 +21,15 @@ void inverteArray (int v[], int N){
         j--;
     }
 }
+int convertdecimal(int a[16]){
+int i;
+long x=0;
 
+for(i=0;i<=16;i++){
+ if (a[i]==1){x=x+powerbruh(2,i);}
+}
+return x;
+}
 int convertbinário(int x){  
     int a[16],x,i;     
     for(i=0;x>0;i++){    

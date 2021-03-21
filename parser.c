@@ -3,6 +3,7 @@
 #include <string.h>
 #include <math.h>
 #include "parser.h"
+#include "stack.h"
 
 void swap (int *x, int *y){
     int t = *x; 

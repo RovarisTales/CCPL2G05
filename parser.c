@@ -69,6 +69,7 @@ void parser (char *line){
         PUSH (X++);
         }
     }
+    Print_stack();
 }
 
 

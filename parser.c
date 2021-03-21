@@ -79,8 +79,8 @@ void parser (char *line){
     }else if (strcmp(token, "&") == 0) {
         long  X = POP ();
         long  Y = POP ();
-        *int a[16] = convertedecimal (X,16);
-        *int b[16] = convertedecimal (Y,16);
+        *int a[16] = convertebinario (X);
+        *int b[16] = convertebinario (Y);
 
         a = inverteArray (a,16);
         b = inverteArray (b,16);
@@ -92,15 +92,15 @@ void parser (char *line){
             else resultado[i] = 0;
         }
 
-        long A = convertebinario (resultado,16);
+        long A = convertedecimal (resultado,16);
 
         PUSH(A);
 
     }else if (strcmp(token, "|") == 0) {
         long  X = POP ();
         long  Y = POP ();
-        *int a[16] = convertedecimal (X,16);
-        *int b[16] = convertedecimal (Y,16);
+        *int a[16] = convertebinario (X);
+        *int b[16] = convertebinario (Y);
 
         a = inverteArray (a,16);
         b = inverteArray (b,16);
@@ -112,15 +112,15 @@ void parser (char *line){
             else resultado[i] = 0;
         }
 
-        long A = convertebinario (resultado,16);
+        long A = convertedecimal (resultado,16);
 
         PUSH(A);
 
     }else if (strcmp(token, "^") == 0) {
         long  X = POP ();
         long  Y = POP ();
-        *int a[16] = convertedecimal (X,16);
-        *int b[16] = convertedecimal (Y,16);
+        *int a[16] = convertebinario (X);
+        *int b[16] = convertebinario (Y);
 
         a = inverteArray (a,16);
         b = inverteArray (b,16);
@@ -128,15 +128,15 @@ void parser (char *line){
         int i;
         int resultado[16]
         for(i=0;i<16;i++){
-            if(a[i] == b[i]) resultado[i] = 0;
-            else resultado[i] = 1;
+            if(a[i] == b[i]) resultado[i] = 1;
+            else resultado[i] = 0;
         }
 
-        long A = convertebinario (resultado,16);
+        long A = convertedecimal (resultado,16);
 
         PUSH(A);
 
-        }
+       }
     }
     Print_stack();
 }

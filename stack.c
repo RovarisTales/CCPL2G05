@@ -37,12 +37,19 @@ int PUSH(int data) {
         stack[top] = data;
     }
 }
-
-void print_stack(){
+void print_stack(int stack ){
+    int data;
+    int i=0;
+    int stacks[10240];
     while(!vazio()) {
-        int data;
         data = POP();
-        printf("%d ", data);
-        }putchar('\n');
-    }
 
+        stacks[i] = data;
+        i++;
+
+        }
+    for (i=i-1;i>-1;i--) {
+        printf("%d ", stacks[i]);
+    }
+    putchar('\n');
+}

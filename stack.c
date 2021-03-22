@@ -21,12 +21,13 @@ int cheio(){
 
 
 int POP() {
-    int data;
+    int data = 0;
 
     if(!vazio()) {
         data = stack[top];
         top = top - 1;
     }
+    return data;
 }
 
 void PUSH(int data) {
@@ -36,6 +37,7 @@ void PUSH(int data) {
         stack[top] = data;
     }
 }
+
 void print_stack(){
     int data;
     int i=0;
@@ -48,7 +50,6 @@ void print_stack(){
 
         }
     for (i=i-1;i>-1;i--) {
-        printf("%d ", stacks[i]);
-    }
-    putchar('\n');
+        printf("%d", stacks[i]);
+    }putchar('\n');
 }

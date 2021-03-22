@@ -4,7 +4,7 @@
 #include <math.h>
 #include "parser.h"
 #include "stack.h"
-
+/*
 void swapM (int *x, int *y){
     int t = *x; 
     *x = *y; 
@@ -42,7 +42,7 @@ void convertebinario(long x, int a[]){
     x=x/2;
     }
 }
-
+*/
 void parser (char *line){
     char delimit[8] = " \n\t";
     char *token;

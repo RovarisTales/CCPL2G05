@@ -64,7 +64,7 @@ void parser (char *line){
         long  X = POP ();
         long a = X*Y;
         PUSH (a);
-    } else if (strncmp(token, "_",1) == 0) {
+    } else if (strncmp(token, "/",1) == 0) {
         long  Y = POP ();
         long  X = POP ();
         PUSH (X / Y);

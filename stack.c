@@ -26,11 +26,10 @@ int POP() {
     if(!vazio()) {
         data = stack[top];
         top = top - 1;
-        return data;
     }
 }
 
-int PUSH(int data) {
+void PUSH(int data) {
 
     if(!cheio()) {
         top = top + 1;

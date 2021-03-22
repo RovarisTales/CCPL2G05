@@ -146,17 +146,9 @@ void parser (char *line){
 
        }else if (strncmp(token, "~",1) == 0) {
         long  X = POP ();
-        int a[16]={2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2};
-        convertebinario (X, a);
-        int i;
-        int resultado[16]={0};
-        for(i=0;i<16;i++){
-            if(a[i]==0) resultado[i] = 1;
-            else if (a[i]==1) resultado[i] = 0;
-        }
-        long A = convertedecimal (resultado);
-
-        PUSH(A);
+        X = -X -1;
+        
+        PUSH(X);
 
       } 
     }

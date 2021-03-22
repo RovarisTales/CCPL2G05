@@ -77,10 +77,12 @@ void parser (char *line){
         PUSH (X % Y);
     } else if (strcmp(token, "(") == 0) {
         long  X = POP ();
-        PUSH (X--);
+        X = X - 1;
+        PUSH (X);
     } else if (strcmp(token, ")") == 0) {
         long  X = POP ();
-        PUSH (X++);
+        X = X + 1;
+        PUSH (X);
     }else if (strcmp(token, "&") == 0) {
         long  X = POP ();
         long  Y = POP ();

@@ -1,4 +1,4 @@
-void stack (char *line);
+// void stack (char *line); (nao existe funçao stack)
 int vazio();
 int cheio();
 int POP();

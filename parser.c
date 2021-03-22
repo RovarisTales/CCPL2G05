@@ -44,7 +44,7 @@ void convertebinario(long x, int a[]){
 }
 
 void parser (char *line){
-    char delimit[8] = " /n/t";
+    char delimit[8] = " \n\t";
     char *token;
     for(token = strtok(line, delimit); token != NULL;token = strtok(NULL, delimit) ){
         char *sobra;

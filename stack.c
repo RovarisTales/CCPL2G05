@@ -38,7 +38,7 @@ int PUSH(int data) {
     }
 }
 
-void print_stack(int stack ){
+void print_stack(){
     while(!vazio()) {
         int data;
         data = POP();

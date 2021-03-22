@@ -37,7 +37,7 @@ int PUSH(int data) {
         stack[top] = data;
     }
 }
-void print_stack(int stack ){
+void print_stack(){
     int data;
     int i=0;
     int stacks[10240];

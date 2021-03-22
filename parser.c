@@ -84,73 +84,33 @@ void parser (char *line){
         long  X = POP ();
         X = X + 1;
         PUSH (X);
-    }else if (strncmp(token, "&",1) == 0) {
+}else if (strncmp(token, "&",1) == 0) {
         long  X = POP ();
         long  Y = POP ();
-        int a[16]={0};
-        convertebinario (X, a);
-        int b[16]={0};
-        convertebinario (Y, b);
-        inverteArray (a,16);
-        inverteArray (b,16);
-        int i;
-        int resultado[16]={0};
-        for(i=0;i<16;i++){
-            if(a[i]==1 && b[i]==1) resultado[i] = 1;
-            else resultado[i] = 0;
-        }
-        inverteArray (resultado,16);
-        long A = convertedecimal (resultado);
-       
+        long A = X & Y;
         PUSH(A);
 
     }else if (strncmp(token, "|",1) == 0) {
         long  X = POP ();
         long  Y = POP ();
-        int a[16]={0};
-        convertebinario (X, a);
-        int b[16]={0};
-        convertebinario (Y, b);
-        inverteArray (a,16);
-        inverteArray (b,16);
-        int i;
-        int resultado[16]={0};
-        for(i=0;i<16;i++){
-            if(a[i]==1 || b[i]==1) resultado[i] = 1;
-            else resultado[i] = 0;
-        }
-        inverteArray (resultado,16);
-        long A = convertedecimal (resultado);
+        long A = X | Y;
 
         PUSH(A);
 
     }else if (strncmp(token, "^",1) == 0) {
         long  X = POP ();
         long  Y = POP ();
-        int a[16]={0};
-        convertebinario (X, a);
-        int b[16]={0};
-        convertebinario (Y, b);
-        inverteArray (a,16);
-        inverteArray (b,16);
-        int i;
-        int resultado[16]={0};
-        for(i=0;i<16;i++){
-            if(a[i] != b[i]) resultado[i] = 1;
-            else resultado[i] = 0;
-        }
-        inverteArray (resultado,16);
-        long A = convertedecimal (resultado);
+        long A = X ^ Y;
 
         PUSH(A);
 
        }else if (strncmp(token, "~",1) == 0) {
         long  X = POP ();
-        X = -X -1;
-        
-        PUSH(X);
+        long A = ~X;
 
-      } 
+        PUSH(A);
+
+      }
     }
     print_stack();
 }

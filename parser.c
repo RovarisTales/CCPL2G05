@@ -1,8 +1,12 @@
+/**
+ * @file É o ficheiro que contém a função parser, que separa o input em tokens e realiza as operaçoes baseado na stack.
+ *Neste ficheiro também esta a ser usado o ficheiro stack.h.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include "parser.h"
 #include "stack.h"
 /*
 void swapM (int *x, int *y){
@@ -43,6 +47,13 @@ void convertebinario(long x, int a[]){
     }
 }
 */
+/**
+ * \brief Realiza as operações utilizando as funçoes da stack.
+ *
+ * Estas operações dependem do caracter introduzido.
+ *
+ * @param line A linha que foi lida na main para realizar o parser.
+ */
 void parser (char *line){
     char delimit[8] = " \n\t";
     char *token;

@@ -1,3 +1,7 @@
+/**
+ * Este ficheiro é a head do ficheiro parser.c.
+ *
+ */
 void parser (char *line);
 
 /* void convertebinario(long x, int a[]);

@@ -3,19 +3,32 @@
  *
  */
 #include <stdio.h>
+
+struct StackT{
+    double valor;
+    char tipo ;
+
+};
+
 int MAXSIZE = 10240;
-int stack[10240];
+struct StackT stack[10240];
 int top = -1;
+
 /**
  * \brief Esta funçao verifica se a stack se encontra vazia.
  * @return 1 se a stack estiver vazia e retorna 0 se tiver algum elemento.
  */
+
 int vazio() {
 
     if(top == -1)
         return 1;
     else
         return 0;
+}
+
+void MOVE (int a){
+    top = top + a;
 }
 
 /**
@@ -30,29 +43,48 @@ int cheio(){
         return 0;
 }
 
+char POPT(){
+    char a= 'l';
+    if(!vazio()){
+        a = stack[top].tipo;
+    }
+    return a;
+}
+
 /**
  * \brief Esta funçao retira o elemento mais acima na stack.
  * @return data que é o elemento mais acima na stack.
  */
-int POP() {
-    int data = 0;
 
+double POP() {
+    double data = 0;
     if(!vazio()) {
-        data = stack[top];
+        data = stack[top].valor;
         top = top - 1;
     }
     return data;
 }
+
+double MOVEPOP (int a){
+    top = top - a;
+    
+    double x = POP();
+    return x;
+}
+
 /**
  * \brief Esta funçao adiciona o elemento no topo da stack.
  */
-void PUSH(int data) {
+
+void PUSH(double data,char a) {
 
     if(!cheio()) {
         top = top + 1;
-        stack[top] = data;
+        stack[top].valor = data;
+        stack[top].tipo = a;
     }
 }
+
 /**
  * \brief Esta função imprime todos os elementos da stack.
  */
@@ -84,3 +116,4 @@ void print_stack(){
             }
     }putchar('\n');
 }
+

@@ -280,7 +280,7 @@ void parser (char *line){
             PUSH(a,b);
         }
     }
-    
+    print_stack();
 }
 
 

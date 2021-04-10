@@ -56,18 +56,31 @@ void PUSH(int data) {
 /**
  * \brief Esta função imprime todos os elementos da stack.
  */
+
 void print_stack(){
-    int data;
+    double data;
     int i=0;
-    int stacks[10240];
+    char a;
+    struct StackT stacks[10240];
     while(!vazio()) {
+        a = POPT();
         data = POP();
-
-        stacks[i] = data;
+        stacks[i].valor = data;
+        stacks[i].tipo = a;
         i++;
-
         }
     for (i=i-1;i>-1;i--) {
-        printf("%d", stacks[i]);
+        if(stacks[i].tipo == 'c'){
+            char cara = stacks[i].valor;
+            printf("%c", cara);
+            }else if (stacks[i].tipo == 'i'){
+                int inteiro = stacks[i].valor;
+                printf("%d", inteiro);
+            }else if (stacks[i].tipo == 'l'){
+                long floate = stacks[i].valor;
+                printf("%ld", floate);
+            }else if (stacks[i].tipo == 'f'){
+                printf("%g", stacks[i].valor);
+            }
     }putchar('\n');
 }

@@ -5,7 +5,9 @@
 // void stack (char *line); (nao existe funçao stack)
 int vazio();
 int cheio();
-int POP();
-int PUSH(int data);
+double POP();
+void PUSH(double data,char a);
 void print_stack();
-
+void MOVE (int a);
+double MOVEPOP (int a);
+char POPT();

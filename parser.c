@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <assert.h>
+#include "parser.h"
 #include "stack.h"
 /*
 void swapM (int *x, int *y){
@@ -59,45 +61,73 @@ void parser (char *line){
     char *token;
     for(token = strtok(line, delimit); token != NULL;token = strtok(NULL, delimit) ){
         char *sobra;
+        char *sobra2;
         long valint = strtol(token, &sobra, 10);
+        double valdouble = strtod(token, &sobra2);
         if (strlen(sobra) == 0){
-            PUSH(valint);
-    }else if (strncmp(token, "-",1) == 0) {
-        long  Y = POP ();
-        long  X = POP ();
-        PUSH (X - Y);
+            PUSH(valint,'i');
+        }else if (strlen(sobra2) == 0) {
+            
+            PUSH(valdouble,'f');
+    } else if (strncmp(token, "-",1) == 0) {
+        char A = POPT();
+        double  Y = POP ();
+        char B = POPT();
+        double  X = POP ();
+        if (A == B) PUSH (X - Y,A);
+        else if (A == 'i' && B == 'i') PUSH (X - Y,'i');
+        else PUSH (X - Y,'f');
     } else if (strncmp(token, "+",1) == 0) {
-        long  Y = POP ();
-        long  X = POP ();
-        PUSH (X + Y);
+        char A = POPT();
+        double  Y = POP ();
+        char B = POPT();
+        double  X = POP ();
+        if (A == B) PUSH (X + Y,A);
+        else if (A == 'i' && B == 'i') PUSH (X + Y,'i');
+        else PUSH (X + Y,'f');
     } else if (strncmp(token, "*", 1) == 0) {
-        long  Y = POP ();
-        long  X = POP ();
-        long a = X*Y;
-        PUSH (a);
+        char A = POPT();
+        double  Y = POP ();
+        char B = POPT();
+        double  X = POP ();
+        double a = X*Y;
+        if (A == B) PUSH (a,A);
+        else if (A == 'i' && B == 'i') PUSH (a,'i');
+        else PUSH (a,'f');
     } else if (strncmp(token, "/",1) == 0) {
-        long  Y = POP ();
-        long  X = POP ();
-        PUSH (X / Y);
+        char A = POPT();
+        double  Y = POP ();
+        char B = POPT();
+        double  X = POP ();
+        if (A == 'i' && B == 'i') {
+            long a = Y;
+            long b = X;
+            PUSH(b / a,'i');
+        }
+        else if (A == B) PUSH (X / Y,A);
+        else PUSH (X / Y,'f');
     } else if (strncmp(token, "#",1) == 0) {
-        long  Y = POP ();
-        long  X = POP ();
-        PUSH (pow (X,Y));
+        double  Y = POP ();
+        double  X = POP ();
+        PUSH (pow (X,Y),'f');
     } else if (strncmp(token, "%",1) == 0) {
         long  Y = POP ();
         long  X = POP ();
-        PUSH (X % Y);
+        
+        PUSH (X % Y,'i');
     } else if (strncmp(token, "(",1) == 0) {
-        long  X = POP ();
+        char A = POPT();
+        double  X = POP ();
         X = X - 1;
-        PUSH (X);
+        PUSH (X,A);
     } else if (strncmp(token, ")",1) == 0) {
-        long  X = POP ();
+        char A = POPT();
+        double  X = POP ();
         X = X + 1;
-        PUSH (X);
+        PUSH (X,A);
 /*  }else if (strncmp(token, "&",1) == 0) {
-        long  X = POP ();
-        long  Y = POP ();
+        double  X = POP ();
+        double  Y = POP ();
         int a[16]={0};
         convertebinario (X, a);
         int b[16]={0};
@@ -111,12 +141,12 @@ void parser (char *line){
             else resultado[i] = 0;
         }
         inverteArray (resultado,16);
-        long A = convertedecimal (resultado);
+        double A = convertedecimal (resultado);
         PUSH(A);
 
     }else if (strncmp(token, "|",1) == 0) {
-        long  X = POP ();
-        long  Y = POP ();
+        double  X = POP ();
+        double  Y = POP ();
         int a[16]={0};
         convertebinario (X, a);
         int b[16]={0};
@@ -130,13 +160,13 @@ void parser (char *line){
             else resultado[i] = 0;
         }
         inverteArray (resultado,16);
-        long A = convertedecimal (resultado);
+        double A = convertedecimal (resultado);
 
         PUSH(A);
 
     }else if (strncmp(token, "^",1) == 0) {
-        long  X = POP ();
-        long  Y = POP ();
+        double  X = POP ();
+        double  Y = POP ();
         int a[16]={0};
         convertebinario (X, a);
         int b[16]={0};
@@ -150,11 +180,11 @@ void parser (char *line){
             else resultado[i] = 0;
         }
         inverteArray (resultado,16);
-        long A = convertedecimal (resultado);
+        double A = convertedecimal (resultado);
         PUSH(A);
 
        }else if (strncmp(token, "~",1) == 0) {
-        long  X = POP ();
+        double  X = POP ();
         X = -X -1;
         PUSH(X);}*/
             
@@ -163,32 +193,95 @@ void parser (char *line){
         long  X = POP ();
         long  Y = POP ();
         long A = X & Y;
-        PUSH(A);
+        PUSH(A,'l');
 
     }else if (strncmp(token, "|",1) == 0) {
         long  X = POP ();
         long  Y = POP ();
         long A = X | Y;
 
-        PUSH(A);
+        PUSH(A,'l');
 
     }else if (strncmp(token, "^",1) == 0) {
         long  X = POP ();
         long  Y = POP ();
         long A = X ^ Y;
 
-        PUSH(A);
+        PUSH(A,'l');
 
        }else if (strncmp(token, "~",1) == 0) {
         long  X = POP ();
         long A = ~X;
 
-        PUSH(A);
+        PUSH(A,'l');
 
-      }
+      }else if (strncmp(token, "_",1) == 0) {
+        char A = POPT();
+        double  Y = POP ();
+        PUSH (Y,A);
+        PUSH (Y,A);
         
+       }else if (strncmp(token, ";",1) == 0) {
+        double  X = POP ();
+        X++;
+
+       }else if (strcmp(token, "\\") == 0) {
+        char A = POPT();
+        double  X = POP ();
+        char B = POPT();
+        double  Y = POP ();
+        
+        PUSH (X,A);
+        PUSH (Y,B);
+
+        }else if (strncmp(token, "@",1) == 0) {
+        
+        char A = POPT();
+        double  X = POP ();
+        char B = POPT();
+        double  Y = POP ();
+        char C = POPT();
+        double  Z = POP (); 
+        PUSH (Y,B);
+        PUSH (X,A);
+        PUSH (Z,C);
+           
+        
+        }else if(strncmp(token, "i",1) == 0){
+            
+            double x = POP();
+            
+            PUSH(x,'i');
+
+        }else if(strncmp(token, "f",1) == 0){
+           
+            float x = POP();
+            
+            PUSH(x,'f');
+
+        }else if(strncmp(token, "c",1) == 0){
+            long x = POP();
+
+            PUSH(x,'c');
+            
+        }else if(strncmp(token, "l",1) == 0){
+            char lerlinha [10240];
+            char *oi;
+            assert(fgets(lerlinha,10240,stdin)!=NULL);
+            assert(lerlinha[strlen(lerlinha)- 1]== '\n');
+            double a = strtod(lerlinha,&oi);
+            PUSH(a,'f');
+        }else if(strncmp(token, "$",1) == 0){
+            double x = POP();
+            int a = MOVEPOP(x);
+            char b = POPT();
+            PUSH(a,b);
+            MOVE(x);
+            PUSH(a,b);
+        }
     }
-    print_stack();
+    
 }
+
 
 

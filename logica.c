@@ -24,7 +24,7 @@ void logica (char *token){
         char B = POPT();
         double b = POP();
         if (a!= 0 || b != 0) {
-            if (a != 0) PUSH(b,B);
+            if (b != 0) PUSH(b,B);
             else PUSH(a,A);
         }else PUSH(0,'l');
         

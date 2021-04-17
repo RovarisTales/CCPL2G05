@@ -1,11 +1,17 @@
+/**
+ * @file É o ficheiro que contem a função quando detetamos tokens relativamente á manipulação da stack.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "stack.h"
 #include "parser.h"
 
-
-
+/**
+ * \brief Função relacionada com a manipulação da stack
+ * @param token dentro dos mencionados no parser ("_;\@$")
+ */
 
 void manipstack (char *token){
     if (strncmp(token, "_",1) == 0) {

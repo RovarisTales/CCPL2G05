@@ -178,9 +178,7 @@ void parser (char *line){
            readline(token);
         }else if (strstr("=e&e|e<e>?",token) != NULL){
            logica(token);
-        }else if (strstr("ABCDEFGHIJKLMNOPQRSTUVWXYZ",token) != NULL){
-           variaveis(token);
-    }
+        }
     print_stack();
 }
 

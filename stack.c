@@ -1,14 +1,25 @@
 /**
- *@file Este ficheiro contem as funçoes utilizadas para realizar a stack.
+ *@file Este ficheiro contem as funçoes utilizadas para realizar a struct/stack.
  *
  */
+
 #include <stdio.h>
+
+/**
+ *\brief Definir uma struct.
+ *
+ */
 
 struct StackT{
     double valor;
     char tipo ;
 
 };
+
+/**
+ *\brief Declaração de variaveis que correspondem ao tamanho maximo da stack,a struct, e o topo da stack respetivamente.
+ *
+ */
 
 int MAXSIZE = 10240;
 struct StackT stack[10240];
@@ -27,6 +38,11 @@ int vazio() {
         return 0;
 }
 
+/**
+ * \brief Esta funçao retira o elemento mais acima na stack.
+ * @param a Posição para onde vamos deslocar.
+ */
+
 void MOVE (int a){
     top = top + a;
 }
@@ -42,6 +58,11 @@ int cheio(){
     else
         return 0;
 }
+
+/**
+ * \brief Esta funçao verifica se a stack se encontra cheia.
+ * @return 1 se a stack estiver cheia e retorna 0 se não estiver cheia.
+ */
 
 char POPT(){
     char a= 'l';
@@ -65,6 +86,12 @@ double POP() {
     return data;
 }
 
+/**
+ * \brief Esta função serve para retirar um elemento numa posição espefica na stack.
+ * @param a Posição onde queremos retirar o elemento.
+ * @return Retorna o elemento na posição da stack inserida.
+ */
+
 double MOVEPOP (int a){
     top = top - a;
     
@@ -74,6 +101,8 @@ double MOVEPOP (int a){
 
 /**
  * \brief Esta funçao adiciona o elemento no topo da stack.
+ * @param data elemento mais a cima na stack
+ * @param a Tipo do valor
  */
 
 void PUSH(double data,char a) {

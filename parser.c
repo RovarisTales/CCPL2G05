@@ -191,16 +191,46 @@ void readline (char *token){
     }
 }
 
-// void logica (char *token){
-//     if(strncmp(token, "=",1) == 0){
-// 
-// 
-// 
-// 
-//     }
-// 
-// 
-// }
+void logica (char *token){
+    if(strncmp(token, "=",1) == 0){
+        double X = POP();
+        double Y = POP();
+        if (X == Y) PUSH (0,'l');
+        else PUSH (1,'l');
+    }else if (strncmp(token, "e&",2) == 0){
+        long a = POP();
+        long b = POP();
+        PUSH(a&b,'l');
+    }else if (strncmp(token, "e|",2) == 0){
+        long a = POP();
+        long b = POP();
+        PUSH(a|b,'l');
+    }else if (strncmp(token, "e<",2) == 0){
+        char a = POPT();
+        double X = POP();
+        char b = POPT();
+        double Y = POP();
+        if (X>Y) PUSH(Y,b);
+        else PUSH (X,a);
+    }else if (strncmp(token, "e>",2) == 0){
+        char a = POPT();
+        double X = POP();
+        char b = POPT();
+        double Y = POP();
+        if (X<Y) PUSH(Y,b);
+        else PUSH (X,a);
+    }else if (strncmp(token, "?",1) == 0){
+        char b = POPT();
+        double X = POP();
+        char a = POPT();
+        double Y = POP();
+        double Z = POP();
+
+        if (Z) PUSH(Y,a);
+        else PUSH (X,b);
+    }
+
+}
 /*
 void swapM (int *x, int *y){
     int t = *x; 
@@ -339,6 +369,8 @@ void parser (char *line){
             
         }else if(strstr("l",token) != NULL){
             readline(token);
+        }else if (strstr("=e&e|e<e>?",token) != NULL){
+            logica(token);
         }
     }
     print_stack();

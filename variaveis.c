@@ -4,41 +4,8 @@
 #include "stack.h"
 #include "parser.h"
 
-void variaveis(char *token){
+void variaveis(char *token, double *alfabeto){
 
-    struct StackT{
-    double valor;
-    char tipo ;
-
-    };
-    struct StackT alfabeto[26] = {
-        {10,'i'},
-        {11,'i'},
-        {12,'i'},
-        {13,'i'},
-        {14,'i'},
-        {15,'i'},
-        {0,'i'},
-        {0,'i'},
-        {0,'i'},
-        {0,'i'},
-        {0,'i'},
-        {0,'i'},
-        {0,'i'},
-        {0,'c'},
-        {0,'i'},
-        {0,'i'},
-        {0,'i'},
-        {0,'i'},
-        {0,'i'},
-        {32,'c'},
-        {0,'i'},
-        {0,'i'},
-        {0,'i'},
-        {0,'i'},
-        {1,'i'},
-        {0,'i'},
-            };
     
     if (strncmp(token,":",1) == 0) {
 
@@ -48,8 +15,7 @@ void variaveis(char *token){
         char A = POPT();
         double x = POP();
 
-        alfabeto[a].tipo = A;
-        alfabeto[a].valor = x;
+        alfabeto[a] = x;
 
         PUSH(x,A);
     }
@@ -57,11 +23,17 @@ void variaveis(char *token){
         int a = token[0];
 
         a=a-65;
-
-        char b = alfabeto[a].tipo;
-        double x = alfabeto[a].valor;
-
+        if ((a == 14) || (a == 18)){
+        double x = alfabeto[a];
+        char b = 'c';
         PUSH(x,b);
+        }
+        else {
+            double x = alfabeto[a];
+            char c = 'i';
+            PUSH(x,c);
+            
+        }
 
     }
 

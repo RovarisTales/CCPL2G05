@@ -87,6 +87,8 @@ void convertebinario(long x, int a[]){
  * @param line A linha que foi lida na main para realizar o parser.
  */
 void parser (char *line){
+
+    double alfabeto[26] = {10,11,12,13,14,15,0,0,0,0,0,0,0,10,0,0,0,0,32,0,0,0,0,0,1,2};
     char delimit[8] = " \n\t";
     char *token;
     for(token = strtok(line, delimit); token != NULL;token = strtok(NULL, delimit) ){
@@ -145,9 +147,39 @@ void parser (char *line){
     }else if (strncmp(token, "^",1) == 0) {
         double  X = POP ();
         double  Y = POP ();
-        int a[16]={0};
-        convertebinario (X, a);
-        int b[16]={0};
+        int a[16]={0};struct StackT{
+    double valor;
+    char tipo ;
+
+    };
+    struct StackT alfabeto[26] = {
+        {10,'i'},
+        {11,'i'},
+        {12,'i'},
+        {13,'i'},
+        {14,'i'},
+        {15,'i'},
+        {0,'i'},
+        {0,'i'},
+        {0,'i'},
+        {0,'i'},
+        {0,'i'},
+        {0,'i'},
+        {0,'i'},
+        {0,'c'},
+        {0,'i'},
+        {0,'i'},
+        {0,'i'},
+        {0,'i'},
+        {0,'i'},
+        {32,'c'},
+        {0,'i'},
+        {0,'i'},
+        {0,'i'},
+        {0,'i'},
+        {1,'i'},
+        {0,'i'},
+            };
         convertebinario (Y, b);
         inverteArray (a,16);
         inverteArray (b,16);
@@ -180,8 +212,10 @@ void parser (char *line){
             readline(token);
         }else if (strstr("=e&e|e<e>?!<>",token) != NULL){
             logica(token);
-        }else if (strstr(":ABCDEFGHIJKLMNOPQRSTUVWXYZ",token) != NULL ){
-            variaveis(token);
+        }else if (strstr("ABCDEFGHIJKLMNOPQRSTUVWXYZ",token) != NULL ){
+            variaveis(token, alfabeto);
+        }else if (strncmp(token,":",1) == 0){
+            variaveis(token, alfabeto);
         }
     }
     print_stack();

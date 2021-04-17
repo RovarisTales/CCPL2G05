@@ -16,15 +16,17 @@ void logica (char *token){
     }else if (strncmp(token, "e&",2) == 0){
         double a = POP();
         double b = POP();
-        if (a!= 0 && b != 0) PUSH(a&b,'f');
-        else PUSH(0,'i')
+        if (a!= 0 && b != 0) PUSH(a,'f');
+        else PUSH(0,'i');
     }else if (strncmp(token, "e|",2) == 0){
         char A = POPT();
         double a = POP();
         char B = POPT();
         double b = POP();
-        if (a!= 0 || b != 0) (a|b,'f');
-        else PUSH(0,'l');
+        if (a!= 0 || b != 0) {
+            if (a != 0) PUSH(b,B);
+            else PUSH(a,A);
+        }else PUSH(0,'l');
         
     }else if (strncmp(token, "e<",2) == 0){
         char a = POPT();

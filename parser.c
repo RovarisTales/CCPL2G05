@@ -10,6 +10,73 @@
 #include <assert.h>
 #include "parser.h"
 #include "stack.h"
+
+char comparatipo (char a, char b){
+
+    if (a == b) return a;
+    else if (a == 'f' || b == 'f') return 'f';
+    else return 'l';
+
+}
+
+void aritimetica (char *oper){
+    if (strcmp(oper, "-") == 0) {
+        char A = POPT();
+        double  Y = POP ();
+        char B = POPT();
+        double  X = POP ();
+        A = comparatipo (A,B);
+        PUSH (X - Y,A);
+    } else if (strncmp(oper, "+",1) == 0) {
+        char A = POPT();
+        double  Y = POP ();
+        char B = POPT();
+        double  X = POP ();
+        A = comparatipo (A,B);
+        PUSH (X + Y,A);
+    } else if (strncmp(oper, "*", 1) == 0) {
+        char A = POPT();
+        double  Y = POP ();
+        char B = POPT();
+        double  X = POP ();
+        double a = X*Y;
+        A = comparatipo (A,B);
+        PUSH (a,A);
+    } else if (strncmp(oper, "/",1) == 0) {
+        char A = POPT();
+        double  Y = POP ();
+        char B = POPT();
+        double  X = POP ();
+        if (A == 'i' && B == 'i') {
+            long a = Y;
+            long b = X;
+            PUSH(b / a,'i');
+        }
+        else if (A == B) PUSH (X / Y,A);
+        else PUSH (X / Y,'f');
+    } else if (strncmp(oper, "#",1) == 0) {
+        double  Y = POP ();
+        double  X = POP ();
+        PUSH (pow (X,Y),'f');
+    } else if (strncmp(oper, "%",1) == 0) {
+        long  Y = POP ();
+        long  X = POP ();
+        
+        PUSH (X % Y,'i');
+    } else if (strncmp(oper, "(",1) == 0) {
+        char A = POPT();
+        double  X = POP ();
+        X = X - 1;
+        PUSH (X,A);
+    } else if (strncmp(oper, ")",1) == 0) {
+        char A = POPT();
+        double  X = POP ();
+        X = X + 1;
+        PUSH (X,A);
+    }
+
+
+}
 /*
 void swapM (int *x, int *y){
     int t = *x; 
@@ -64,67 +131,15 @@ void parser (char *line){
         char *sobra2;
         long valint = strtol(token, &sobra, 10);
         double valdouble = strtod(token, &sobra2);
+        // char *tokencmp;
         if (strlen(sobra) == 0){
             PUSH(valint,'i');
         }else if (strlen(sobra2) == 0) {
             
             PUSH(valdouble,'f');
-    } else if (strncmp(token, "-",1) == 0) {
-        char A = POPT();
-        double  Y = POP ();
-        char B = POPT();
-        double  X = POP ();
-        if (A == B) PUSH (X - Y,A);
-        else if (A == 'i' && B == 'i') PUSH (X - Y,'i');
-        else PUSH (X - Y,'f');
-    } else if (strncmp(token, "+",1) == 0) {
-        char A = POPT();
-        double  Y = POP ();
-        char B = POPT();
-        double  X = POP ();
-        if (A == B) PUSH (X + Y,A);
-        else if (A == 'i' && B == 'i') PUSH (X + Y,'i');
-        else PUSH (X + Y,'f');
-    } else if (strncmp(token, "*", 1) == 0) {
-        char A = POPT();
-        double  Y = POP ();
-        char B = POPT();
-        double  X = POP ();
-        double a = X*Y;
-        if (A == B) PUSH (a,A);
-        else if (A == 'i' && B == 'i') PUSH (a,'i');
-        else PUSH (a,'f');
-    } else if (strncmp(token, "/",1) == 0) {
-        char A = POPT();
-        double  Y = POP ();
-        char B = POPT();
-        double  X = POP ();
-        if (A == 'i' && B == 'i') {
-            long a = Y;
-            long b = X;
-            PUSH(b / a,'i');
-        }
-        else if (A == B) PUSH (X / Y,A);
-        else PUSH (X / Y,'f');
-    } else if (strncmp(token, "#",1) == 0) {
-        double  Y = POP ();
-        double  X = POP ();
-        PUSH (pow (X,Y),'f');
-    } else if (strncmp(token, "%",1) == 0) {
-        long  Y = POP ();
-        long  X = POP ();
+    } else if (strstr("-+/*#%()",token) != NULL) {
+        aritimetica(token);
         
-        PUSH (X % Y,'i');
-    } else if (strncmp(token, "(",1) == 0) {
-        char A = POPT();
-        double  X = POP ();
-        X = X - 1;
-        PUSH (X,A);
-    } else if (strncmp(token, ")",1) == 0) {
-        char A = POPT();
-        double  X = POP ();
-        X = X + 1;
-        PUSH (X,A);
 /*  }else if (strncmp(token, "&",1) == 0) {
         double  X = POP ();
         double  Y = POP ();

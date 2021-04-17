@@ -1,1 +1,0 @@
-void logicabin (char *token);

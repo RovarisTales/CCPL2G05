@@ -11,8 +11,8 @@ void logica (char *token){
     if(strncmp(token, "=",1) == 0){
         double X = POP();
         double Y = POP();
-        if (X == Y) PUSH (0,'l');
-        else PUSH (1,'l');
+        if (X == Y) PUSH (1,'l');
+        else PUSH (0,'l');
     }else if (strncmp(token, "e&",2) == 0){
         long a = POP();
         long b = POP();

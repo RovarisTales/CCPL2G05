@@ -15,6 +15,7 @@
 #include "logica.h"
 #include "convertetipo.h"
 #include "readline.h"
+#include "variaveis.h"
 
 char comparatipo (char a, char b){
 
@@ -36,6 +37,7 @@ double convertelong (double x, char a){
     
     return x;
 }
+
 
 
 /*
@@ -165,21 +167,22 @@ void parser (char *line){
         PUSH(X);}*/
             
             
-        }else if (strstr("&^~|",token) != NULL) {
-           logicabin (token);
+    }else if (strstr("&^~|",token) != NULL) {
+        logicabin (token);
 
-        }else if (strstr("_;\\@$",token) != NULL) {
+      }else if (strstr("_;\\@$",token) != NULL) {
            manipstack(token);
         
         }else if(strstr("ifc",token) != NULL){
-           convertetipo(token);
+            convertetipo(token);
             
         }else if(strstr("l",token) != NULL){
-           readline(token);
-        }else if (strstr("=e&e|e<e>?",token) != NULL){
-           logica(token);
-        }else if (strstr("ABCDEFGHIJKLMNOPQRSTUVWXYZ",token) != NULL){
-           variaveis(token);
+            readline(token);
+        }else if (strstr("=e&e|e<e>?!<>",token) != NULL){
+            logica(token);
+        }else if (strstr(":ABCDEFGHIJKLMNOPQRSTUVWXYZ",token) != NULL ){
+            variaveis(token);
+        }
     }
     print_stack();
 }

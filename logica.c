@@ -48,16 +48,16 @@ void logica (char *token){
         long X = POP();
         long Y = POP();
         if (Y<X) PUSH(1,'i');
-        if (X>Y) PUSH(0,'i');
+        else PUSH(0,'i');
     }else if (strncmp(token,">",1) == 0){
         long X = POP();
         long Y = POP();
         if (Y<X) PUSH(0,'i');
-        if (X>Y) PUSH(1,'i');
+        else PUSH(1,'i');
     }else if (strncmp(token,"!",1) == 0){
         long X = POP();
         if (X==0) PUSH(1,'i');
         else PUSH(0,'i');
-}
+    }
 
 }

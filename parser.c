@@ -77,6 +77,108 @@ void aritimetica (char *oper){
 
 
 }
+
+void logica (char *token){
+    if (strncmp(token, "&",1) == 0) {
+        long  X = POP ();
+        long  Y = POP ();
+        long A = X & Y;
+        PUSH(A,'l');
+
+    }else if (strncmp(token, "|",1) == 0) {
+        long  X = POP ();
+        long  Y = POP ();
+        long A = X | Y;
+
+        PUSH(A,'l');
+
+    }else if (strncmp(token, "^",1) == 0) {
+        long  X = POP ();
+        long  Y = POP ();
+        long A = X ^ Y;
+
+        PUSH(A,'l');
+
+       }else if (strncmp(token, "~",1) == 0) {
+        long  X = POP ();
+        long A = ~X;
+
+        PUSH(A,'l');
+       }
+}
+
+void manipstack (char *token){
+    if (strncmp(token, "_",1) == 0) {
+        char A = POPT();
+        double  Y = POP ();
+        PUSH (Y,A);
+        PUSH (Y,A);
+        
+    }else if (strncmp(token, ";",1) == 0) {
+        double  X = POP ();
+        X++;
+
+    }else if (strcmp(token, "\\") == 0) {
+        char A = POPT();
+        double  X = POP ();
+        char B = POPT();
+        double  Y = POP ();
+        
+        PUSH (X,A);
+        PUSH (Y,B);
+
+    }else if (strncmp(token, "@",1) == 0) {
+        
+        char A = POPT();
+        double  X = POP ();
+        char B = POPT();
+        double  Y = POP ();
+        char C = POPT();
+        double  Z = POP (); 
+        PUSH (Y,B);
+        PUSH (X,A);
+        PUSH (Z,C);
+    }else if(strncmp(token, "$",1) == 0){
+            double x = POP();
+            int a = MOVEPOP(x);
+            char b = POPT();
+            PUSH(a,b);
+            MOVE(x);
+            PUSH(a,b);
+    }
+}
+
+void convertetipo (char *token){
+    if(strncmp(token, "i",1) == 0){
+            
+            double x = POP();
+            
+            PUSH(x,'i');
+
+    }else if(strncmp(token, "f",1) == 0){
+           
+            float x = POP();
+            
+            PUSH(x,'f');
+
+    }else if(strncmp(token, "c",1) == 0){
+            long x = POP();
+
+            PUSH(x,'c');
+            
+    }
+}
+
+void readline (char *token){
+    if(strncmp(token, "l",1) == 0){
+        char lerlinha [10240];
+        char *oi;
+        assert(fgets(lerlinha,10240,stdin)!=NULL);
+        assert(lerlinha[strlen(lerlinha)- 1]== '\n');
+        double a = strtod(lerlinha,&oi);
+        PUSH(a,'f');
+    }
+}
 /*
 void swapM (int *x, int *y){
     int t = *x; 
@@ -204,95 +306,17 @@ void parser (char *line){
         PUSH(X);}*/
             
             
-    }else if (strncmp(token, "&",1) == 0) {
-        long  X = POP ();
-        long  Y = POP ();
-        long A = X & Y;
-        PUSH(A,'l');
+    }else if (strstr("&^~|",token) != NULL) {
+        logica (token);
 
-    }else if (strncmp(token, "|",1) == 0) {
-        long  X = POP ();
-        long  Y = POP ();
-        long A = X | Y;
-
-        PUSH(A,'l');
-
-    }else if (strncmp(token, "^",1) == 0) {
-        long  X = POP ();
-        long  Y = POP ();
-        long A = X ^ Y;
-
-        PUSH(A,'l');
-
-       }else if (strncmp(token, "~",1) == 0) {
-        long  X = POP ();
-        long A = ~X;
-
-        PUSH(A,'l');
-
-      }else if (strncmp(token, "_",1) == 0) {
-        char A = POPT();
-        double  Y = POP ();
-        PUSH (Y,A);
-        PUSH (Y,A);
+      }else if (strstr("_;\\@$",token) != NULL) {
+           manipstack(token);
         
-       }else if (strncmp(token, ";",1) == 0) {
-        double  X = POP ();
-        X++;
-
-       }else if (strcmp(token, "\\") == 0) {
-        char A = POPT();
-        double  X = POP ();
-        char B = POPT();
-        double  Y = POP ();
-        
-        PUSH (X,A);
-        PUSH (Y,B);
-
-        }else if (strncmp(token, "@",1) == 0) {
-        
-        char A = POPT();
-        double  X = POP ();
-        char B = POPT();
-        double  Y = POP ();
-        char C = POPT();
-        double  Z = POP (); 
-        PUSH (Y,B);
-        PUSH (X,A);
-        PUSH (Z,C);
-           
-        
-        }else if(strncmp(token, "i",1) == 0){
+        }else if(strstr("ifc",token) != NULL){
+            convertetipo(token);
             
-            double x = POP();
-            
-            PUSH(x,'i');
-
-        }else if(strncmp(token, "f",1) == 0){
-           
-            float x = POP();
-            
-            PUSH(x,'f');
-
-        }else if(strncmp(token, "c",1) == 0){
-            long x = POP();
-
-            PUSH(x,'c');
-            
-        }else if(strncmp(token, "l",1) == 0){
-            char lerlinha [10240];
-            char *oi;
-            assert(fgets(lerlinha,10240,stdin)!=NULL);
-            assert(lerlinha[strlen(lerlinha)- 1]== '\n');
-            double a = strtod(lerlinha,&oi);
-            PUSH(a,'f');
-        }else if(strncmp(token, "$",1) == 0){
-            double x = POP();
-            int a = MOVEPOP(x);
-            char b = POPT();
-            PUSH(a,b);
-            MOVE(x);
-            PUSH(a,b);
+        }else if(strstr("l",token) != NULL){
+            readline(token);
         }
     }
     print_stack();

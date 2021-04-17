@@ -4,8 +4,9 @@
  */
 void parser (char *line);
 char comparatipo (char a, char b);
+double convertelong (double x, char a);
 void aritimetica (char *oper);
-void logica (char *token);
+void logicabin (char *token);
 void manipstack (char *token);
 void convertetipo (char *token);
 void readline (char *token);

@@ -19,6 +19,19 @@ char comparatipo (char a, char b){
 
 }
 
+double convertelong (double x, char a){
+    long l;
+    if (a == 'l') {
+        l = x;
+        x = l;
+    }else if (a == 'i') {
+        l = x;
+        x = l;
+    }
+    
+    return x;
+}
+
 void aritimetica (char *oper){
     if (strcmp(oper, "-") == 0) {
         char A = POPT();
@@ -47,13 +60,11 @@ void aritimetica (char *oper){
         double  Y = POP ();
         char B = POPT();
         double  X = POP ();
-        if (A == 'i' && B == 'i') {
-            long a = Y;
-            long b = X;
-            PUSH(b / a,'i');
-        }
-        else if (A == B) PUSH (X / Y,A);
-        else PUSH (X / Y,'f');
+        A = comparatipo(A,B);
+        double T = X / Y;
+        T = convertelong (T,A);
+        
+        PUSH (T,A);
     } else if (strncmp(oper, "#",1) == 0) {
         double  Y = POP ();
         double  X = POP ();
@@ -78,7 +89,7 @@ void aritimetica (char *oper){
 
 }
 
-void logica (char *token){
+void logicabin (char *token){
     if (strncmp(token, "&",1) == 0) {
         long  X = POP ();
         long  Y = POP ();
@@ -179,6 +190,17 @@ void readline (char *token){
         PUSH(a,'f');
     }
 }
+
+// void logica (char *token){
+//     if(strncmp(token, "=",1) == 0){
+// 
+// 
+// 
+// 
+//     }
+// 
+// 
+// }
 /*
 void swapM (int *x, int *y){
     int t = *x; 
@@ -307,7 +329,7 @@ void parser (char *line){
             
             
     }else if (strstr("&^~|",token) != NULL) {
-        logica (token);
+        logicabin (token);
 
       }else if (strstr("_;\\@$",token) != NULL) {
            manipstack(token);

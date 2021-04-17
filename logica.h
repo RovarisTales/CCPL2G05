@@ -1,1 +1,1 @@
-void logica (char *token);
+void logicabin (char *token);

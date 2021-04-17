@@ -1,0 +1,1 @@
+void readline (char *token);

@@ -1,0 +1,1 @@
+void manipstack (char *token);

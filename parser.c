@@ -8,9 +8,13 @@
 #include <string.h>
 #include <math.h>
 #include <assert.h>
-#include "parser.h"
 #include "stack.h"
 #include "aritimetica.h"
+#include "logicabin.h"
+#include "manipstack.h"
+#include "logica.h"
+#include "convertetipo.h"
+#include "readline.h"
 
 char comparatipo (char a, char b){
 
@@ -34,119 +38,8 @@ double convertelong (double x, char a){
 }
 
 
-void manipstack (char *token){
-    if (strncmp(token, "_",1) == 0) {
-        char A = POPT();
-        double  Y = POP ();
-        PUSH (Y,A);
-        PUSH (Y,A);
-        
-    }else if (strncmp(token, ";",1) == 0) {
-        double  X = POP ();
-        X++;
 
-    }else if (strcmp(token, "\\") == 0) {
-        char A = POPT();
-        double  X = POP ();
-        char B = POPT();
-        double  Y = POP ();
-        
-        PUSH (X,A);
-        PUSH (Y,B);
 
-    }else if (strncmp(token, "@",1) == 0) {
-        
-        char A = POPT();
-        double  X = POP ();
-        char B = POPT();
-        double  Y = POP ();
-        char C = POPT();
-        double  Z = POP (); 
-        PUSH (Y,B);
-        PUSH (X,A);
-        PUSH (Z,C);
-    }else if(strncmp(token, "$",1) == 0){
-            double x = POP();
-            int a = MOVEPOP(x);
-            char b = POPT();
-            PUSH(a,b);
-            MOVE(x);
-            PUSH(a,b);
-    }
-}
-
-void convertetipo (char *token){
-    if(strncmp(token, "i",1) == 0){
-            
-            double x = POP();
-            
-            PUSH(x,'i');
-
-    }else if(strncmp(token, "f",1) == 0){
-           
-            float x = POP();
-            
-            PUSH(x,'f');
-
-    }else if(strncmp(token, "c",1) == 0){
-            long x = POP();
-
-            PUSH(x,'c');
-            
-    }
-}
-
-void readline (char *token){
-    if(strncmp(token, "l",1) == 0){
-        char lerlinha [10240];
-        char *oi;
-        assert(fgets(lerlinha,10240,stdin)!=NULL);
-        assert(lerlinha[strlen(lerlinha)- 1]== '\n');
-        double a = strtod(lerlinha,&oi);
-        PUSH(a,'f');
-    }
-}
-
-void logica (char *token){
-    if(strncmp(token, "=",1) == 0){
-        double X = POP();
-        double Y = POP();
-        if (X == Y) PUSH (0,'l');
-        else PUSH (1,'l');
-    }else if (strncmp(token, "e&",2) == 0){
-        long a = POP();
-        long b = POP();
-        PUSH(a&b,'l');
-    }else if (strncmp(token, "e|",2) == 0){
-        long a = POP();
-        long b = POP();
-        PUSH(a|b,'l');
-    }else if (strncmp(token, "e<",2) == 0){
-        char a = POPT();
-        double X = POP();
-        char b = POPT();
-        double Y = POP();
-        if (X>Y) PUSH(Y,b);
-        else PUSH (X,a);
-    }else if (strncmp(token, "e>",2) == 0){
-        char a = POPT();
-        double X = POP();
-        char b = POPT();
-        double Y = POP();
-        if (X<Y) PUSH(Y,b);
-        else PUSH (X,a);
-    }else if (strncmp(token, "?",1) == 0){
-        char b = POPT();
-        double X = POP();
-        char a = POPT();
-        double Y = POP();
-        double Z = POP();
-
-        if (Z) PUSH(Y,a);
-        else PUSH (X,b);
-    }
-
-}
 /*
 void swapM (int *x, int *y){
     int t = *x; 

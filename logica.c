@@ -45,24 +45,24 @@ void logica (char *token){
         if (Z) PUSH(Y,a);
         else PUSH (X,b);
     }else if (strncmp(token,"<",1) == 0){
-    long X = POP();
-    long Y = POP();
-    if (Y<X) PUSH("1");
-    if (X>Y) PUSH("0");
+        long X = POP();
+        long Y = POP();
+        if (Y<X) PUSH("1");
+        if (X>Y) PUSH("0");
     }else if (strncmp(token,">",1) == 0){
-    long X = POP();
-    long Y = POP();
-    if (Y<X) PUSH("0");
-    if (X>Y) PUSH("1");
+        long X = POP();
+        long Y = POP();
+        if (Y<X) PUSH("0");
+        if (X>Y) PUSH("1");
     }else if (strncmp(token,"=",1) == 0){
-    long X = POP();
-    long Y = POP();
-    if (X==Y) PUSH("1");
-    if (X!=Y) PUSH("0");
+        long X = POP();
+        long Y = POP();
+        if (X==Y) PUSH("1");
+        if (X!=Y) PUSH("0");
     }else if (strncmp(token,"!",1) == 0){
-    long X = POP();
-    if (X==0) PUSH("1");
-    if (X==1) PUSH("0");
+        long X = POP();
+        if (X==0) PUSH("1");
+        if (X==1) PUSH("0");
 }
 
 }

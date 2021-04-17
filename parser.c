@@ -38,8 +38,6 @@ double convertelong (double x, char a){
 }
 
 
-
-
 /*
 void swapM (int *x, int *y){
     int t = *x; 

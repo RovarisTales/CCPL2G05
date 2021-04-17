@@ -33,7 +33,7 @@ double convertelong (double x, char a){
     return x;
 }
 
-void logicabin (char *token){
+/*void logicabin (char *token){
     if (strncmp(token, "&",1) == 0) {
         long  X = POP ();
         long  Y = POP ();
@@ -61,7 +61,7 @@ void logicabin (char *token){
         PUSH(A,'l');
        }
 }
-
+*/
 void manipstack (char *token){
     if (strncmp(token, "_",1) == 0) {
         char A = POPT();

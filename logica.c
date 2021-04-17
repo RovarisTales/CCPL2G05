@@ -14,13 +14,20 @@ void logica (char *token){
         if (X == Y) PUSH (1,'l');
         else PUSH (0,'l');
     }else if (strncmp(token, "e&",2) == 0){
-        long a = POP();
-        long b = POP();
-        PUSH(a&b,'l');
+        double a = POP();
+        double b = POP();
+        if (a!= 0 && b != 0) PUSH(a,'f');
+        else PUSH(0,'i')
     }else if (strncmp(token, "e|",2) == 0){
-        long a = POP();
-        long b = POP();
-        PUSH(a|b,'l');
+        char A = POPT();
+        double a = POP();
+        char B = POPT();
+        double b = POP();
+        if (a!= 0 || b != 0) {
+            if (a != 0) PUSH(a,A);]
+            else PUSH(b,B);
+        }else PUSH(0,'l');
+        
     }else if (strncmp(token, "e<",2) == 0){
         char a = POPT();
         double X = POP();

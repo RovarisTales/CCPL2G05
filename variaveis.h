@@ -1,0 +1,1 @@
+void variaveis(char *token);

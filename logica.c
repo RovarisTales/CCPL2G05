@@ -1,10 +1,17 @@
+/**
+ * @file É o ficheiro que contem a função quando detetamos tokens relativamente á logica.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "stack.h"
 #include "parser.h"
 
-
+/**
+ * \brief Função relacionada com a logica.
+ * @param token dentro dos mencionados no parser ("=e&e|e<e>?")
+ */
 
 
 void logica (char *token){

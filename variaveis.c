@@ -23,7 +23,7 @@ void variaveis(char *token, double *alfabeto){
         int a = token[0];
 
         a=a-65;
-        if ((a == 14) || (a == 18)){
+        if ((a == 13) || (a == 18)){
         double x = alfabeto[a];
         char b = 'c';
         PUSH(x,b);

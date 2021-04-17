@@ -3,6 +3,12 @@
  *
  */
 void parser (char *line);
+char comparatipo (char a, char b);
+void aritimetica (char *oper);
+void logica (char *token);
+void manipstack (char *token);
+void convertetipo (char *token);
+void readline (char *token);
 
 /* void convertebinario(long x, int a[]);
 

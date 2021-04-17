@@ -1,0 +1,1 @@
+void aritimetica (char *oper);

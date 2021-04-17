@@ -165,20 +165,21 @@ void parser (char *line){
         PUSH(X);}*/
             
             
-    }else if (strstr("&^~|",token) != NULL) {
-        logicabin (token);
+        }else if (strstr("&^~|",token) != NULL) {
+           logicabin (token);
 
-      }else if (strstr("_;\\@$",token) != NULL) {
+        }else if (strstr("_;\\@$",token) != NULL) {
            manipstack(token);
         
         }else if(strstr("ifc",token) != NULL){
-            convertetipo(token);
+           convertetipo(token);
             
         }else if(strstr("l",token) != NULL){
-            readline(token);
+           readline(token);
         }else if (strstr("=e&e|e<e>?",token) != NULL){
-            logica(token);
-        }
+           logica(token);
+        }else if (strstr("ABCDEFGHIJKLMNOPQRSTUVWXYZ",token) != NULL){
+           variaveis(token);
     }
     print_stack();
 }

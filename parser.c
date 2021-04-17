@@ -10,6 +10,7 @@
 #include <assert.h>
 #include "parser.h"
 #include "stack.h"
+#include "aritimetica.h"
 
 char comparatipo (char a, char b){
 
@@ -30,63 +31,6 @@ double convertelong (double x, char a){
     }
     
     return x;
-}
-
-void aritimetica (char *oper){
-    if (strcmp(oper, "-") == 0) {
-        char A = POPT();
-        double  Y = POP ();
-        char B = POPT();
-        double  X = POP ();
-        A = comparatipo (A,B);
-        PUSH (X - Y,A);
-    } else if (strncmp(oper, "+",1) == 0) {
-        char A = POPT();
-        double  Y = POP ();
-        char B = POPT();
-        double  X = POP ();
-        A = comparatipo (A,B);
-        PUSH (X + Y,A);
-    } else if (strncmp(oper, "*", 1) == 0) {
-        char A = POPT();
-        double  Y = POP ();
-        char B = POPT();
-        double  X = POP ();
-        double a = X*Y;
-        A = comparatipo (A,B);
-        PUSH (a,A);
-    } else if (strncmp(oper, "/",1) == 0) {
-        char A = POPT();
-        double  Y = POP ();
-        char B = POPT();
-        double  X = POP ();
-        A = comparatipo(A,B);
-        double T = X / Y;
-        T = convertelong (T,A);
-        
-        PUSH (T,A);
-    } else if (strncmp(oper, "#",1) == 0) {
-        double  Y = POP ();
-        double  X = POP ();
-        PUSH (pow (X,Y),'f');
-    } else if (strncmp(oper, "%",1) == 0) {
-        long  Y = POP ();
-        long  X = POP ();
-        
-        PUSH (X % Y,'i');
-    } else if (strncmp(oper, "(",1) == 0) {
-        char A = POPT();
-        double  X = POP ();
-        X = X - 1;
-        PUSH (X,A);
-    } else if (strncmp(oper, ")",1) == 0) {
-        char A = POPT();
-        double  X = POP ();
-        X = X + 1;
-        PUSH (X,A);
-    }
-
-
 }
 
 void logicabin (char *token){

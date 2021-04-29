@@ -1,1 +1,1 @@
-void variaveis(char *token, double *alfabeto);
+void variaveis(char *token, Tipoval *alfabeto);

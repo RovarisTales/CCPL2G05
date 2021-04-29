@@ -9,41 +9,39 @@
 
 void manipstack (char *token){
     if (strncmp(token, "_",1) == 0) {
-        char A = POPT();
-        double  Y = POP ();
-        PUSH (Y,A);
-        PUSH (Y,A);
+        Tipoval  Y = POP ();
+        PUSH (Y);
+        PUSH (Y);
         
     }else if (strncmp(token, ";",1) == 0) {
-        double  X = POP ();
-        X++;
+        Tipoval  X = POP ();
+        X.valor++;
 
     }else if (strcmp(token, "\\") == 0) {
-        char A = POPT();
-        double  X = POP ();
-        char B = POPT();
-        double  Y = POP ();
+
+        Tipoval  X = POP ();
+
+        Tipoval  Y = POP ();
         
-        PUSH (X,A);
-        PUSH (Y,B);
+        PUSH (X);
+        PUSH (Y);
 
     }else if (strncmp(token, "@",1) == 0) {
         
-        char A = POPT();
-        double  X = POP ();
-        char B = POPT();
-        double  Y = POP ();
-        char C = POPT();
-        double  Z = POP (); 
-        PUSH (Y,B);
-        PUSH (X,A);
-        PUSH (Z,C);
+
+        Tipoval  X = POP ();
+
+        Tipoval  Y = POP ();
+
+        Tipoval  Z = POP (); 
+        PUSH (Y);
+        PUSH (X);
+        PUSH (Z);
     }else if(strncmp(token, "$",1) == 0){
-            double x = POP();
-            int a = MOVEPOP(x);
-            char b = POPT();
-            PUSH(a,b);
-            MOVE(x);
-            PUSH(a,b);
+            Tipoval x = POP();
+            Tipoval a = MOVEPOP(x.valor);
+            PUSH(a);
+            MOVE(x.valor);
+            PUSH(a);
     }
 }

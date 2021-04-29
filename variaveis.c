@@ -4,7 +4,7 @@
 #include "stack.h"
 #include "parser.h"
 
-void variaveis(char *token, double *alfabeto){
+void variaveis(char *token, Tipoval *alfabeto){
 
     
     if (strncmp(token,":",1) == 0) {
@@ -12,29 +12,21 @@ void variaveis(char *token, double *alfabeto){
         int a = token[1];
 
         a = a-65;
-        char A = POPT();
-        double x = POP();
+        Tipoval x = POP();
 
         alfabeto[a] = x;
 
-        PUSH(x,A);
+        PUSH(x);
     }
     if (strstr("ABCDEFGHIJKLMNOPQRSTUVWXYZ",token) != NULL){
         int a = token[0];
 
         a=a-65;
-        if ((a == 13) || (a == 18)){
-        double x = alfabeto[a];
-        char b = 'c';
-        PUSH(x,b);
-        }
-        else {
-            double x = alfabeto[a];
-            char c = 'i';
-            PUSH(x,c);
-            
-        }
-
+        Tipoval x = alfabeto[a];
+        PUSH(x);
     }
+        
+
+    
 
 }

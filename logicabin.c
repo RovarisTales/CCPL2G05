@@ -6,29 +6,39 @@
 
 void logicabin (char *token){
     if (strncmp(token, "&",1) == 0) {
-        long  X = POP ();
-        long  Y = POP ();
-        long A = X & Y;
-        PUSH(A,'l');
+        Tipoval  X = POP ();
+        Tipoval  Y = POP ();
+        long x,y;
+        x = X.valor;
+        y = Y.valor;
+        X.valor = x&y;
+        PUSH(X);
 
     }else if (strncmp(token, "|",1) == 0) {
-        long  X = POP ();
-        long  Y = POP ();
-        long A = X | Y;
+        Tipoval  X = POP ();
+        Tipoval  Y = POP ();
+        long x,y;
+        x = X.valor;
+        y = Y.valor;
+        X.valor = x | y;
 
-        PUSH(A,'l');
+        PUSH(X);
 
     }else if (strncmp(token, "^",1) == 0) {
-        long  X = POP ();
-        long  Y = POP ();
-        long A = X ^ Y;
+        Tipoval  X = POP ();
+        Tipoval  Y = POP ();
+        long x,y;
+        x = X.valor;
+        y = Y.valor;
+        X.valor = x ^ y;
 
-        PUSH(A,'l');
+        PUSH(X);
 
        }else if (strncmp(token, "~",1) == 0) {
-        long  X = POP ();
-        long A = ~X;
+        Tipoval  X = POP ();
+        long A = X.valor;
+        X.valor = ~A;
 
-        PUSH(A,'l');
+        PUSH(X);
        }
 }

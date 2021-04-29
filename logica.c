@@ -5,66 +5,99 @@
 #include "parser.h"
 
 
+void logicanormal (char *token){
+    Tipoval true, false;
+    true.valor = 1;
+    true.tipo = 'i';
+    false.valor = 0;
+    false.tipo = 'i';
 
-
-void logica (char *token){
     if(strncmp(token, "=",1) == 0){
-        double X = POP();
-        double Y = POP();
-        if (X == Y) PUSH (1,'l');
-        else PUSH (0,'l');
-    }else if (strncmp(token, "e&",2) == 0){
-        double a = POP();
-        double b = POP();
-        if (a!= 0 && b != 0) PUSH(a,'f');
-        else PUSH(0,'i');
-    }else if (strncmp(token, "e|",2) == 0){
-        char A = POPT();
-        double a = POP();
-        char B = POPT();
-        double b = POP();
-        if (a!= 0 || b != 0) {
-            if (b != 0) PUSH(b,B);
-            else PUSH(a,A);
-        }else PUSH(0,'l');
-        
-    }else if (strncmp(token, "e<",2) == 0){
-        char a = POPT();
-        double X = POP();
-        char b = POPT();
-        double Y = POP();
-        if (X>Y) PUSH(Y,b);
-        else PUSH (X,a);
-    }else if (strncmp(token, "e>",2) == 0){
-        char a = POPT();
-        double X = POP();
-        char b = POPT();
-        double Y = POP();
-        if (X<Y) PUSH(Y,b);
-        else PUSH (X,a);
+        Tipoval X = POP();
+        Tipoval Y = POP();
+        if (X.valor == Y.valor) PUSH (true);
+        else PUSH (false);
     }else if (strncmp(token, "?",1) == 0){
-        char b = POPT();
-        double X = POP();
-        char a = POPT();
-        double Y = POP();
-        double Z = POP();
+        Tipoval X = POP();
+        Tipoval Y = POP();
+        Tipoval Z = POP();
 
-        if (Z) PUSH(Y,a);
-        else PUSH (X,b);
+        if (Z.valor) PUSH(Y);
+        else PUSH (X);
     }else if (strncmp(token,"<",1) == 0){
-        long X = POP();
-        long Y = POP();
-        if (Y<X) PUSH(1,'i');
-        else PUSH(0,'i');
+        Tipoval X = POP();
+        Tipoval Y = POP();
+        if (Y.valor<X.valor) PUSH(true);
+        else PUSH(false);
     }else if (strncmp(token,">",1) == 0){
-        long X = POP();
-        long Y = POP();
-        if (Y<X) PUSH(0,'i');
-        else PUSH(1,'i');
+        Tipoval X = POP();
+        Tipoval Y = POP();
+        if (Y.valor<X.valor) PUSH(false);
+        else PUSH(true);
     }else if (strncmp(token,"!",1) == 0){
-        long X = POP();
-        if (X==0) PUSH(1,'i');
-        else PUSH(0,'i');
+        Tipoval X = POP();
+        if (X.valor==0) PUSH(true);
+        else PUSH(false);
     }
 
 }
+
+void logicaE (char *token){
+    Tipoval false;
+    false.valor = 0;
+    false.tipo = 'i';
+    if (strncmp(token, "e&",2) == 0){
+        Tipoval a = POP();
+        Tipoval b = POP();
+        Tipoval x;
+        x.valor = 0;
+        x.tipo = 'i';
+        if (a.valor!= 0 && b.valor != 0) PUSH(a);
+        else PUSH(x);
+    }else if (strncmp(token, "e|",2) == 0){
+        Tipoval a = POP();
+        Tipoval b = POP();
+        if (a.valor!= 0 || b.valor != 0) {
+            if (b.valor != 0) PUSH(b);
+            else PUSH(a);
+        }else PUSH(false);
+        
+    }else if (strncmp(token, "e<",2) == 0){
+        Tipoval X = POP();
+        Tipoval Y = POP();
+        if (X.valor>Y.valor) PUSH(Y);
+        else PUSH (X);
+    }else if (strncmp(token, "e>",2) == 0){
+        Tipoval X = POP();
+        Tipoval Y = POP();
+        if (X.valor<Y.valor) PUSH(Y);
+        else PUSH (X);
+    }
+}
+
+
+void logica (char *token){
+    if (strstr("=?<>!",token)){
+        logicanormal(token);
+    }
+    else logicaE(token);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

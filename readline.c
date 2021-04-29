@@ -13,6 +13,9 @@ void readline (char *token){
         assert(fgets(lerlinha,10240,stdin)!=NULL);
         assert(lerlinha[strlen(lerlinha)- 1]== '\n');
         double a = strtod(lerlinha,&oi);
-        PUSH(a,'f');
+        Tipoval x;
+        x.valor = a;
+        x.tipo = 'f';
+        PUSH(x);
     }
 }

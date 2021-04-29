@@ -3,11 +3,18 @@
  *
  */
 // void stack (char *line); (nao existe funçao stack)
+struct StackT{
+    double valor;
+    char tipo ;
+
+};
+typedef struct StackT Tipoval;
 int vazio();
 int cheio();
-double POP();
-void PUSH(double data,char a);
+Tipoval POP();
+void PUSH(Tipoval a);
 void print_stack();
 void MOVE (int a);
-double MOVEPOP (int a);
+Tipoval MOVEPOP (int a);
 char POPT();
+

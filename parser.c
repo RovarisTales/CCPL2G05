@@ -88,7 +88,34 @@ void convertebinario(long x, int a[]){
  */
 void parser (char *line){
 
-    double alfabeto[26] = {10,11,12,13,14,15,0,0,0,0,0,0,0,10,0,0,0,0,32,0,0,0,0,0,1,2};
+    Tipoval alfabeto[26] = {
+        {10,'i'},
+        {11,'i'},
+        {12,'i'},
+        {13,'i'},
+        {14,'i'},
+        {15,'i'},
+        {0,'i'},
+        {0,'i'},
+        {0,'i'},
+        {0,'i'},
+        {0,'i'},
+        {0,'i'},
+        {0,'i'},
+        {10,'c'},
+        {0,'i'},
+        {0,'i'},
+        {0,'i'},
+        {0,'i'},
+        {32,'c'},
+        {0,'i'},
+        {0,'i'},
+        {0,'i'},
+        {0,'i'},
+        {0,'i'},
+        {1,'i'},
+        {2,'i'},
+            };
     char delimit[8] = " \n\t";
     char *token;
     for(token = strtok(line, delimit); token != NULL;token = strtok(NULL, delimit) ){
@@ -98,10 +125,15 @@ void parser (char *line){
         double valdouble = strtod(token, &sobra2);
         // char *tokencmp;
         if (strlen(sobra) == 0){
-            PUSH(valint,'i');
+            Tipoval X;
+            X.valor = valint;
+            X.tipo = 'i';
+            PUSH(X);
         }else if (strlen(sobra2) == 0) {
-            
-            PUSH(valdouble,'f');
+            Tipoval X;
+            X.valor = valdouble;
+            X.tipo = 'f';
+            PUSH(X);
     } else if (strstr("-+/*#%()",token) != NULL) {
         aritimetica(token);
         

@@ -3,12 +3,8 @@
  *
  */
 #include <stdio.h>
+#include "stack.h"
 
-struct StackT{
-    double valor;
-    char tipo ;
-
-};
 
 int MAXSIZE = 10240;
 struct StackT stack[10240];
@@ -43,32 +39,25 @@ int cheio(){
         return 0;
 }
 
-char POPT(){
-    char a= 'l';
-    if(!vazio()){
-        a = stack[top].tipo;
-    }
-    return a;
-}
-
 /**
  * \brief Esta funçao retira o elemento mais acima na stack.
  * @return data que é o elemento mais acima na stack.
  */
 
-double POP() {
-    double data = 0;
+Tipoval POP() {
+    Tipoval data;
     if(!vazio()) {
-        data = stack[top].valor;
+        data.valor = stack[top].valor;
+        data.tipo = stack[top].tipo;
         top = top - 1;
     }
     return data;
 }
 
-double MOVEPOP (int a){
+Tipoval MOVEPOP (int a){
     top = top - a;
     
-    double x = POP();
+    Tipoval x = POP();
     return x;
 }
 
@@ -76,12 +65,11 @@ double MOVEPOP (int a){
  * \brief Esta funçao adiciona o elemento no topo da stack.
  */
 
-void PUSH(double data,char a) {
+void PUSH(Tipoval a) {
 
     if(!cheio()) {
         top = top + 1;
-        stack[top].valor = data;
-        stack[top].tipo = a;
+        stack[top] = a;
     }
 }
 
@@ -90,15 +78,13 @@ void PUSH(double data,char a) {
  */
 
 void print_stack(){
-    double data;
+    Tipoval data;
     int i=0;
-    char a;
     struct StackT stacks[10240];
     while(!vazio()) {
-        a = POPT();
         data = POP();
-        stacks[i].valor = data;
-        stacks[i].tipo = a;
+        stacks[i].valor = data.valor;
+        stacks[i].tipo = data.tipo;
         i++;
         }
     for (i=i-1;i>-1;i--) {

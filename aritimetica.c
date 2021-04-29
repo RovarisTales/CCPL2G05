@@ -5,58 +5,77 @@
 #include "stack.h"
 #include "parser.h"
 
-void aritimetica (char *oper){
+long convertelong2 (double x){
+    long l;
+    l = x;
+    x = l;
+    return x;
+}
+
+
+
+
+
+
+
+
+
+void aritimeticasimples (char *oper){
     if (strcmp(oper, "-") == 0) {
-        char A = POPT();
-        double  Y = POP ();
-        char B = POPT();
-        double  X = POP ();
-        A = comparatipo (A,B);
-        PUSH (X - Y,A);
+        Tipoval  Y = POP ();
+        Tipoval  X = POP ();
+        X.tipo = comparatipo (Y.tipo,X.tipo);
+        X.valor = X.valor - Y.valor;
+        PUSH (X);
     } else if (strncmp(oper, "+",1) == 0) {
-        char A = POPT();
-        double  Y = POP ();
-        char B = POPT();
-        double  X = POP ();
-        A = comparatipo (A,B);
-        PUSH (X + Y,A);
+
+        Tipoval  Y = POP ();
+
+        Tipoval  X = POP ();
+        X.tipo = comparatipo (Y.tipo,X.tipo);
+        X.valor = Y.valor + X.valor;
+        PUSH (X);
     } else if (strncmp(oper, "*", 1) == 0) {
-        char A = POPT();
-        double  Y = POP ();
-        char B = POPT();
-        double  X = POP ();
-        double a = X*Y;
-        A = comparatipo (A,B);
-        PUSH (a,A);
+        Tipoval  Y = POP ();
+        Tipoval  X = POP ();
+        X.tipo = comparatipo (X.tipo,Y.tipo);
+        X.valor = X.valor * Y.valor;
+        PUSH (X);
     } else if (strncmp(oper, "/",1) == 0) {
-        char A = POPT();
-        double  Y = POP ();
-        char B = POPT();
-        double  X = POP ();
-        A = comparatipo(A,B);
-        double T = X / Y;
-        T = convertelong (T,A);
+        Tipoval  Y = POP ();
+        Tipoval  X = POP ();
+        X.tipo = comparatipo (Y.tipo,X.tipo);
+        X.valor = X.valor / Y.valor;
+        X.valor = convertelong (X.valor,X.tipo);
         
-        PUSH (T,A);
-    } else if (strncmp(oper, "#",1) == 0) {
-        double  Y = POP ();
-        double  X = POP ();
-        PUSH (pow (X,Y),'f');
+        PUSH (X);
+
+    }
+
+}
+
+void aritimeticaresto (char *oper){
+    if (strncmp(oper, "#",1) == 0) {
+        Tipoval  Y = POP ();
+        Tipoval  X = POP ();
+        X.valor = pow (X.valor,Y.valor);
+        X.tipo = 'f';
+        PUSH (X);
     } else if (strncmp(oper, "%",1) == 0) {
-        long  Y = POP ();
-        long  X = POP ();
-        
-        PUSH (X % Y,'i');
+        Tipoval  Y = POP ();
+        Tipoval  X = POP ();
+        long a =X.valor;
+        long b = Y.valor;
+        X.valor = a%b;
+        PUSH (X);
     } else if (strncmp(oper, "(",1) == 0) {
-        char A = POPT();
-        double  X = POP ();
-        X = X - 1;
-        PUSH (X,A);
+        Tipoval  X = POP ();
+        X.valor = X.valor - 1;
+        PUSH (X);
     } else if (strncmp(oper, ")",1) == 0) {
-        char A = POPT();
-        double  X = POP ();
-        X = X + 1;
-        PUSH (X,A);
+        Tipoval  X = POP ();
+        X.valor = X.valor + 1;
+        PUSH (X);
     }
 
 
@@ -64,4 +83,12 @@ void aritimetica (char *oper){
 
 
 
+void aritimetica (char *oper){
+    if (strstr ("+*/-",oper)){
+        aritimeticasimples (oper);
+    }
+    else if (strstr("#%()",oper)){
+        aritimeticaresto(oper);
+    }
 
+}

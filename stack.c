@@ -1,10 +1,16 @@
 /**
- *@file Este ficheiro contem as funçoes utilizadas para realizar a stack.
+ *@file Este ficheiro contem as funçoes utilizadas para realizar a struct/stack.
  *
  */
+
 #include <stdio.h>
 #include "stack.h"
 
+
+/**
+ *\brief Declaração de variaveis que correspondem ao tamanho maximo da stack,a struct, e o topo da stack respetivamente.
+ *
+ */
 
 int MAXSIZE = 10240;
 struct StackT stack[10240];
@@ -22,6 +28,11 @@ int vazio() {
     else
         return 0;
 }
+
+/**
+ * \brief Esta funçao retira o elemento mais acima na stack.
+ * @param a Posição para onde vamos deslocar.
+ */
 
 void MOVE (int a){
     top = top + a;
@@ -54,6 +65,13 @@ Tipoval POP() {
     return data;
 }
 
+
+/**
+ * \brief Esta função serve para retirar um elemento numa posição espefica na stack.
+ * @param a Posição onde queremos retirar o elemento.
+ * @return Retorna o elemento na posição da stack inserida.
+ */
+
 Tipoval MOVEPOP (int a){
     top = top - a;
     
@@ -63,6 +81,8 @@ Tipoval MOVEPOP (int a){
 
 /**
  * \brief Esta funçao adiciona o elemento no topo da stack.
+ * @param data elemento mais a cima na stack
+ * @param a Tipo do valor
  */
 
 void PUSH(Tipoval a) {

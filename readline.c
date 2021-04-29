@@ -1,3 +1,7 @@
+/**
+ * @file É o ficheiro que contem a função relacionado com o token l
+ *
+ */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -5,6 +9,11 @@
 #include <math.h>
 #include <assert.h>
 #include "stack.h"
+
+/**
+ * \brief Função que lê a linha seguinte quando o token 'l' é detetado na stack
+ * @param token Token l
+ */
 
 void readline (char *token){
     if(strncmp(token, "l",1) == 0){

@@ -1,6 +1,7 @@
 /**
  * @file É o ficheiro que contém a função parser, que separa o input em tokens e realiza as operaçoes baseado na stack.
- *Neste ficheiro também esta a ser usado o ficheiro stack.h.
+ *Neste ficheiro também esta a ser usado o ficheiro stack.h e os ficheiros auxiliares das funções com as operações previamente mencionadas.
+ *(aritimetica.h , logicabin.h , manipstack.h , logica.h , convertetipo.h , readline.h , variaveis.h)
  */
 
 #include <stdio.h>
@@ -17,6 +18,13 @@
 #include "readline.h"
 #include "variaveis.h"
 
+/**
+ * \brief Compara tipos
+ * @param a Tipo da primeira variavel
+ * @param b Tipo da segunda variavel
+ * @return Retorna o proprio tipo se forem iguais,se um deles for float retorna em float e se forem diferentes retorna em long
+ */
+
 char comparatipo (char a, char b){
 
     if (a == b) return a;
@@ -24,6 +32,13 @@ char comparatipo (char a, char b){
     else return 'l';
 
 }
+
+/**
+ * \brief Como o proprio nome converte a variavel para long.
+ * @param x Variavel que queremos converter
+ * @param a Tipo de x
+ * @return Retorna o valor introduzido no tipo long
+ */
 
 double convertelong (double x, char a){
     long l;

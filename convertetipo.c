@@ -1,3 +1,7 @@
+/**
+ * @file É o ficheiro que contem a função quando detetamos tokens relativamente á conversão de tipo.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -21,6 +25,10 @@ double converte(double x,char a){
                 return x;
         }
 }
+/**
+ * \brief Função relacionada com a conversão do tipo-
+ * @param token dentro dos mencionados no parser ("ifc")
+ */
 
 void convertetipo (char *token){
     if(strncmp(token, "i",1) == 0){

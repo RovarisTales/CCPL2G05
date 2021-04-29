@@ -1,3 +1,6 @@
+/**
+ * @file É o ficheiro que contem a função quando detetamos tokens relativamente á expressões matemáticas.
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -5,20 +8,10 @@
 #include "stack.h"
 #include "parser.h"
 
-long convertelong2 (double x){
-    long l;
-    l = x;
-    x = l;
-    return x;
-}
-
-
-
-
-
-
-
-
+/**
+ * \brief Função relacionada com as expressões matemáticas
+ * @param oper Token dentro dos mencionados no parser ("-+/#%()")
+ */
 
 void aritimeticasimples (char *oper){
     if (strcmp(oper, "-") == 0) {

@@ -122,7 +122,10 @@ void parsenormal (char *token,Tipoval *alfabeto){
             X.tipo = 'f';
             X.tipo2 = 'n';
             PUSH(X);
-    } else if ((strstr("+*()#_=<>~/",token) != NULL)){
+    } else if (strstr("le&e|e<e>?!ABCDEFGHIJKLMNOPQRSTUVWXYZ:ifc_;\\@$&^~|-+/*#%()",token) != NULL){
+        funnormal(token,alfabeto);
+    }
+    else if (strstr("+*()#_=<>~/,",token) != NULL){
         Tipoval X , Y;
         X = POP();
         Y = POP();
@@ -131,7 +134,7 @@ void parsenormal (char *token,Tipoval *alfabeto){
         PUSH(X);
         if (a) funnormal(token,alfabeto);
         else funarray(token);
-    }
+    } 
 }
 
 void parsearray (char *token,char **resto, char *demilit,Tipoval *alfabeto){

@@ -17,6 +17,7 @@
 #include "convertetipo.h"
 #include "readline.h"
 #include "variaveis.h"
+#include "array.h"
 
 /**
  * \brief Compara tipos
@@ -24,7 +25,30 @@
  * @param b Tipo da segunda variavel
  * @return Retorna o proprio tipo se forem iguais,se um deles for float retorna em float e se forem diferentes retorna em long
  */
+/*
+int charcomparar (char a, char *string){
+    while (*string != '\0'){
+        if (a == *string) return 1;
+        else string++;
+    }
+    return 0;
 
+}
+char *gettoken (char *line , char **resto){
+
+    int i = 0;
+    char *token;
+    while (charcomparar(line[i]," \n\t") != 0){
+        token[i] = line[i];
+        i++;
+    }
+    while(charcomparar(line[i]," \n\t") == 0){
+        i++;
+    }
+    *resto = &line[i];
+    return token;
+
+}*/
 char comparatipo (char a, char b){
 
     if (a == b) return a;
@@ -32,7 +56,11 @@ char comparatipo (char a, char b){
     else return 'l';
 
 }
+int comparatipo2(char a, char b){
+    if (a == 'F' || b == 'F') return 0; // 0 para array ou string
+    else return 1; // 1 para normal
 
+}
 /**
  * \brief Como o proprio nome converte a variavel para long.
  * @param x Variavel que queremos converter
@@ -52,6 +80,118 @@ double convertelong (double x, char a){
     
     return x;
 }
+void funnormal (char *token,Tipoval *alfabeto){
+
+    if ((strstr("-+/*#%()",token) != NULL)) {
+        aritimetica(token);
+            
+    }else if ((strstr("&^~|",token) != NULL)) {
+        logicabin (token);
+
+      }else if (strstr("_;\\@$",token) != NULL ) {
+           manipstack(token);
+        
+        }else if(strstr("ifc",token) != NULL){
+            convertetipo(token);
+            
+        }else if(strstr("l",token) != NULL){
+            readline(token);
+        }else if (strstr("=e&e|e<e>?!<>",token) != NULL){
+            logica(token);
+        }else if (strstr("ABCDEFGHIJKLMNOPQRSTUVWXYZ:",token) != NULL ){
+            variaveis(token, alfabeto);
+        }
+
+}
+
+
+void parsenormal (char *token,Tipoval *alfabeto){
+    char *sobra;
+    char *sobra2;
+    long valint = strtol(token, &sobra, 10);
+    double valdouble = strtod(token, &sobra2);
+    if (strlen(sobra) == 0){
+            Tipoval X;
+            X.valor = valint;
+            X.tipo = 'i';
+            X.tipo2 = 'n';
+            PUSH(X);
+        }else if (strlen(sobra2) == 0) {
+            Tipoval X;
+            X.valor = valdouble;
+            X.tipo = 'f';
+            X.tipo2 = 'n';
+            PUSH(X);
+    } else if ((strstr("+*()#_=<>~/",token) != NULL)){
+        Tipoval X , Y;
+        X = POP();
+        Y = POP();
+        int a = comparatipo2(X.tipo2,Y.tipo2);
+        PUSH (Y);
+        PUSH(X);
+        if (a) funnormal(token,alfabeto);
+        else funarray(token);
+    }
+}
+
+void parsearray (char *token,char **resto, char *demilit,Tipoval *alfabeto){
+        Tipoval X;
+        X.valor = 0;
+        X.tipo = 'i';
+        X.tipo2 = 'I';
+        PUSH(X);
+        for (token = strtok_r(*resto, demilit,resto); ((strcmp(token,"]") != 0) && (strcmp(token,"[") != 0));token = __strtok_r(NULL,demilit,resto) ){
+            char *sobra;
+            char *sobra2;
+            long valint = strtol(token, &sobra, 10);
+            double valdouble = strtod(token, &sobra2);
+            
+                 if (strlen(sobra) == 0){
+                    Tipoval X;
+                    X.valor = valint;
+                    X.tipo = 'i';
+                    X.tipo2 = 'a';
+                    PUSH(X);
+                    
+                }else if (strlen(sobra2) == 0) {
+                    Tipoval X;
+                    X.valor = valdouble;
+                    X.tipo = 'f';
+                    X.tipo2 = 'a';
+                    PUSH(X);
+                    
+                }
+                else parsenormal (token,alfabeto);
+                
+
+
+
+
+                }
+            if (strncmp(token,"]",1) == 0){
+                Tipoval X;
+                X.valor = 0;
+                X.tipo = 'i';
+                X.tipo2 = 'F';
+                PUSH(X);
+                
+            }
+            else if(strcmp("[",token)== 0) {
+                printf("novo array \n");
+                parsearray(token,resto,demilit,alfabeto);
+                
+                }
+
+    
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -104,42 +244,52 @@ void convertebinario(long x, int a[]){
 void parser (char *line){
 
     Tipoval alfabeto[26] = {
-        {10,'i'},
-        {11,'i'},
-        {12,'i'},
-        {13,'i'},
-        {14,'i'},
-        {15,'i'},
-        {0,'i'},
-        {0,'i'},
-        {0,'i'},
-        {0,'i'},
-        {0,'i'},
-        {0,'i'},
-        {0,'i'},
-        {10,'c'},
-        {0,'i'},
-        {0,'i'},
-        {0,'i'},
-        {0,'i'},
-        {32,'c'},
-        {0,'i'},
-        {0,'i'},
-        {0,'i'},
-        {0,'i'},
-        {0,'i'},
-        {1,'i'},
-        {2,'i'},
+        {10,'i','n'},
+        {11,'i','n'},
+        {12,'i','n'},
+        {13,'i','n'},
+        {14,'i','n'},
+        {15,'i','n'},
+        {0,'i','n'},
+        {0,'i','n'},
+        {0,'i','n'},
+        {0,'i','n'},
+        {0,'i','n'},
+        {0,'i','n'},
+        {0,'i','n'},
+        {10,'c','n'},
+        {0,'i','n'},
+        {0,'i','n'},
+        {0,'i','n'}, 
+        {0,'i','n'},
+        {32,'c','n'},
+        {0,'i','n'},
+        {0,'i','n'},
+        {0,'i','n'},
+        {0,'i','n'},
+        {0,'i','n'},
+        {1,'i','n'},
+        {2,'i','n'},
             };
+    char *resto;
     char delimit[8] = " \n\t";
     char *token;
-    for(token = strtok(line, delimit); token != NULL;token = strtok(NULL, delimit) ){
-        char *sobra;
-        char *sobra2;
-        long valint = strtol(token, &sobra, 10);
-        double valdouble = strtod(token, &sobra2);
-        // char *tokencmp;
-        if (strlen(sobra) == 0){
+    for(token = strtok_r(line, delimit,&resto); token != NULL;token = __strtok_r(NULL,delimit,&resto) ){
+        if (strstr("\"[",token) != NULL){
+            
+            parsearray(token,&resto,delimit,alfabeto);
+            
+        }else if (strncmp(token,"]",1) == 0){
+                Tipoval X;
+                X.valor = 0;
+                X.tipo = 'i';
+                X.tipo2 = 'F';
+                PUSH(X);
+            }
+
+        else parsenormal(token,alfabeto);
+
+       /* if (strlen(sobra) == 0){
             Tipoval X;
             X.valor = valint;
             X.tipo = 'i';
@@ -149,101 +299,10 @@ void parser (char *line){
             X.valor = valdouble;
             X.tipo = 'f';
             PUSH(X);
-    } else if (strstr("-+/*#%()",token) != NULL) {
+    } else if (strstr("-+#%()",token) != NULL) {
         aritimetica(token);
         
-/*  }else if (strncmp(token, "&",1) == 0) {
-        double  X = POP ();
-        double  Y = POP ();
-        int a[16]={0};
-        convertebinario (X, a);
-        int b[16]={0};
-        convertebinario (Y, b);
-        inverteArray (a,16);
-        inverteArray (b,16);
-        int i;
-        int resultado[16]={0};
-        for(i=0;i<16;i++){
-            if(a[i]==1 && b[i]==1) resultado[i] = 1;
-            else resultado[i] = 0;
-        }
-        inverteArray (resultado,16);
-        double A = convertedecimal (resultado);
-        PUSH(A);
 
-    }else if (strncmp(token, "|",1) == 0) {
-        double  X = POP ();
-        double  Y = POP ();
-        int a[16]={0};
-        convertebinario (X, a);
-        int b[16]={0};
-        convertebinario (Y, b);
-        inverteArray (a,16);
-        inverteArray (b,16);
-        int i;
-        int resultado[16]={0};
-        for(i=0;i<16;i++){
-            if(a[i]==1 || b[i]==1) resultado[i] = 1;
-            else resultado[i] = 0;
-        }
-        inverteArray (resultado,16);
-        double A = convertedecimal (resultado);
-
-        PUSH(A);
-
-    }else if (strncmp(token, "^",1) == 0) {
-        double  X = POP ();
-        double  Y = POP ();
-        int a[16]={0};struct StackT{
-    double valor;
-    char tipo ;
-
-    };
-    struct StackT alfabeto[26] = {
-        {10,'i'},
-        {11,'i'},
-        {12,'i'},
-        {13,'i'},
-        {14,'i'},
-        {15,'i'},
-        {0,'i'},
-        {0,'i'},
-        {0,'i'},
-        {0,'i'},
-        {0,'i'},
-        {0,'i'},
-        {0,'i'},
-        {0,'c'},
-        {0,'i'},
-        {0,'i'},
-        {0,'i'},
-        {0,'i'},
-        {0,'i'},
-        {32,'c'},
-        {0,'i'},
-        {0,'i'},
-        {0,'i'},
-        {0,'i'},
-        {1,'i'},
-        {0,'i'},
-            };
-        convertebinario (Y, b);
-        inverteArray (a,16);
-        inverteArray (b,16);
-        int i;
-        int resultado[16]={0};
-        for(i=0;i<16;i++){
-            if(a[i] != b[i]) resultado[i] = 1;
-            else resultado[i] = 0;
-        }
-        inverteArray (resultado,16);
-        double A = convertedecimal (resultado);
-        PUSH(A);
-
-       }else if (strncmp(token, "~",1) == 0) {
-        double  X = POP ();
-        X = -X -1;
-        PUSH(X);}*/
             
             
     }else if (strstr("&^~|",token) != NULL) {
@@ -263,7 +322,7 @@ void parser (char *line){
             variaveis(token, alfabeto);
         }else if (strncmp(token,":",1) == 0){
             variaveis(token, alfabeto);
-        }
+        }*/
     }
     print_stack();
 }

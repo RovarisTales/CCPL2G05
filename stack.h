@@ -7,6 +7,7 @@
 struct StackT{
     double valor;
     char tipo ;
+    char tipo2;
 
 };
 typedef struct StackT Tipoval;

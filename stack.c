@@ -60,6 +60,7 @@ Tipoval POP() {
     if(!vazio()) {
         data.valor = stack[top].valor;
         data.tipo = stack[top].tipo;
+        data.tipo2 = stack[top].tipo2;
         top = top - 1;
     }
     return data;
@@ -105,21 +106,24 @@ void print_stack(){
         data = POP();
         stacks[i].valor = data.valor;
         stacks[i].tipo = data.tipo;
+        stacks[i].tipo2 = data.tipo2;
         i++;
         }
     for (i=i-1;i>-1;i--) {
-        if(stacks[i].tipo == 'c'){
-            char cara = stacks[i].valor;
-            printf("%c", cara);
-            }else if (stacks[i].tipo == 'i'){
-                int inteiro = stacks[i].valor;
-                printf("%d", inteiro);
-            }else if (stacks[i].tipo == 'l'){
-                long floate = stacks[i].valor;
-                printf("%ld", floate);
-            }else if (stacks[i].tipo == 'f'){
-                printf("%g", stacks[i].valor);
+        if((stacks[i].tipo2 != 'F') && (stacks[i].tipo2 != 'I')){
+            if(stacks[i].tipo == 'c'){
+                char cara = stacks[i].valor;
+                printf("%c", cara);
+                }else if (stacks[i].tipo == 'i'){
+                    int inteiro = stacks[i].valor;
+                    printf("%d", inteiro);
+                }else if (stacks[i].tipo == 'l'){
+                    long floate = stacks[i].valor;
+                    printf("%ld", floate);
+                }else if (stacks[i].tipo == 'f'){
+                    printf("%g", stacks[i].valor);
             }
+        }
     }putchar('\n');
 }
 

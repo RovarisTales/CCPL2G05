@@ -15,7 +15,7 @@
  * @param token Token l
  */
 
-void readline (char *token){
+void readline (char *token,SPointer s){
     if(strncmp(token, "l",1) == 0){
         char lerlinha [10240];
         char *oi;
@@ -25,6 +25,6 @@ void readline (char *token){
         Tipoval x;
         x.valor = a;
         x.tipo = 'f';
-        PUSH(x);
+        PUSH(x,s);
     }
 }

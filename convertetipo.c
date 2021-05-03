@@ -30,27 +30,27 @@ double converte(double x,char a){
  * @param token dentro dos mencionados no parser ("ifc")
  */
 
-void convertetipo (char *token){
+void convertetipo (char *token, SPointer s){
     if(strncmp(token, "i",1) == 0){
             
-        Tipoval x = POP();
+        Tipoval x = POP(s);
         x.tipo = 'i';
         x.valor = converte(x.valor, 'i');
-        PUSH(x);
+        PUSH(x,s);
 
     }else if(strncmp(token, "f",1) == 0){
         
-        Tipoval x = POP();
+        Tipoval x = POP(s);
         x.tipo = 'f';
         x.valor = converte(x.valor, 'f');
           
-        PUSH(x);
+        PUSH(x,s);
 
     }else if(strncmp(token, "c",1) == 0){
-        Tipoval x = POP();
+        Tipoval x = POP(s);
         x.tipo = 'c';
         x.valor = converte(x.valor, 'c');
-        PUSH(x);
+        PUSH(x,s);
             
     }
 }

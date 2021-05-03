@@ -3,4 +3,4 @@
  *
  */
 
-void manipstack (char *token);
+void manipstack (char *token, SPointer s);

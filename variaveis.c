@@ -16,29 +16,38 @@
  * @param alfabeto Letra do alfabeto em maiuscula que corresponde ao codigo ascii (65-90)
  */
 
-void variaveis(char *token, Tipoval *alfabeto){
+void variaveisA(char *token, Tipoval *alfabeto, SPointer s){
 
     
     if (strncmp(token,":",1) == 0) {
-
+        printf("entrei");
         int a = token[1];
 
         a = a-65;
-        Tipoval x = POP();
+        Tipoval x = POP(s);
 
         alfabeto[a] = x;
 
-        PUSH(x);
-    }
-    if (strstr("ABCDEFGHIJKLMNOPQRSTUVWXYZ",token) != NULL){
+        PUSH(x,s);
+    }  
+}
+   
+   
+void variaveisB(char *token, Tipoval *alfabeto,SPointer s){
+
+    
+     if (strstr("ABCDEFGHIJKLMNOPQRSTUVWXYZ",token) != NULL){
         int a = token[0];
 
         a=a-65;
         Tipoval x = alfabeto[a];
-        PUSH(x);
+        PUSH(x,s);
     }
-        
-
-    
 
 }
+void variaveis(char *token, Tipoval *alfabeto,SPointer s){
+    if (strncmp(token,":",1) == 0) variaveisA(token, alfabeto,s);
+    else variaveisB(token, alfabeto,s);
+
+}
+

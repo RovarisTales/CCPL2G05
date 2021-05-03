@@ -3,4 +3,4 @@
  *
  */
 
-void variaveis(char *token, Tipoval *alfabeto);
+void variaveis(char *token, Tipoval *alfabeto,SPointer s);

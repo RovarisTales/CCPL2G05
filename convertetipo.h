@@ -2,4 +2,4 @@
  * @file É o ficheiro que contem a head do ficheiro convertipo.c
  *
  */
-void convertetipo (char *token);
+void convertetipo (char *token, SPointer s);

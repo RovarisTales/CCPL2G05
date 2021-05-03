@@ -23,7 +23,7 @@
 
 
 
-void bruhnormal(Tipoval X){
+void bruhnormal(Tipoval X, SPointer s){
     Tipoval y;
     y.valor = 0;
     y.tipo = 'i';
@@ -32,43 +32,43 @@ void bruhnormal(Tipoval X){
     y.tipo='i';
     y.tipo2='a';
     y.valor=t;
-            PUSH(y);}
+            PUSH(y,s);}
     y.valor = 0;
     y.tipo = 'i';
     y.tipo2 = 'F';
 }
-void bruharray(){
-    Tipoval r = POP();
+void bruharray(SPointer s){
+    Tipoval r = POP(s);
     int b;
-    for(b=0;r.tipo2!='F';b++){r=POP();}
+    for(b=0;r.tipo2!='F';b++){r=POP(s);}
     Tipoval y;
     y.tipo='i';
     y.tipo2='n';
     y.valor=b;
-        PUSH(y);
+        PUSH(y,s);
 }
-void bruh (char *token){
+void bruh (char *token, SPointer s){
     if(strncmp(token, ",",1) == 0){
-        Tipoval X = POP();
-        if (X.tipo2 == 'I'){bruharray();}
-        if (X.tipo2 == 'n'){bruhnormal(X);}
+        Tipoval X = POP(s);
+        if (X.tipo2 == 'I'){bruharray(s);}
+        if (X.tipo2 == 'n'){bruhnormal(X,s);}
         }
     }
 
 
-void nope (char *token){
+void nope (char *token,SPointer s ){
     if(strncmp(token, "~",1) == 0){
-        Tipoval X = POP();
+        Tipoval X = POP(s);
         Tipoval guardar[50];
         int i;
         while(X.tipo2 != 'I'){
             i=0;
-            X = POP();
+            X = POP(s);
             guardar[i] = X;
             i++;
         }
         while(i>-1){
-         PUSH (guardar[i]);
+         PUSH (guardar[i],s);
          i--;
         }
     }
@@ -79,109 +79,109 @@ void nope (char *token){
 
 }
 
-void concatarray (){
+void concatarray (SPointer s){
     Tipoval a[100]= {{0}};
     int b;
     for(b=1;a[b].tipo2!='I';b++){
-        a[b]=POP();}
+        a[b]=POP(s);}
 
-    Tipoval y = POP();
+    Tipoval y = POP(s);
 
     for(;b!=1;b--){
-        PUSH(a[b]);}
+        PUSH(a[b],s);}
     
     y.tipo='i';
     y.tipo2='F';
     y.valor='0';
-    PUSH(y);
+    PUSH(y,s);
 }
-void concatnum (Tipoval r){
-    Tipoval y = POP();
-    PUSH(r);
+void concatnum (Tipoval r,SPointer s){
+    Tipoval y = POP(s);
+    PUSH(r,s);
 
     y.tipo='i';
     y.tipo2='F';
     y.valor='0';
-    PUSH(y);
+    PUSH(y,s);
 }
-void concat(){
-        Tipoval X = POP();
-        if (X.tipo2 == 'F'){concatarray();}
-        if (X.tipo2 == 'n'){concatnum(X);}
+void concat(SPointer s){
+        Tipoval X = POP(s);
+        if (X.tipo2 == 'F'){concatarray(s);}
+        if (X.tipo2 == 'n'){concatnum(X,s);}
 }
     
-void inicioarray(Tipoval X,Tipoval r){
+void inicioarray(Tipoval X,Tipoval r, SPointer s){
     Tipoval a[100]= {{0}};
     int b;
     a[0]=X;
     for(b=1;a[b].tipo2!='I';b++){
-        a[b]=POP();}
+        a[b]=POP(s);}
     int xpto=b;
     for(;b!=xpto-r.valor;b--){
-        PUSH(a[b]);}
+        PUSH(a[b],s);}
 }
 
-void fimarray(Tipoval X,Tipoval r){
+void fimarray(Tipoval X,Tipoval r,SPointer s){
     Tipoval a[100]= {{0}};
     int b;
     a[0]=X;
     for(b=1;b!=r.valor+1;b++){
-        a[b]=POP();}
+        a[b]=POP(s);}
     for(;a[b].tipo2!='F';b--){
-        PUSH(a[b]);}
+        PUSH(a[b],s);}
 }
-void inifim(char *token){
-    Tipoval Y = POP();
-    Tipoval X = POP();
-    if (strncmp(token, "<",1) == 0) inicioarray(X,Y);
-    else fimarray(X,Y);
+void inifim(char *token, SPointer s){
+    Tipoval Y = POP(s);
+    Tipoval X = POP(s);
+    if (strncmp(token, "<",1) == 0) inicioarray(X,Y,s);
+    else fimarray(X,Y,s);
 
 }
-void igual (char *token){
+void igual (char *token, SPointer s){
     if(strncmp(token, "=",1) == 0){
-        Tipoval X = POP();
-        Tipoval Y = POP();
+        Tipoval X = POP(s);
+        Tipoval Y = POP(s);
         while (X.valor != 0){
-            Y = POP();
+            Y = POP(s);
             X.valor--;
         }
         X.valor = Y.valor;
         X.tipo = Y.tipo;
         while(Y.tipo != 'I'){
-            Y = POP();
+            Y = POP(s);
         }
     }
     else if(strncmp(token, "*",1) == 0){
-    Tipoval r = POP();
-    Tipoval X = POP();
+    Tipoval r = POP(s);
+    Tipoval X = POP(s);
     Tipoval a[100] = {{0}};
     int b;
     a[0]=X;
     
     for(b=1;a[b].tipo2!='I';b++){
-        a[b]=POP();}
+        a[b]=POP(s);}
     int xpto = b;
     for(int c=0;c!=r.valor;c++){
     for(b = xpto;a[b].tipo2!='F';b--){
-        PUSH(a[b]);}
+        PUSH(a[b],s);}
         }
     }
 }
-void tira (char *token){
+void tira (char *token, SPointer s){
     if(strncmp(token, ")",1) == 0){
-        Tipoval X = POP();
+        Tipoval X = POP(s);
         X.tipo2 = 'n';
-        PUSH(X);
+        PUSH(X,s);
     }
 
     if(strncmp(token, "(",1) == 0){
-        Tipoval Y = POP();
+        Tipoval Y = POP(s);
         Tipoval banana[50] = {{(0)}};
         int i=0;
         
         
         while(Y.tipo2 != 'I'){
-            Y = POP();
+            Y = POP(s);
             banana[i] = Y;
             i++;
         }
@@ -191,30 +191,30 @@ void tira (char *token){
         a--;
         i--;
         while (i>-1){
-            PUSH(banana[i]);
+            PUSH(banana[i],s);
         }
         Tipoval X = banana[a];
         X.tipo2 = 'n';
-        PUSH(X);
+        PUSH(X,s);
     }
 
 }
 
 
 
-void multiarray(){
+void multiarray(SPointer s){
     Tipoval a[100] = {{0}};
-    Tipoval r = POP();
-    Tipoval X = POP();
+    Tipoval r = POP(s);
+    Tipoval X = POP(s);
     int b;
     a[0]=X;
     
     for(b=1;a[b].tipo2!='I';b++){
-        a[b]=POP();}
+        a[b]=POP(s);}
     int xpto = b;
     for(int c=0;c!=r.valor;c++){
     for(b = xpto;a[b].tipo2!='F';b--){
-        PUSH(a[b]);}
+        PUSH(a[b],s);}
         }
 }
 
@@ -246,13 +246,13 @@ void multiarray(){
 //}
 
 
-void funarray (char *token){
+void funarray (char *token, SPointer s){
 
-    if(strcmp(token,"()")) tira (token);
-    else if(strcmp(token,"=*") ) igual (token);
-    else if (strncmp(token, ",",1) == 0) bruh(token);
-    else if (strncmp(token, "+",1) == 0) concat();
-    else if (strncmp(token, "<>",1) == 0) inifim(token);
+    if(strcmp(token,"()")) tira (token,s);
+    else if(strcmp(token,"=*") ) igual (token,s);
+    else if (strncmp(token, ",",1) == 0) bruh(token,s);
+    else if (strncmp(token, "+",1) == 0) concat(s);
+    else if (strncmp(token, "<>",1) == 0) inifim(token,s);
 
 
 

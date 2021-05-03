@@ -3,4 +3,4 @@
  *
  */
 
-void logicabin (char *token);
+void logicabin (char *token, SPointer s);

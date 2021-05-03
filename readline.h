@@ -3,4 +3,4 @@
  *
  */
 
-void readline (char *token);
+void readline (char *token, SPointer s);

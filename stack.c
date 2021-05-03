@@ -12,18 +12,19 @@
  *
  */
 
-int MAXSIZE = 10240;
-struct StackT stack[10240];
-int top = -1;
+SPointer criaStack(SPointer s){
+    s->top = -1;
+    return s;
+}
 
 /**
- * \brief Esta funçao verifica se a stack se encontra vazia.
+ * \brief Esta funçao verifica se a SPointer se encontra vazia.
  * @return 1 se a stack estiver vazia e retorna 0 se tiver algum elemento.
  */
 
-int vazio() {
+int vazio(SPointer s) {
 
-    if(top == -1)
+    if(s->top == -1)
         return 1;
     else
         return 0;
@@ -34,20 +35,8 @@ int vazio() {
  * @param a Posição para onde vamos deslocar.
  */
 
-void MOVE (int a){
-    top = top + a;
-}
-
-/**
- * \brief Esta funçao verifica se a stack se encontra cheia.
- * @return 1 se a stack estiver cheia e retorna 0 se não estiver cheia.
- */
-
-int cheio(){
-    if(top == MAXSIZE)
-        return 1;
-    else
-        return 0;
+void MOVE (int a,SPointer s){
+    s->top = s->top + a;
 }
 
 /**
@@ -55,13 +44,13 @@ int cheio(){
  * @return data que é o elemento mais acima na stack.
  */
 
-Tipoval POP() {
+Tipoval POP(SPointer s) {
     Tipoval data;
-    if(!vazio()) {
-        data.valor = stack[top].valor;
-        data.tipo = stack[top].tipo;
-        data.tipo2 = stack[top].tipo2;
-        top = top - 1;
+    if(!vazio(s)) {
+        data.valor = s->stack[s->top].valor;
+        data.tipo = s->stack[s->top].tipo;
+        data.tipo2 = s->stack[s->top].tipo2;
+        s->top = s->top - 1;
     }
     return data;
 }
@@ -73,10 +62,10 @@ Tipoval POP() {
  * @return Retorna o elemento na posição da stack inserida.
  */
 
-Tipoval MOVEPOP (int a){
-    top = top - a;
+Tipoval MOVEPOP (int a, SPointer s){
+    s->top = s->top - a;
     
-    Tipoval x = POP();
+    Tipoval x = POP(s);
     return x;
 }
 
@@ -86,24 +75,22 @@ Tipoval MOVEPOP (int a){
  * @param a Tipo do valor
  */
 
-void PUSH(Tipoval a) {
+void PUSH(Tipoval a, SPointer s) {
+    s->top = s->top + 1;
+    s->stack[s->top] = a;
 
-    if(!cheio()) {
-        top = top + 1;
-        stack[top] = a;
-    }
 }
 
 /**
  * \brief Esta função imprime todos os elementos da stack.
  */
 
-void print_stack(){
+void print_stack(SPointer s){
     Tipoval data;
     int i=0;
     struct StackT stacks[10240];
-    while(!vazio()) {
-        data = POP();
+    while(!vazio(s)) {
+        data = POP(s);
         stacks[i].valor = data.valor;
         stacks[i].tipo = data.tipo;
         stacks[i].tipo2 = data.tipo2;

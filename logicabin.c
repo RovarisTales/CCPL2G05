@@ -12,41 +12,41 @@
  * @param token dentro dos mencionados no parser ("&|^~")
  */
 
-void logicabin (char *token){
+void logicabin (char *token,SPointer s){
     if (strncmp(token, "&",1) == 0) {
-        Tipoval  X = POP ();
-        Tipoval  Y = POP ();
+        Tipoval  X = POP (s);
+        Tipoval  Y = POP (s);
         long x,y;
         x = X.valor;
         y = Y.valor;
         X.valor = x&y;
-        PUSH(X);
+        PUSH(X,s);
 
     }else if (strncmp(token, "|",1) == 0) {
-        Tipoval  X = POP ();
-        Tipoval  Y = POP ();
+        Tipoval  X = POP (s);
+        Tipoval  Y = POP (s);
         long x,y;
         x = X.valor;
         y = Y.valor;
         X.valor = x | y;
 
-        PUSH(X);
+        PUSH(X,s);
 
     }else if (strncmp(token, "^",1) == 0) {
-        Tipoval  X = POP ();
-        Tipoval  Y = POP ();
+        Tipoval  X = POP (s);
+        Tipoval  Y = POP (s);
         long x,y;
         x = X.valor;
         y = Y.valor;
         X.valor = x ^ y;
 
-        PUSH(X);
+        PUSH(X,s);
 
        }else if (strncmp(token, "~",1) == 0) {
-        Tipoval  X = POP ();
+        Tipoval  X = POP (s);
         long A = X.valor;
         X.valor = ~A;
 
-        PUSH(X);
+        PUSH(X,s);
        }
 }

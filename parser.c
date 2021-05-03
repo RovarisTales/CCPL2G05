@@ -80,32 +80,33 @@ double convertelong (double x, char a){
     
     return x;
 }
-void funnormal (char *token,Tipoval *alfabeto){
+void funnormal (char *token,Tipoval *alfabeto,SPointer s){
 
     if ((strstr("-+/*#%()",token) != NULL)) {
-        aritimetica(token);
+        aritimetica(token,s);
             
     }else if ((strstr("&^~|",token) != NULL)) {
-        logicabin (token);
+        logicabin (token,s);
 
       }else if (strstr("_;\\@$",token) != NULL ) {
-           manipstack(token);
+           manipstack(token,s);
         
         }else if(strstr("ifc",token) != NULL){
-            convertetipo(token);
+            convertetipo(token,s);
             
         }else if(strstr("l",token) != NULL){
-            readline(token);
+            readline(token,s);
         }else if (strstr("=e&e|e<e>?!<>",token) != NULL){
-            logica(token);
+            logica(token,s);
         }else if (strstr("ABCDEFGHIJKLMNOPQRSTUVWXYZ:",token) != NULL ){
-            variaveis(token, alfabeto);
+            
+            variaveis(token, alfabeto,s);
         }
 
 }
 
 
-void parsenormal (char *token,Tipoval *alfabeto){
+void parsenormal (char *token,Tipoval *alfabeto,SPointer s){
     char *sobra;
     char *sobra2;
     long valint = strtol(token, &sobra, 10);
@@ -115,34 +116,36 @@ void parsenormal (char *token,Tipoval *alfabeto){
             X.valor = valint;
             X.tipo = 'i';
             X.tipo2 = 'n';
-            PUSH(X);
+            PUSH(X,s);
         }else if (strlen(sobra2) == 0) {
             Tipoval X;
             X.valor = valdouble;
             X.tipo = 'f';
             X.tipo2 = 'n';
-            PUSH(X);
-    } else if (strstr("le&e|e<e>?!ABCDEFGHIJKLMNOPQRSTUVWXYZ:ifc_;\\@$&^~|-+/*#%()",token) != NULL){
-        funnormal(token,alfabeto);
-    }
-    else if (strstr("+*()#_=<>~/,",token) != NULL){
+            PUSH(X,s);
+    } else if (strstr("le&e|e<e>?!ABCDEFGHIJKLMNOPQRSTUVWXYZifc_;\\@$&^~|-+/*#%()",token) != NULL){
+        
+        funnormal(token,alfabeto,s);
+    }else if (strncmp(token, ":",1) == 0){
+        variaveis(token,alfabeto,s);
+    }else if (strstr("+*()#_=<>~/,",token) != NULL){
         Tipoval X , Y;
-        X = POP();
-        Y = POP();
+        X = POP(s);
+        Y = POP(s);
         int a = comparatipo2(X.tipo2,Y.tipo2);
-        PUSH (Y);
-        PUSH(X);
-        if (a) funnormal(token,alfabeto);
-        else funarray(token);
+        PUSH (Y,s);
+        PUSH(X,s);
+        if (a) funnormal(token,alfabeto,s);
+        else funarray(token,s);
     } 
 }
 
-void parsearray (char *token,char **resto, char *demilit,Tipoval *alfabeto){
+void parsearray (char *token,char **resto, char *demilit,Tipoval *alfabeto,SPointer s){
         Tipoval X;
         X.valor = 0;
         X.tipo = 'i';
         X.tipo2 = 'I';
-        PUSH(X);
+        PUSH(X,s);
         for (token = strtok_r(*resto, demilit,resto); ((strcmp(token,"]") != 0) && (strcmp(token,"[") != 0));token = __strtok_r(NULL,demilit,resto) ){
             char *sobra;
             char *sobra2;
@@ -154,17 +157,17 @@ void parsearray (char *token,char **resto, char *demilit,Tipoval *alfabeto){
                     X.valor = valint;
                     X.tipo = 'i';
                     X.tipo2 = 'a';
-                    PUSH(X);
+                    PUSH(X,s);
                     
                 }else if (strlen(sobra2) == 0) {
                     Tipoval X;
                     X.valor = valdouble;
                     X.tipo = 'f';
                     X.tipo2 = 'a';
-                    PUSH(X);
+                    PUSH(X,s);
                     
                 }
-                else parsenormal (token,alfabeto);
+                else parsenormal (token,alfabeto,s);
                 
 
 
@@ -176,12 +179,12 @@ void parsearray (char *token,char **resto, char *demilit,Tipoval *alfabeto){
                 X.valor = 0;
                 X.tipo = 'i';
                 X.tipo2 = 'F';
-                PUSH(X);
+                PUSH(X,s);
                 
             }
             else if(strcmp("[",token)== 0) {
                 printf("novo array \n");
-                parsearray(token,resto,demilit,alfabeto);
+                parsearray(token,resto,demilit,alfabeto,s);
                 
                 }
 
@@ -245,7 +248,10 @@ void convertebinario(long x, int a[]){
  * @param line A linha que foi lida na main para realizar o parser.
  */
 void parser (char *line){
-
+    struct StackG s1;
+    SPointer s = &s1;
+    
+    criaStack(s);
     Tipoval alfabeto[26] = {
         {10,'i','n'},
         {11,'i','n'},
@@ -278,19 +284,20 @@ void parser (char *line){
     char delimit[8] = " \n\t";
     char *token;
     for(token = strtok_r(line, delimit,&resto); token != NULL;token = __strtok_r(NULL,delimit,&resto) ){
+        printf("esse é o token %s\n", token);
         if (strstr("\"[",token) != NULL){
             
-            parsearray(token,&resto,delimit,alfabeto);
+            parsearray(token,&resto,delimit,alfabeto,s);
             
         }else if (strncmp(token,"]",1) == 0){
                 Tipoval X;
                 X.valor = 0;
                 X.tipo = 'i';
                 X.tipo2 = 'F';
-                PUSH(X);
+                PUSH(X,s);
             }
 
-        else parsenormal(token,alfabeto);
+        else parsenormal(token,alfabeto,s);
 
        /* if (strlen(sobra) == 0){
             Tipoval X;
@@ -327,7 +334,7 @@ void parser (char *line){
             variaveis(token, alfabeto);
         }*/
     }
-    print_stack();
+    print_stack(s);
 }
 
 

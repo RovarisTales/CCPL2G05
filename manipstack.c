@@ -13,41 +13,41 @@
  * @param token dentro dos mencionados no parser ("_;\@$")
  */
 
-void manipstack (char *token){
+void manipstack (char *token, SPointer s){
     if (strncmp(token, "_",1) == 0) {
-        Tipoval  Y = POP ();
-        PUSH (Y);
-        PUSH (Y);
+        Tipoval  Y = POP (s);
+        PUSH (Y,s);
+        PUSH (Y,s);
         
     }else if (strncmp(token, ";",1) == 0) {
-        Tipoval  X = POP ();
+        Tipoval  X = POP (s);
         X.valor++;
 
     }else if (strcmp(token, "\\") == 0) {
 
-        Tipoval  X = POP ();
+        Tipoval  X = POP (s);
 
-        Tipoval  Y = POP ();
+        Tipoval  Y = POP (s);
         
-        PUSH (X);
-        PUSH (Y);
+        PUSH (X,s);
+        PUSH (Y,s);
 
     }else if (strncmp(token, "@",1) == 0) {
         
 
-        Tipoval  X = POP ();
+        Tipoval  X = POP (s);
 
-        Tipoval  Y = POP ();
+        Tipoval  Y = POP (s);
 
-        Tipoval  Z = POP (); 
-        PUSH (Y);
-        PUSH (X);
-        PUSH (Z);
+        Tipoval  Z = POP (s); 
+        PUSH (Y,s);
+        PUSH (X,s);
+        PUSH (Z,s);
     }else if(strncmp(token, "$",1) == 0){
-            Tipoval x = POP();
-            Tipoval a = MOVEPOP(x.valor);
-            PUSH(a);
-            MOVE(x.valor);
-            PUSH(a);
+            Tipoval x = POP(s);
+            Tipoval a = MOVEPOP(x.valor,s);
+            PUSH(a,s);
+            MOVE(x.valor,s);
+            PUSH(a,s);
     }
 }

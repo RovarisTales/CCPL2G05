@@ -112,11 +112,13 @@ void parsenormal (char *token,Tipoval *alfabeto,SPointer s){
             Tipoval X;
             X.valor = valint;
             X.tipo = 'i';
+            X.array = NULL;
             PUSH(X,s);
         }else if (strlen(sobra2) == 0) {
             Tipoval X;
             X.valor = valdouble;
             X.tipo = 'f';
+            X.array = NULL;
             PUSH(X,s);
     } else if (strstr("le&e|e<e>?!ABCDEFGHIJKLMNOPQRSTUVWXYZifc_;\\@$&^~|-+/*#%()",token) != NULL){
         
@@ -126,16 +128,8 @@ void parsenormal (char *token,Tipoval *alfabeto,SPointer s){
     }
 }
 
-void parsearray (char *token,char **resto, char *demilit,Tipoval *alfabeto,SPointer s){
+void parsearray (char *token,char **resto, char *demilit,Tipoval *alfabeto,SPointer mini){
     printf("entrei parse array\n");
-    struct StackG s2;
-    SPointer mini = &s2;
-    criaStack(mini);
-    Tipoval X;
-    X.valor = 0;
-    X.tipo = 'a';
-    X.array = mini;
-    PUSHARRAY(X,s,mini);
     printf("resto : %s\n", *resto);
         
         for (token = strtok_r(*resto, demilit,resto); strcmp(token,"]") != 0;token = __strtok_r(NULL,demilit,resto) ){
@@ -149,34 +143,37 @@ void parsearray (char *token,char **resto, char *demilit,Tipoval *alfabeto,SPoin
                     Tipoval X;
                     X.valor = valint;
                     X.tipo = 'i';
+                    X.array = NULL;
                     PUSH(X,mini);
                     printf("resto : %s\n", *resto);
                 }else if (strlen(sobra2) == 0) {
                     Tipoval X;
                     X.valor = valdouble;
                     X.tipo = 'f';
+                    X.array = NULL;
                     PUSH(X,mini);
                     printf("resto : %s\n", *resto);
+                }else if(strcmp("[",token)== 0) {
+                printf("novo array \n");
+                struct Stack s2;
+                SPointer new = &s2;
+                new = criaStack(new,1024);
+                Tipoval Y;
+                Y.valor = 0;
+                Y.tipo = 'a';
+                Y.array = mini;
+                PUSH(Y,mini);
+                parsearray(token,resto,demilit,alfabeto,new);
                 }
-                else{ parsenormal (token,alfabeto,s);
+                else{ parsenormal (token,alfabeto,mini);
                 printf("resto : %s\n", *resto);
                 }
+        }
 
+        
+            
+           
 
-
-                }
-            printf("sai do token\n");
-            if (strncmp(token,"]",1) == 0){
-                printf("sai parser array\n");
-                
-            }
-            else if(strcmp("[",token)== 0) {
-                printf("novo array \n");
-                parsearray(token,resto,demilit,alfabeto,mini);
-                
-                }
-
-    
 }
 
 
@@ -237,10 +234,10 @@ void convertebinario(long x, int a[]){
  * @param line A linha que foi lida na main para realizar o parser.
  */
 void parser (char *line){
-    struct StackG s1;
+    struct Stack s1;
     SPointer s = &s1;
     
-    criaStack(s);
+    s = criaStack(s,10240);
     Tipoval alfabeto[26] = {
         {10,'i',NULL},
         {11,'i',NULL},
@@ -274,9 +271,19 @@ void parser (char *line){
     char *token;
     for(token = strtok_r(line, delimit,&resto); token != NULL;token = __strtok_r(NULL,delimit,&resto) ){
         printf("esse é o token %s\n", token);
-        if (strstr("\"[]",token) != NULL){
+        if (strstr("\"[",token) != NULL){
             
-            parsearray(token,&resto,delimit,alfabeto,s);
+            
+            struct Stack s2;
+            SPointer mini = &s2;
+            mini = criaStack(mini,1024);
+            Tipoval Y;
+            Y.valor = 0;
+            Y.tipo = 'a';
+            Y.array = mini;
+            PUSH(Y,s);
+            parsearray(token,&resto,delimit,alfabeto,mini);
+            
             
         }
 

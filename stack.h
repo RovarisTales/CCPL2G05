@@ -5,18 +5,18 @@
 
 // void stack (char *line); (nao existe funçao stack)
 #define Max 10240
+typedef struct StackT Tipoval;
+typedef struct StackG *SPointer;
 struct StackT{
     double valor;
     char tipo ;
-    char tipo2;
-
+    SPointer array;
 };
-typedef struct StackT Tipoval;
 struct StackG{
     Tipoval stack[Max];
     int top;
 };
-typedef struct StackG *SPointer;
+
 int vazio(SPointer s);
 int cheio(SPointer s);
 Tipoval POP(SPointer s);
@@ -25,4 +25,5 @@ void print_stack(SPointer s);
 void MOVE (int a,SPointer s);
 Tipoval MOVEPOP (int a,SPointer s);
 SPointer criaStack();
+void PUSHARRAY (Tipoval a, SPointer s, SPointer mini);
 

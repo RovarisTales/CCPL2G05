@@ -17,7 +17,7 @@
 #include "convertetipo.h"
 #include "readline.h"
 #include "variaveis.h"
-#include "array.h"
+
 
 /**
  * \brief Compara tipos
@@ -56,11 +56,7 @@ char comparatipo (char a, char b){
     else return 'l';
 
 }
-int comparatipo2(char a, char b){
-    if (a == 'F' || b == 'F') return 0; // 0 para array ou string
-    else return 1; // 1 para normal
 
-}
 /**
  * \brief Como o proprio nome converte a variavel para long.
  * @param x Variavel que queremos converter
@@ -107,6 +103,7 @@ void funnormal (char *token,Tipoval *alfabeto,SPointer s){
 
 
 void parsenormal (char *token,Tipoval *alfabeto,SPointer s){
+    printf("entrei parse normal\n");
     char *sobra;
     char *sobra2;
     long valint = strtol(token, &sobra, 10);
@@ -115,38 +112,34 @@ void parsenormal (char *token,Tipoval *alfabeto,SPointer s){
             Tipoval X;
             X.valor = valint;
             X.tipo = 'i';
-            X.tipo2 = 'n';
             PUSH(X,s);
         }else if (strlen(sobra2) == 0) {
             Tipoval X;
             X.valor = valdouble;
             X.tipo = 'f';
-            X.tipo2 = 'n';
             PUSH(X,s);
     } else if (strstr("le&e|e<e>?!ABCDEFGHIJKLMNOPQRSTUVWXYZifc_;\\@$&^~|-+/*#%()",token) != NULL){
         
         funnormal(token,alfabeto,s);
     }else if (strncmp(token, ":",1) == 0){
         variaveis(token,alfabeto,s);
-    }else if (strstr("+*()#_=<>~/,",token) != NULL){
-        Tipoval X , Y;
-        X = POP(s);
-        Y = POP(s);
-        int a = comparatipo2(X.tipo2,Y.tipo2);
-        PUSH (Y,s);
-        PUSH(X,s);
-        if (a) funnormal(token,alfabeto,s);
-        else funarray(token,s);
-    } 
+    }
 }
 
 void parsearray (char *token,char **resto, char *demilit,Tipoval *alfabeto,SPointer s){
-        Tipoval X;
-        X.valor = 0;
-        X.tipo = 'i';
-        X.tipo2 = 'I';
-        PUSH(X,s);
-        for (token = strtok_r(*resto, demilit,resto); ((strcmp(token,"]") != 0) && (strcmp(token,"[") != 0));token = __strtok_r(NULL,demilit,resto) ){
+    printf("entrei parse array\n");
+    struct StackG s2;
+    SPointer mini = &s2;
+    criaStack(mini);
+    Tipoval X;
+    X.valor = 0;
+    X.tipo = 'a';
+    X.array = mini;
+    PUSHARRAY(X,s,mini);
+    printf("resto : %s\n", *resto);
+        
+        for (token = strtok_r(*resto, demilit,resto); strcmp(token,"]") != 0;token = __strtok_r(NULL,demilit,resto) ){
+            printf("esse é o token %s\n", token);
             char *sobra;
             char *sobra2;
             long valint = strtol(token, &sobra, 10);
@@ -156,35 +149,30 @@ void parsearray (char *token,char **resto, char *demilit,Tipoval *alfabeto,SPoin
                     Tipoval X;
                     X.valor = valint;
                     X.tipo = 'i';
-                    X.tipo2 = 'a';
-                    PUSH(X,s);
-                    
+                    PUSH(X,mini);
+                    printf("resto : %s\n", *resto);
                 }else if (strlen(sobra2) == 0) {
                     Tipoval X;
                     X.valor = valdouble;
                     X.tipo = 'f';
-                    X.tipo2 = 'a';
-                    PUSH(X,s);
-                    
+                    PUSH(X,mini);
+                    printf("resto : %s\n", *resto);
                 }
-                else parsenormal (token,alfabeto,s);
-                
-
+                else{ parsenormal (token,alfabeto,s);
+                printf("resto : %s\n", *resto);
+                }
 
 
 
                 }
+            printf("sai do token\n");
             if (strncmp(token,"]",1) == 0){
-                Tipoval X;
-                X.valor = 0;
-                X.tipo = 'i';
-                X.tipo2 = 'F';
-                PUSH(X,s);
+                printf("sai parser array\n");
                 
             }
             else if(strcmp("[",token)== 0) {
                 printf("novo array \n");
-                parsearray(token,resto,demilit,alfabeto,s);
+                parsearray(token,resto,demilit,alfabeto,mini);
                 
                 }
 
@@ -206,7 +194,8 @@ void swapM (int *x, int *y){
     int t = *x; 
     *x = *y; 
     *y = t; 
-}
+}struct StackG s1;
+    SPointer s = &s1;
 
 void swap (int v[], int i, int j){
     swapM(v+i,v+j);
@@ -253,49 +242,43 @@ void parser (char *line){
     
     criaStack(s);
     Tipoval alfabeto[26] = {
-        {10,'i','n'},
-        {11,'i','n'},
-        {12,'i','n'},
-        {13,'i','n'},
-        {14,'i','n'},
-        {15,'i','n'},
-        {0,'i','n'},
-        {0,'i','n'},
-        {0,'i','n'},
-        {0,'i','n'},
-        {0,'i','n'},
-        {0,'i','n'},
-        {0,'i','n'},
-        {10,'c','n'},
-        {0,'i','n'},
-        {0,'i','n'},
-        {0,'i','n'}, 
-        {0,'i','n'},
-        {32,'c','n'},
-        {0,'i','n'},
-        {0,'i','n'},
-        {0,'i','n'},
-        {0,'i','n'},
-        {0,'i','n'},
-        {1,'i','n'},
-        {2,'i','n'},
+        {10,'i',NULL},
+        {11,'i',NULL},
+        {12,'i',NULL},
+        {13,'i',NULL},
+        {14,'i',NULL},
+        {15,'i',NULL},
+        {0,'i',NULL},
+        {0,'i',NULL},
+        {0,'i',NULL},
+        {0,'i',NULL},
+        {0,'i',NULL},
+        {0,'i',NULL},
+        {0,'i',NULL},
+        {10,'c',NULL},
+        {0,'i',NULL},
+        {0,'i',NULL},
+        {0,'i',NULL}, 
+        {0,'i',NULL},
+        {32,'c',NULL},
+        {0,'i',NULL},
+        {0,'i',NULL},
+        {0,'i',NULL},
+        {0,'i',NULL},
+        {0,'i',NULL},
+        {1,'i',NULL},
+        {2,'i',NULL},
             };
     char *resto;
     char delimit[8] = " \n\t";
     char *token;
     for(token = strtok_r(line, delimit,&resto); token != NULL;token = __strtok_r(NULL,delimit,&resto) ){
         printf("esse é o token %s\n", token);
-        if (strstr("\"[",token) != NULL){
+        if (strstr("\"[]",token) != NULL){
             
             parsearray(token,&resto,delimit,alfabeto,s);
             
-        }else if (strncmp(token,"]",1) == 0){
-                Tipoval X;
-                X.valor = 0;
-                X.tipo = 'i';
-                X.tipo2 = 'F';
-                PUSH(X,s);
-            }
+        }
 
         else parsenormal(token,alfabeto,s);
 

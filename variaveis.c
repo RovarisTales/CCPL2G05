@@ -20,14 +20,14 @@ void variaveisA(char *token, Tipoval *alfabeto, SPointer s){
 
     
     if (strncmp(token,":",1) == 0) {
-        printf("entrei");
+        printf("entrei dois pontos \n");
         int a = token[1];
 
         a = a-65;
         Tipoval x = POP(s);
-
-        alfabeto[a] = x;
-
+        printf("valor de a %g\n", alfabeto[a].valor);
+        alfabeto[a].valor = x.valor;
+        printf("valor de a %g\n", alfabeto[a].valor);
         PUSH(x,s);
     }  
 }
@@ -40,7 +40,9 @@ void variaveisB(char *token, Tipoval *alfabeto,SPointer s){
         int a = token[0];
 
         a=a-65;
+        printf("valor de a %g\n", alfabeto[a].valor);
         Tipoval x = alfabeto[a];
+        printf("valor de a %g\n", alfabeto[a].valor);
         PUSH(x,s);
     }
 

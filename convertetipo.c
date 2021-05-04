@@ -37,7 +37,6 @@ void convertetipo (char *token, SPointer s){
         x.tipo = 'i';
         x.valor = converte(x.valor, 'i');
         PUSH(x,s);
-
     }else if(strncmp(token, "f",1) == 0){
         
         Tipoval x = POP(s);

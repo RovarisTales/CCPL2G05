@@ -49,12 +49,25 @@ Tipoval POP(SPointer s) {
     if(!vazio(s)) {
         data.valor = s->stack[s->top].valor;
         data.tipo = s->stack[s->top].tipo;
-        data.tipo2 = s->stack[s->top].tipo2;
+        data.array = s->stack[s->top].array;
         s->top = s->top - 1;
+        printf("top diminuiu\n");
     }
+    printf("popei %g\n",data.valor);
+    printf("top é : %d\n", s->top);
     return data;
 }
+void PUSHARRAY(Tipoval a, SPointer s, SPointer mini){
+    s->top = s->top + 1;
+    printf("top aumentou\n");
+    s->stack[s->top] = a;
+    s->stack[s->top].array = mini;
+    printf("pushei stack %g\n", a.valor);
+    printf("pushei %c\n", a.tipo);
+    
+    printf("top é : %d\n", s->top);
 
+}
 
 /**
  * \brief Esta função serve para retirar um elemento numa posição espefica na stack.
@@ -77,40 +90,89 @@ Tipoval MOVEPOP (int a, SPointer s){
 
 void PUSH(Tipoval a, SPointer s) {
     s->top = s->top + 1;
+    printf("top aumentou\n");
     s->stack[s->top] = a;
-
+    printf("pushei %g\n", a.valor);
+    printf("tipo: %c\n", a.tipo);
+    printf("top é : %d\n", s->top);
 }
 
 /**
  * \brief Esta função imprime todos os elementos da stack.
  */
 
-void print_stack(SPointer s){
+void print_stack2(SPointer s){
     Tipoval data;
     int i=0;
-    struct StackT stacks[10240];
+    struct StackT stacks[1024] = {{0}};
     while(!vazio(s)) {
         data = POP(s);
         stacks[i].valor = data.valor;
+        printf("%g\n", data.valor);
         stacks[i].tipo = data.tipo;
-        stacks[i].tipo2 = data.tipo2;
+        printf("%c\n", data.tipo);
+        stacks[i].array = data.array;
         i++;
         }
-    for (i=i-1;i>-1;i--) {
-        if((stacks[i].tipo2 != 'F') && (stacks[i].tipo2 != 'I')){
+    for (i=i-1;i>-1;i--){
+        if (stacks[i].tipo != 'a'){
+        
             if(stacks[i].tipo == 'c'){
                 char cara = stacks[i].valor;
-                printf("%c", cara);
+                printf("printei :");
+                printf("%c\n", cara);
                 }else if (stacks[i].tipo == 'i'){
                     int inteiro = stacks[i].valor;
-                    printf("%d", inteiro);
+                    printf("printei :");
+                    printf("%d\n", inteiro);
                 }else if (stacks[i].tipo == 'l'){
                     long floate = stacks[i].valor;
-                    printf("%ld", floate);
+                    printf("printei :");
+                    printf("%ld\n", floate);
+                    
                 }else if (stacks[i].tipo == 'f'){
-                    printf("%g", stacks[i].valor);
+                    printf("printei :");
+                    printf("%g\n", stacks[i].valor);
             }
         }
-    }putchar('\n');
+    }
+}
+
+void print_stack(SPointer s){
+    Tipoval data;
+    int i=0;
+    struct StackT stacks[1024] = {{0}};
+    while(!vazio(s)) {
+        data = POP(s);
+        stacks[i].valor = data.valor;
+        printf("%g\n", data.valor);
+        stacks[i].tipo = data.tipo;
+        printf("%c\n", data.tipo);
+        stacks[i].array = data.array;
+        i++;
+        }
+    for (i=i-1;i>-1;i--){
+        if (stacks[i].tipo != 'a'){
+        
+            if(stacks[i].tipo == 'c'){
+                char cara = stacks[i].valor;
+                printf("printei :");
+                printf("%c\n", cara);
+                }else if (stacks[i].tipo == 'i'){
+                    int inteiro = stacks[i].valor;
+                    printf("printei :");
+                    printf("%d\n", inteiro);
+                }else if (stacks[i].tipo == 'l'){
+                    long floate = stacks[i].valor;
+                    printf("printei :");
+                    printf("%ld\n", floate);
+                    
+                }else if (stacks[i].tipo == 'f'){
+                    printf("printei :");
+                    printf("%g\n", stacks[i].valor);
+            }
+        }else print_stack2(stacks[i].array);
+    }
+    putchar('\n');
 }
 

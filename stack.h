@@ -26,4 +26,6 @@ void MOVE (int a,SPointer s);
 Tipoval MOVEPOP (int a,SPointer s);
 SPointer criaStack(SPointer s,int tamanho);
 void PUSHARRAY (Tipoval a, SPointer s);
+Tipoval POPFALSO(SPointer s);
+Tipoval POPFALSO2(SPointer s);
 

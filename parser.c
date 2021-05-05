@@ -104,24 +104,19 @@ void funnormal (char *token,Tipoval *alfabeto,SPointer s){
 
 }
 void arrayounormal (char *token,Tipoval *alfabeto,SPointer s){
+    Tipoval x = POPFALSO(s);
+    Tipoval y = POPFALSO2(s);
     if (strcmp(token, ",") == 0){
          funarray(token,s);
-    }
-    Tipoval x = POP(s);
-    if (x.tipo == 'a'){
-        PUSH(x,s);
+    }else if (x.tipo == 'a'){
+        
         funarray(token,s);
 
     }else {
-        Tipoval y = POP(s);
         if (y.tipo == 'a'){
-            PUSH(y,s);
-            PUSH(x,s);
             funarray(token,s);
         }
         else {
-            PUSH(y,s);
-            PUSH(x,s);
             funnormal(token,alfabeto,s);
         }
     }

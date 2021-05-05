@@ -71,7 +71,20 @@ void PUSHARRAY(Tipoval a, SPointer s){
     
 
 }
+Tipoval POPFALSO2(SPointer s){
+    Tipoval data;
+    data = s->stack[s->top+1];
+    return data;
+}
+Tipoval POPFALSO(SPointer s){
+    Tipoval data;
+    data = s->stack[s->top];
+    return data;
 
+
+
+
+}
 /**
  * \brief Esta função serve para retirar um elemento numa posição espefica na stack.
  * @param a Posição onde queremos retirar o elemento.

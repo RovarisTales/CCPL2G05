@@ -107,7 +107,6 @@ void bruharray(Tipoval Y, SPointer s){
     y.valor=b;
     y.array = NULL;
     PUSH(y,s);
-    y = POP(s);
 }
 void bruh (SPointer s){
     Tipoval Y = POP(s);

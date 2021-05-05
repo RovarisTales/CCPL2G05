@@ -146,7 +146,7 @@ void print_stack(SPointer s){
         }
     i --;
     while (i>-1){
-        if (stacks[i].tipo != 'a'){
+        if (stacks[i].tipo != 'a' && stacks[i].tipo != 's'){
         
             printnormal(stacks[i]);
         }else print_stack (stacks[i].array);

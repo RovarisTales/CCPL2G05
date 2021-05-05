@@ -201,7 +201,31 @@ void parsearray (char *token,char **resto, char *demilit,Tipoval *alfabeto,SPoin
 
 }
 
+void parsestring (char *token,SPointer s){
+    printf("%c\n ", token[1]);
+    struct Stack s2;
+    SPointer string = &s2;
+    string = criaStack(string,1024);
+    Tipoval Y;
+    Y.valor = 0;
+    Y.tipo = 's';
+    for(int i = 1; token[i]!= '\"';i++){
+        Tipoval chr;
+        int a = token[i];
+        chr.valor = a;
+        chr.tipo = 'c';
+        chr.array = NULL;
+        PUSH(chr,string);
 
+    }
+    Y.array = string;
+    PUSH(Y,s);
+        
+        
+            
+           
+
+}
 
 
 
@@ -296,7 +320,7 @@ void parser (char *line){
     char *token;
     for(token = strtok_r(line, delimit,&resto); token != NULL;token = __strtok_r(NULL,delimit,&resto) ){
         printf("token : %s\n", token);
-        if (strstr("\"[",token) != NULL){
+        if (strstr("[",token) != NULL){
             
             
             struct Stack s2;
@@ -310,6 +334,8 @@ void parser (char *line){
             parsearray(token,&resto,delimit,alfabeto,mini);
             
             
+        }else if (strncmp("\"",token,1) == 0){
+            parsestring(token,s);
         }
 
         else {
@@ -350,7 +376,6 @@ void parser (char *line){
             variaveis(token, alfabeto);
         }*/
     }
-    printf("sai ciclo\n");
     print_stack(s);
     putchar('\n');
 }

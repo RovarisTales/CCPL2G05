@@ -218,4 +218,5 @@ void funarray (char *token, SPointer s){
     else if (strcmp(token,"~") == 0) tiraarrayb(s);
     else if (strcmp(token,"+") == 0) concat(s);
 
+
 }

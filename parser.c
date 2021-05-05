@@ -17,7 +17,7 @@
 #include "convertetipo.h"
 #include "readline.h"
 #include "variaveis.h"
-
+#include "array.h"
 
 /**
  * \brief Compara tipos
@@ -76,6 +76,9 @@ double convertelong (double x, char a){
     
     return x;
 }
+
+
+
 void funnormal (char *token,Tipoval *alfabeto,SPointer s){
 
     if ((strstr("-+/*#%()",token) != NULL)) {
@@ -100,10 +103,32 @@ void funnormal (char *token,Tipoval *alfabeto,SPointer s){
         }
 
 }
+void arrayounormal (char *token,Tipoval *alfabeto,SPointer s){
+    if (strcmp(token, ",") == 0) funarray(token,s);
+    Tipoval x = POP(s);
+    if (x.tipo == 'a'){
+        PUSH(x,s);
+        funarray(token,s);
+
+    }else {
+        Tipoval y = POP(s);
+        if (y.tipo == 'a'){
+            PUSH(y,s);
+            PUSH(x,s);
+            funarray(token,s);
+        }
+        else {
+            PUSH(y,s);
+            PUSH(x,s);
+            funnormal(token,alfabeto,s);
+        }
+    }
+
+
+}
 
 
 void parsenormal (char *token,Tipoval *alfabeto,SPointer s){
-    printf("entrei parse normal\n");
     char *sobra;
     char *sobra2;
     long valint = strtol(token, &sobra, 10);
@@ -120,7 +145,10 @@ void parsenormal (char *token,Tipoval *alfabeto,SPointer s){
             X.tipo = 'f';
             X.array = NULL;
             PUSH(X,s);
-    } else if (strstr("le&e|e<e>?!ABCDEFGHIJKLMNOPQRSTUVWXYZifc_;\\@$&^~|-+/*#%()",token) != NULL){
+    }else if (strstr("~+()<>*,=", token) != NULL){
+        arrayounormal(token,alfabeto,s);
+    
+    }else if (strstr("le&e|e<e>?!ABCDEFGHIJKLMNOPQRSTUVWXYZifc_;\\@$&^~|-+/*#%()",token) != NULL){
         
         funnormal(token,alfabeto,s);
     }else if (strncmp(token, ":",1) == 0){
@@ -129,11 +157,10 @@ void parsenormal (char *token,Tipoval *alfabeto,SPointer s){
 }
 
 void parsearray (char *token,char **resto, char *demilit,Tipoval *alfabeto,SPointer mini){
-    printf("entrei parse array\n");
-    printf("resto : %s\n", *resto);
+
         
         for (token = strtok_r(*resto, demilit,resto); strcmp(token,"]") != 0;token = __strtok_r(NULL,demilit,resto) ){
-            printf("esse é o token %s\n", token);
+            
             char *sobra;
             char *sobra2;
             long valint = strtol(token, &sobra, 10);
@@ -145,31 +172,31 @@ void parsearray (char *token,char **resto, char *demilit,Tipoval *alfabeto,SPoin
                     X.tipo = 'i';
                     X.array = NULL;
                     PUSH(X,mini);
-                    printf("resto : %s\n", *resto);
+                    
                 }else if (strlen(sobra2) == 0) {
                     Tipoval X;
                     X.valor = valdouble;
                     X.tipo = 'f';
                     X.array = NULL;
                     PUSH(X,mini);
-                    printf("resto : %s\n", *resto);
+                    
                 }else if(strcmp("[",token)== 0) {
-                printf("novo array \n");
-                struct Stack s2;
-                SPointer new = &s2;
-                new = criaStack(new,1024);
-                Tipoval Y;
-                Y.valor = 0;
-                Y.tipo = 'a';
-                Y.array = mini;
-                PUSH(Y,mini);
-                parsearray(token,resto,demilit,alfabeto,new);
+                
+                    struct Stack s2;
+                    SPointer new = &s2;
+                    new = criaStack(new,1024);
+                    Tipoval Y;
+                    Y.valor = 0;
+                    Y.tipo = 'a';
+                    Y.array = new;
+                    PUSH(Y,mini);
+                    parsearray(token,resto,demilit,alfabeto,new);
+                    
                 }
                 else{ parsenormal (token,alfabeto,mini);
-                printf("resto : %s\n", *resto);
+                
                 }
         }
-
         
             
            
@@ -270,7 +297,6 @@ void parser (char *line){
     char delimit[8] = " \n\t";
     char *token;
     for(token = strtok_r(line, delimit,&resto); token != NULL;token = __strtok_r(NULL,delimit,&resto) ){
-        printf("esse é o token %s\n", token);
         if (strstr("\"[",token) != NULL){
             
             
@@ -325,6 +351,7 @@ void parser (char *line){
         }*/
     }
     print_stack(s);
+    putchar('\n');
 }
 
 

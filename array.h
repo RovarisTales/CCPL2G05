@@ -1,0 +1,1 @@
+void funarray (char *token,  SPointer s);

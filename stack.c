@@ -101,96 +101,46 @@ void PUSH(Tipoval a, SPointer s) {
     
     
 }
-
+void print_stack(SPointer s);
 /**
  * \brief Esta função imprime todos os elementos da stack.
  */
 
-void print_stack2(SPointer s){
-    printf("entrei print stack2 \n");
-    Tipoval data;
-    int i=0;
-    Tipoval stacks[1024] = {{0}} ;
-    while(!vazio(s)) {
-        data = POP(s);
-        stacks[i].valor = data.valor;
-        printf("valor :%g\n", data.valor);
-        
-        stacks[i].tipo = data.tipo;
-        stacks[i].array = data.array;
-        if (stacks[i].array == NULL) printf("NULL\n");
-        else printf("nao NULL\n");
-        i++;
-        }
-    
-    for (i=i-1;i>-1;i--){
-        if (data.array == NULL){
-        
-            if(stacks[i].tipo == 'c'){
-                char cara = stacks[i].valor;
-                printf("printei array:");
-                printf("%c\n", cara);
-                }else if (stacks[i].tipo == 'i'){
-                    int inteiro = stacks[i].valor;
-                    printf("printei array:");
-                    printf("%d\n", inteiro);
-                }else if (stacks[i].tipo == 'l'){
-                    long floate = stacks[i].valor;
-                    printf("printei array:");
-                    printf("%ld\n", floate);
-                    
-                }else if (stacks[i].tipo == 'f'){
-                    printf("printei array :");
-                    printf("%g\n", stacks[i].valor);
-            }
 
-        }
-    }
-}
 void printnormal(Tipoval data){
         if(data.tipo == 'c'){
                 char cara = data.valor;
-                printf("printei :");
-                printf("%c\n", cara);
+                printf("%c", cara);
                 }else if (data.tipo == 'i'){
                     int inteiro = data.valor;
-                    printf("printei :");
-                    printf("%d\n", inteiro);
+                    printf("%d", inteiro);
                 }else if (data.tipo == 'l'){
                     long floate = data.valor;
-                    printf("printei :");
-                    printf("%ld\n", floate);
+                    printf("%ld", floate);
                     
                 }else if (data.tipo == 'f'){
-                    printf("printei :");
-                    printf("%g\n", data.valor);
+                    printf("%g", data.valor);
             }
 }
 void print_stack(SPointer s){
-    printf("entrei print stack \n");
     Tipoval data;
     int i=0;
-    Tipoval stacks[1024] = {{0}} ;
-    while(!vazio(s)) {
+    Tipoval stacks[50];
+    while(vazio(s) != 1) {
         data = POP(s);
-        stacks[i].valor = data.valor;
-        printf("valor :%g\n", data.valor);
         
-        stacks[i].tipo = data.tipo;
-        stacks[i].array = data.array;
-        if (stacks[i].array == NULL) printf("NULL\n");
-        else printf("nao NULL\n");
+        stacks[i]= data;
         i++;
         }
-    
-    for (i=i-1;i>-1;i--){
-        if (data.array == NULL){
+    i --;
+    while (i>-1){
+        if (stacks[i].tipo != 'a'){
         
             printnormal(stacks[i]);
-            }   else if (data.array != NULL) print_stack2 (stacks[i].array);
+        }else print_stack (stacks[i].array);
+
+            i--;
         }
     
-    
-    putchar('\n');
 }
 

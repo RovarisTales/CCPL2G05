@@ -52,9 +52,7 @@ void MOVE (int a,SPointer s){
 Tipoval POP(SPointer s) {
     Tipoval data;
     if(!vazio(s)) {
-        data.valor = s->stack[s->top].valor;
-        data.tipo = s->stack[s->top].tipo;
-        data.array = s->stack[s->top].array;
+        data = s->stack[s->top];
         s->top = s->top - 1;
         
     }
@@ -123,6 +121,7 @@ void printnormal(Tipoval data){
             }
 }
 void print_stack(SPointer s){
+    
     Tipoval data;
     int i=0;
     Tipoval stacks[50];

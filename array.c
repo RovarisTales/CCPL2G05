@@ -75,13 +75,23 @@ void multi (SPointer s){
 }
 //-------------------------------------------------
 //TOKEN , ARRAYS E NORMAL
-void bruhnormal(SPointer s,Tipoval Y){
+void bruhnormal(SPointer s,Tipoval X){
     
-    int a = Y.valor;
+    int a = X.valor;
+    struct Stack s2;
+    SPointer new = &s2;
+    new = criaStack(new,150);
+    Tipoval Y;
+    Y.valor = 0;
+    Y.tipo = 'a';
+    Y.array = new;
     for(int t=0;t<a;t++){
-        Y.valor=t;
-        PUSH(Y,s);
+        X.valor=t;
+        PUSH(X,new);
     }
+    
+    PUSH(Y,s);
+    
 }
 void bruharray(Tipoval Y, SPointer s){
     SPointer dois = Y.array;
@@ -96,7 +106,8 @@ void bruharray(Tipoval Y, SPointer s){
     y.tipo='i';
     y.valor=b;
     y.array = NULL;
-        PUSH(y,s);
+    PUSH(y,s);
+    y = POP(s);
 }
 void bruh (SPointer s){
     Tipoval Y = POP(s);
@@ -146,34 +157,55 @@ void inicioarray (SPointer s){
 //(AINDA TENHO DE MUDAR ISTO)
 
 
-void parentesesaberto2(SPointer secundaria, SPointer principal){
-        Tipoval l;
-        l = POP(secundaria);
-        PUSH(l,principal);
-}
+void parentesesfechado2(SPointer secundaria, SPointer principal){
+        Tipoval a[100];
+        int b;
+        for(b=0;secundaria->top!=-1;b++){
+            a[b]=POP(secundaria);
+        }
+        for (; b>0; b--){
+            PUSH(a[b],secundaria);
+        }
+        Tipoval x;
+        x.array = secundaria;
+        x.tipo = 'a';
+        x.valor = 0;
+        PUSH(x,principal);
+        PUSH(a[0],principal);
+} // ta certo
 
 
-void parentesesfechado2(SPointer secundaria, SPointer principal) {
+void parentesesaberto2(SPointer secundaria, SPointer principal) {
         
         Tipoval a[100];
         int b;
-        for(b=1;secundaria->top!=-1;b++){
+        for(b=0;secundaria->top!=-1;b++){
             a[b]=POP(secundaria);
         }
-        PUSH(a[b],principal);
+        int c = b - 2;
+        for (; c>-1; c--){
+            PUSH(a[c],secundaria);
+            printf("%g\n", a[c].valor);
+        }
+        Tipoval x;
+        x.array = secundaria;
+        x.tipo = 'a';
+        x.valor = 0;
+        PUSH(x,principal);
+        PUSH(a[b-1],principal);
 }
 void parentesesfechado (SPointer s){
         
             Tipoval l = POP(s);
             SPointer secundaria = l.array;
-            parentesesaberto2(secundaria,s);
+            parentesesfechado2(secundaria,s);
         
 }
 void parentesesaberto (SPointer s){
         
         Tipoval l = POP(s);
         SPointer secundaria = l.array;
-        parentesesfechado2(secundaria,s);
+        parentesesaberto2(secundaria,s);
         
 }
 
@@ -186,8 +218,5 @@ void funarray (char *token, SPointer s){
     else if (strcmp(token,"*") == 0) multi(s);
     else if (strcmp(token,"~") == 0) tiraarrayb(s);
     else if (strcmp(token,"+") == 0) concat(s);
-
-
-
 
 }

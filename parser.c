@@ -104,7 +104,9 @@ void funnormal (char *token,Tipoval *alfabeto,SPointer s){
 
 }
 void arrayounormal (char *token,Tipoval *alfabeto,SPointer s){
-    if (strcmp(token, ",") == 0) funarray(token,s);
+    if (strcmp(token, ",") == 0){
+         funarray(token,s);
+    }
     Tipoval x = POP(s);
     if (x.tipo == 'a'){
         PUSH(x,s);
@@ -147,6 +149,7 @@ void parsenormal (char *token,Tipoval *alfabeto,SPointer s){
             PUSH(X,s);
     }else if (strstr("~+()<>*,=", token) != NULL){
         arrayounormal(token,alfabeto,s);
+        
     
     }else if (strstr("le&e|e<e>?!ABCDEFGHIJKLMNOPQRSTUVWXYZifc_;\\@$&^~|-+/*#%()",token) != NULL){
         
@@ -297,6 +300,7 @@ void parser (char *line){
     char delimit[8] = " \n\t";
     char *token;
     for(token = strtok_r(line, delimit,&resto); token != NULL;token = __strtok_r(NULL,delimit,&resto) ){
+        printf("token : %s\n", token);
         if (strstr("\"[",token) != NULL){
             
             
@@ -313,8 +317,9 @@ void parser (char *line){
             
         }
 
-        else parsenormal(token,alfabeto,s);
-
+        else {
+            parsenormal(token,alfabeto,s);
+        }
        /* if (strlen(sobra) == 0){
             Tipoval X;
             X.valor = valint;
@@ -350,6 +355,7 @@ void parser (char *line){
             variaveis(token, alfabeto);
         }*/
     }
+    printf("sai ciclo\n");
     print_stack(s);
     putchar('\n');
 }

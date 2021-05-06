@@ -7,6 +7,7 @@
 
 typedef struct Tipovalor Tipoval;
 typedef struct Stack *SPointer;
+
 struct Tipovalor{
     double valor;
     char tipo ;

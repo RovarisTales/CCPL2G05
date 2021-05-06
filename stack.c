@@ -17,7 +17,7 @@
 
 SPointer criaStack(SPointer s,int tamanho){
     s->top = -1;
-    s-> stack = malloc(tamanho*sizeof(Tipoval));
+    s-> stack = calloc(tamanho,sizeof(Tipoval));
     
     return s;
 }
@@ -133,22 +133,29 @@ void printnormal(Tipoval data){
                     printf("%g", data.valor);
             }
 }
+
 void print_stack(SPointer s){
     
     Tipoval data;
-    int i=0;
-    Tipoval stacks[50];
-    while(vazio(s) != 1) {
-        data = POP(s);
+    int i;
+    Tipoval stacks[500];
+    for(i = 0;vazio(s) != 1;i++) {
         
+        data = POP(s);
+        //if(data.array != NULL){ 
+            //Tipoval xpto;
+           // xpto = POP(data.array);
+           // printf("printei da stack%g\n", xpto.valor);
+        //}
         stacks[i]= data;
-        i++;
+        
         }
     i --;
     while (i>-1){
-        if (stacks[i].tipo != 'a' && stacks[i].tipo != 's'){
-        
+        if (stacks[i].tipo != 'a'){
+            
             printnormal(stacks[i]);
+            
         }else print_stack (stacks[i].array);
 
             i--;

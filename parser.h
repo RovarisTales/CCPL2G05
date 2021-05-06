@@ -2,9 +2,10 @@
  * Este ficheiro é a head do ficheiro parser.c.
  *
  */
-void parser (char *line);
+typedef struct Stack *SPointer;
 char comparatipo (char a, char b);
 double convertelong (double x, char a);
+SPointer parser (char *line);
 
 
 /* void convertebinario(long x, int a[]);

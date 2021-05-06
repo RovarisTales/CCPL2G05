@@ -3,13 +3,12 @@
  *Neste ficheiro também esta a ser usado o ficheiro stack.h e os ficheiros auxiliares das funções com as operações previamente mencionadas.
  *(aritimetica.h , logicabin.h , manipstack.h , logica.h , convertetipo.h , readline.h , variaveis.h)
  */
-
+#include "stack.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
 #include <assert.h>
-#include "stack.h"
 #include "aritimetica.h"
 #include "logicabin.h"
 #include "manipstack.h"
@@ -49,6 +48,60 @@ char *gettoken (char *line , char **resto){
     return token;
 
 }*/
+char *get_token(char *line, char *seps, char **resto){
+    char *token;
+    token = malloc(100*sizeof(char));
+    int i = 0;
+    
+    if (line == NULL) return NULL;
+    else{
+        
+        while (strchr(seps,line[i]) == NULL){
+         token[i] = line[i];
+         i++;
+        }
+        token[i+1] = '\0';
+        while (strchr(seps,line[i]) != NULL){
+            i++;
+        }
+        if (strlen(token) != strlen(line)){
+            *resto = line+i;
+        }else *resto = NULL;
+    
+    
+    }
+    return token;
+}
+
+char *get_delimited (char *line, char *seps, char **resto){
+    int i = 1;
+    int c;
+    
+    char *array;
+    array = malloc(1024*sizeof(char));
+    
+
+    for (c=0;i!=0;c++){
+        if(strchr(seps,line[c]) == NULL){
+            array[c] = line[c];
+            
+        }
+        else if(seps[1]==line[c]) {
+            i--;
+            
+        }
+        else if(seps[2]==line[c]){
+            i++;
+            array[c] = line[c];
+        }
+        
+    }
+    
+    *resto = line + c;
+
+    return array;
+}
+
 char comparatipo (char a, char b){
 
     if (a == b) return a;
@@ -108,12 +161,12 @@ void arrayounormal (char *token,Tipoval *alfabeto,SPointer s){
     Tipoval y = POPFALSO2(s);
     if (strcmp(token, ",") == 0){
          funarray(token,s);
-    }else if (x.tipo == 'a'){
+    }else if (x.tipo == 'a' || x.tipo == 's'){
         
         funarray(token,s);
 
     }else {
-        if (y.tipo == 'a'){
+        if (y.tipo == 'a'|| y.tipo == 's'){
             funarray(token,s);
         }
         else {
@@ -154,78 +207,8 @@ void parsenormal (char *token,Tipoval *alfabeto,SPointer s){
     }
 }
 
-void parsearray (char *token,char **resto, char *demilit,Tipoval *alfabeto,SPointer mini){
 
-        
-        for (token = strtok_r(*resto, demilit,resto); strcmp(token,"]") != 0;token = __strtok_r(NULL,demilit,resto) ){
-            
-            char *sobra;
-            char *sobra2;
-            long valint = strtol(token, &sobra, 10);
-            double valdouble = strtod(token, &sobra2);
-            
-                 if (strlen(sobra) == 0){
-                    Tipoval X;
-                    X.valor = valint;
-                    X.tipo = 'i';
-                    X.array = NULL;
-                    PUSH(X,mini);
-                    
-                }else if (strlen(sobra2) == 0) {
-                    Tipoval X;
-                    X.valor = valdouble;
-                    X.tipo = 'f';
-                    X.array = NULL;
-                    PUSH(X,mini);
-                    
-                }else if(strcmp("[",token)== 0) {
-                
-                    struct Stack s2;
-                    SPointer new = &s2;
-                    new = criaStack(new,1024);
-                    Tipoval Y;
-                    Y.valor = 0;
-                    Y.tipo = 'a';
-                    Y.array = new;
-                    PUSH(Y,mini);
-                    parsearray(token,resto,demilit,alfabeto,new);
-                    
-                }
-                else{ parsenormal (token,alfabeto,mini);
-                
-                }
-        }
-        
-            
-           
 
-}
-
-void parsestring (char *token,SPointer s){
-    printf("%c\n ", token[1]);
-    struct Stack s2;
-    SPointer string = &s2;
-    string = criaStack(string,1024);
-    Tipoval Y;
-    Y.valor = 0;
-    Y.tipo = 's';
-    for(int i = 1; token[i]!= '\"';i++){
-        Tipoval chr;
-        int a = token[i];
-        chr.valor = a;
-        chr.tipo = 'c';
-        chr.array = NULL;
-        PUSH(chr,string);
-
-    }
-    Y.array = string;
-    PUSH(Y,s);
-        
-        
-            
-           
-
-}
 
 
 
@@ -267,10 +250,7 @@ for(i=0;i<16;i++){
 }
 return x;
 }
-void convertebinario(long x, int a[]){
-    int i;
-    for(i=0;x>0;i++){
-    a[i]=x%2;
+void convertebinario(long x, int a[]){printf("entrei\n");
     x=x/2;
     }
 }
@@ -282,7 +262,8 @@ void convertebinario(long x, int a[]){
  *
  * @param line A linha que foi lida na main para realizar o parser.
  */
-void parser (char *line){
+SPointer parser (char *line){
+    printf("entrei parse\n");
     struct Stack s1;
     SPointer s = &s1;
     
@@ -318,24 +299,21 @@ void parser (char *line){
     char *resto;
     char delimit[8] = " \n\t";
     char *token;
-    for(token = strtok_r(line, delimit,&resto); token != NULL;token = __strtok_r(NULL,delimit,&resto) ){
-        printf("token : %s\n", token);
-        if (strstr("[",token) != NULL){
+    char delim [3] = "[]";
+    for(token = get_token(line, delimit,&resto); resto != NULL ; token = get_token(resto,delimit,&resto) ){
+        
+        if (strcmp(token,"[") == 0){
             
+            SPointer new;
             
-            struct Stack s2;
-            SPointer mini = &s2;
-            mini = criaStack(mini,1024);
-            Tipoval Y;
-            Y.valor = 0;
-            Y.tipo = 'a';
-            Y.array = mini;
-            PUSH(Y,s);
-            parsearray(token,&resto,delimit,alfabeto,mini);
-            
-            
-        }else if (strncmp("\"",token,1) == 0){
-            parsestring(token,s);
+            new = parser(get_delimited(resto,delim,&resto));
+            Tipoval x;
+            x.valor = 0;
+            x.tipo = 'a';
+            x.array = new;
+            PUSH(x,s);
+            printf("pointer : _______%p\n", (void *)new);
+
         }
 
         else {
@@ -376,8 +354,7 @@ void parser (char *line){
             variaveis(token, alfabeto);
         }*/
     }
-    print_stack(s);
-    putchar('\n');
+    return s;
 }
 
 

@@ -7,6 +7,7 @@
 #include <string.h>
 #include <assert.h>
 #include "parser.h"
+#include "stack.h"
 /**
  * \brief Função principal do programa
  * Esta função le um input introduzido pelo ser misterioso e realiza a função parser.
@@ -20,7 +21,13 @@ int main (){
    
     assert(line[strlen(line)- 1]== '\n');
 
-    parser(line);
+    SPointer s;
+
+
+
+    s = parser(line);
+    print_stack(s);
+    putchar('\n');
     return 0;
 }
 

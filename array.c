@@ -184,7 +184,7 @@ void parentesesaberto2(SPointer secundaria, SPointer principal) {
         int c = b - 2;
         for (; c>-1; c--){
             PUSH(a[c],secundaria);
-            printf("%g\n", a[c].valor);
+            
         }
         Tipoval x;
         x.array = secundaria;

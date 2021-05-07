@@ -274,13 +274,32 @@ void igualarray (Tipoval x, Tipoval y, SPointer s){
 
 }
 
+void igualnum (Tipoval x, Tipoval y, SPointer s){
+
+    int c = x.valor;
+    SPointer um;
+    um = y.array;
+
+    Tipoval a[100];
+    int b;
+    
+    for(b=0;!vazio(um);b++){
+        a[b]=POP(um);}
+
+    PUSH(a[b-c-1],s);
+
+
+
+
+}
+
 void igual (SPointer s){
 
     Tipoval X = POP(s);
     Tipoval Y = POP(s);
 
 
-    if (X.tipo == 'i');
+    if (X.tipo == 'i')igualnum(X,Y,s);
     else igualarray(X,Y,s);
 
 

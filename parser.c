@@ -85,6 +85,41 @@ char *get_delimited (char *line, char *seps, char **resto){
     
 }
 
+char *get_delimited2 (char *token,char *line, char *seps, char **resto){
+    
+    
+    char *string;
+    string = malloc(100*sizeof(char));
+    char a = seps[0]; // "
+    int i = 1; // andar na lista
+    while (token[i] != '\0' && token[i] != a){
+        
+        string[i-1] = token[i];
+        
+        i++;
+
+
+    }
+    int b = i;
+    if(token[i] == '\"') return string;
+    else {
+      string[b-1] = ' ';
+      i = 0;
+        while (line[i] != '\0' && line[i] != a){
+        
+            string[b+i] = line[i];
+        
+            i++;
+
+
+        }
+        *resto = line +  (i+1);
+        string[i+b+1] = '\0';
+        return string;
+    }
+    
+}
+
 char comparatipo (char a, char b){
 
     if (a == b) return a;
@@ -144,14 +179,14 @@ void arrayounormal (char *token,Tipoval *alfabeto,SPointer s){
     if (strcmp(token, ",") == 0){
         PUSH(x,s);
          funarray(token,s);
-    }else if (x.tipo == 'a'){
+    }else if (x.tipo == 'a' || x.tipo == 's'){
         PUSH(x,s);
         
         funarray(token,s);
 
     }else {
         Tipoval y = POP(s);
-        if (y.tipo == 'a'){
+        if (y.tipo == 'a' || y.tipo == 's'){
             PUSH(y,s);
             PUSH(x,s);
             
@@ -188,8 +223,6 @@ void parsenormal (char *token,Tipoval *alfabeto,SPointer s){
             PUSH(X,s);
     }else if (strstr("~+()<>*,=", token) != NULL){
         arrayounormal(token,alfabeto,s);
-        
-    
     }else if (strstr("le&e|e<e>?!ABCDEFGHIJKLMNOPQRSTUVWXYZifc_;\\@$&^~|-+/*#%()",token) != NULL){
         
         funnormal(token,alfabeto,s);
@@ -199,7 +232,27 @@ void parsenormal (char *token,Tipoval *alfabeto,SPointer s){
 }
 
 
+SPointer parserstring (char *line){
+    
+    
+    SPointer s = NULL;
+    
+    s = criaStack(s,10240);
 
+    for(int i = 0; line[i] != '\0'; i++){
+        Tipoval x;
+        x.valor = line[i];
+        x.tipo = 'c';
+        x.array = NULL;
+        PUSH(x,s);
+    }
+
+    return s;
+
+
+
+
+}
 
 
 
@@ -286,6 +339,7 @@ SPointer parser (char *line){
     char delimit[8] = " \n\t";
     char *token;
     char delim [3] = "[]";
+    char delim2 [2] = "\"";
     for(token = __strtok_r(line, delimit,&resto); token != NULL ; token = __strtok_r(resto,delimit,&resto) ){
         
         if (strcmp(token,"[") == 0){
@@ -300,6 +354,16 @@ SPointer parser (char *line){
             PUSH(x,s);
             
 
+        }else if(strncmp(token,"\"",1) == 0) {
+            
+            SPointer new;
+
+            new = parserstring(get_delimited2(token,resto,delim2,&resto));
+            Tipoval x;
+            x.valor = 0;
+            x.tipo = 's';
+            x.array = new;
+            PUSH(x,s);
         }
 
         else {

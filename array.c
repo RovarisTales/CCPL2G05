@@ -5,11 +5,12 @@
 #include "stack.h"
 #include "parser.h"
 
-void concatarray (Tipoval x,Tipoval y, SPointer s){
+void concatigual (Tipoval x,Tipoval y, SPointer s){
     Tipoval a[100];
     SPointer dois = x.array;
     SPointer um  = y.array;
     int b;
+    
     for(b=0;!vazio(dois);b++){
         a[b]=POP(dois);}
     
@@ -29,23 +30,15 @@ void concatarraynum (Tipoval x ,Tipoval y, SPointer s){
     int b;
     SPointer X;
     X = x.array;
-    Tipoval xpto;
-    
-    xpto.valor = '0';
-    xpto.tipo = 'a';
-    xpto.array = NULL;
-    
-    SPointer um = xpto.array;
-    criaStack(um,1024);
-    PUSH(y,um);
     for(b=0;X->top!=-1;b++){
         a[b]=POP(X);
         }
     int cont=b;
+    PUSH(y,X);
     for(b=cont;b!=-1;b--){
-        PUSH(a[b],um);}
-    xpto.array = um;
-    PUSH(xpto,s);
+        PUSH(a[b],X);}
+    x.array = X;
+    PUSH(x,s);
 
 
 
@@ -53,7 +46,7 @@ void concatarraynum (Tipoval x ,Tipoval y, SPointer s){
 void concat(SPointer s){
     Tipoval X = POP(s);
     Tipoval y = POP(s);
-        if (X.tipo == 'a' && y.tipo == 'a')concatarray(X,y,s);
+        if (X.tipo ==  y.tipo)concatigual(X,y,s);
         else if (X.tipo != 'a' && y.tipo == 'a')concatnumarray(X,y,s);
         else concatarraynum(X,y,s);
 }
@@ -97,7 +90,7 @@ void multi(SPointer s){
         a[b]=POP(dois);}
     int xpto=b;
     for(int c=0;c<fator.valor;c++){
-        printf("primeiro ciclo\n");
+        
         for(b=xpto;b!=-1;b--){
         PUSH(a[b],dois);
         }
@@ -127,15 +120,18 @@ void bruhnormal(SPointer s,Tipoval X){
     PUSH(Y,s);
     
 }
+
 void bruharray(Tipoval Y, SPointer s){
     SPointer dois = Y.array;
-    int b;
-    for(b=0;vazio(dois)!=1;b++){
+    int b = 0;
+    while(!vazio(dois)){
         
         Tipoval r;
         r=POP(dois);
-        printf("%g\n", r.valor);
+        if(r.tipo == 'i' || r.tipo == 'l' || r.tipo == 'f' || r.tipo == 'c' || r.tipo == 'a'|| r.tipo == 's' ){
+        b++;
         r.valor ++;
+        }
         }
     Tipoval y;
     y.tipo='i';
@@ -143,45 +139,56 @@ void bruharray(Tipoval Y, SPointer s){
     y.array = NULL;
     PUSH(y,s);
 }
+
 void bruh (SPointer s){
     Tipoval Y = POP(s);
     
-    if (Y.tipo == 'a'){bruharray(Y,s);}
-    if (Y.tipo != 'a'){bruhnormal(s,Y);}
+    if (Y.tipo == 'a' || Y.tipo == 's'){bruharray(Y,s);}
+    else {bruhnormal(s,Y);}
         
 }
 //----------------------------------------------
 //TOKEN <> EM ARRAYS
-void fimarray2(SPointer s,SPointer Y,Tipoval r){
+void fimarray2(SPointer s,Tipoval y,Tipoval r){
     Tipoval a[100]= {{0}};
-    int b;
-    for(b=0;(b!=r.valor);b++){
+    SPointer Y = y.array;
+    int b ;
+    int c = r.valor;
+    for(b=0;!vazio(Y);b++){
         a[b]=POP(Y);}
-    for(;b!=0;b--){
-        PUSH(a[b],s);}
+    for(b = r.valor - 1;c != -1;b--,c--){
+        PUSH(a[b],Y);}
+    y.array = Y;
+    PUSH(y,s);
 }
 void fimarray (SPointer s){
     
         Tipoval r = POP(s);
         Tipoval Y = POP(s);
-        if (Y.tipo == 'a'){fimarray2(s,Y.array,r);}
+        if (Y.tipo == 'a' || Y.tipo == 's'){fimarray2(s,Y,r);}
         
 }
-void inicioarray2(SPointer s,SPointer Y,Tipoval r){
-    Tipoval a[100]= {{0}};
+void inicioarray2(SPointer s,Tipoval y,Tipoval r){
+    SPointer Y = y.array;
+    Tipoval a[100];
     int b;
     for(b=0;Y->top!=-1;b++){
         a[b]=POP(Y);}
+    
     int xpto=b;
-    for(;b!=xpto-r.valor;b--){
-        PUSH(a[b],s);}
+    for(;b!=xpto-r.valor-1;b--){
+        PUSH(a[b],Y);};
+        
+        y.array = Y;
+        PUSH(y,s);
+    
 }
 
 void inicioarray (SPointer s){
 
         Tipoval r = POP(s);
         Tipoval Y = POP(s);
-        if (Y.tipo == 'a'){inicioarray2(s,Y.array,r);}
+        if (Y.tipo == 'a' || Y.tipo == 's'){inicioarray2(s,Y,r);}
 }
 
 
@@ -242,6 +249,46 @@ void parentesesaberto (SPointer s){
         parentesesaberto2(secundaria,s);
         
 }
+// -----------------------------------------------
+void igualarray (Tipoval x, Tipoval y, SPointer s){
+    Tipoval um, dois;
+
+    SPointer xis, ips;
+    xis = x.array;
+    ips = y.array;
+
+    int i = 1;
+
+    while(i != 0  && !vazio(xis) && !vazio(ips)){
+        um = POP(xis);
+        dois = POP(ips);
+        if(um.valor == dois.valor) i = 1;
+        else i = 0;
+    }
+    Tipoval bolo;
+    bolo.valor = i;
+    bolo.tipo = 'i';
+    bolo.array = NULL;
+    PUSH(bolo,s);
+
+
+}
+
+void igual (SPointer s){
+
+    Tipoval X = POP(s);
+    Tipoval Y = POP(s);
+
+
+    if (X.tipo == 'i');
+    else igualarray(X,Y,s);
+
+
+
+}
+
+
+
 
 void funarray (char *token, SPointer s){
     if (strcmp(token,"(") == 0) parentesesaberto(s);
@@ -252,6 +299,6 @@ void funarray (char *token, SPointer s){
     else if (strcmp(token,"*") == 0) multi(s);
     else if (strcmp(token,"~") == 0) tiraarrayb(s);
     else if (strcmp(token,"+") == 0) concat(s);
-
+    else if (strcmp(token,"=") == 0) igual(s);
 
 }

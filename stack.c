@@ -16,8 +16,9 @@
 
 
 SPointer criaStack(SPointer s,int tamanho){
+    s = malloc(sizeof(SPointer));
     s->top = -1;
-    s-> stack = calloc(tamanho,sizeof(Tipoval));
+    s-> stack = malloc(tamanho*sizeof(Tipoval));
     
     return s;
 }

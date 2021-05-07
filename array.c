@@ -5,27 +5,57 @@
 #include "stack.h"
 #include "parser.h"
 
-void concatarray (SPointer um,SPointer dois){
-    Tipoval a[100]= {{0}};
+void concatarray (Tipoval x,Tipoval y, SPointer s){
+    Tipoval a[100];
+    SPointer dois = x.array;
+    SPointer um  = y.array;
     int b;
-    for(b=1;dois->top!=-1;b++){
+    for(b=0;!vazio(dois);b++){
         a[b]=POP(dois);}
-    int xpto=b;
-    for(b=xpto;b!=0;b--){
+    
+    for(;b!=-1;b--){
         PUSH(a[b],um);}
+        y.array = um;
+        PUSH(y,s);
 }
-void concatnum (Tipoval r,SPointer dois){
-    PUSH(r,dois);
+void concatnumarray (Tipoval x,Tipoval y, SPointer s){
+    SPointer um = y.array;
+    PUSH(x,um);
+    y.array = um;
+    PUSH(y,s);
 }
+void concatarraynum (Tipoval x ,Tipoval y, SPointer s){
+    Tipoval a[100];
+    int b;
+    SPointer X;
+    X = x.array;
+    Tipoval xpto;
+    
+    xpto.valor = '0';
+    xpto.tipo = 'a';
+    xpto.array = NULL;
+    
+    SPointer um = xpto.array;
+    criaStack(um,1024);
+    PUSH(y,um);
+    for(b=0;X->top!=-1;b++){
+        a[b]=POP(X);
+        }
+    int cont=b;
+    for(b=cont;b!=-1;b--){
+        PUSH(a[b],um);}
+    xpto.array = um;
+    PUSH(xpto,s);
 
+
+
+}
 void concat(SPointer s){
     Tipoval X = POP(s);
-    Tipoval Y = POP(s);
-    SPointer dois = Y.array;
-    SPointer  um = X.array;
-    
-        if (X.tipo == 'a'){concatarray(um,dois);}
-        if (X.tipo != 'a'){concatnum(X,dois);}
+    Tipoval y = POP(s);
+        if (X.tipo == 'a' && y.tipo == 'a')concatarray(X,y,s);
+        else if (X.tipo != 'a' && y.tipo == 'a')concatnumarray(X,y,s);
+        else concatarraynum(X,y,s);
 }
     
 
@@ -51,35 +81,39 @@ void tiraarrayb ( SPointer s){
 }
 //---------------------------------------
 //TOKEN * EM ARRAYS
-void multiarray(SPointer dois, SPointer s,Tipoval r){
+void multi(SPointer s){
 
-    Tipoval a[100]= {{0}};
+    Tipoval fator,array;
+    fator = POP(s);
+    array = POP(s);
+    SPointer dois = array.array;
+    
+
+
+
+    Tipoval a[100];
     int b;
-    for(b=1;dois->top!=-1;b++){
+    for(b=0;!vazio(dois);b++){
         a[b]=POP(dois);}
     int xpto=b;
-    for(int c=0;c!=r.valor;c++){
-    for(b=xpto;b!=0;b--){
-        PUSH(a[b],s);}
+    for(int c=0;c<fator.valor;c++){
+        printf("primeiro ciclo\n");
+        for(b=xpto;b!=-1;b--){
+        PUSH(a[b],dois);
         }
+    }
+    array.array = dois;
+    PUSH(array,s);
 }
 
-void multi (SPointer s){
-    
-    
-    Tipoval r = POP(s);
-    Tipoval Y = POP(s);
-    SPointer dois = Y.array;
-    multiarray(dois,s,r);
-        
-}
+
 //-------------------------------------------------
 //TOKEN , ARRAYS E NORMAL
 void bruhnormal(SPointer s,Tipoval X){
     
     int a = X.valor;
-    struct Stack s2;
-    SPointer new = &s2;
+    
+    SPointer new = NULL;
     new = criaStack(new,150);
     Tipoval Y;
     Y.valor = 0;
@@ -100,6 +134,7 @@ void bruharray(Tipoval Y, SPointer s){
         
         Tipoval r;
         r=POP(dois);
+        printf("%g\n", r.valor);
         r.valor ++;
         }
     Tipoval y;

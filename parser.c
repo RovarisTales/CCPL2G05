@@ -48,58 +48,41 @@ char *gettoken (char *line , char **resto){
     return token;
 
 }*/
-char *get_token(char *line, char *seps, char **resto){
-    char *token;
-    token = malloc(100*sizeof(char));
-    int i = 0;
-    
-    if (line == NULL) return NULL;
-    else{
-        
-        while (strchr(seps,line[i]) == NULL){
-         token[i] = line[i];
-         i++;
-        }
-        token[i+1] = '\0';
-        while (strchr(seps,line[i]) != NULL){
-            i++;
-        }
-        if (strlen(token) != strlen(line)){
-            *resto = line+i;
-        }else *resto = NULL;
-    
-    
-    }
-    return token;
-}
+
 
 char *get_delimited (char *line, char *seps, char **resto){
-    int i = 1;
-    int c;
     
+    int par = 1;
     char *array;
-    array = malloc(1024*sizeof(char));
-    
+    array = malloc(100*sizeof(char));
+    char a = seps[0]; // [
+    char b = seps[1]; // ]
+    int i = 0; // andar na lista
+    while (par != 0){
+        if (line[i] == a) {
+            par++;
+            array[i] = line[i];
+        }
+        else if (line[i] == b){
+            par--;
+            array[i] = line[i];
+        }
+        else {
+            array[i] = line[i];
+        }
+        i++;
 
-    for (c=0;i!=0;c++){
-        if(strchr(seps,line[c]) == NULL){
-            array[c] = line[c];
-            
-        }
-        else if(seps[1]==line[c]) {
-            i--;
-            
-        }
-        else if(seps[2]==line[c]){
-            i++;
-            array[c] = line[c];
-        }
-        
+
     }
     
-    *resto = line + c;
+    *resto = line +  i;
+    
 
+    
+
+    array[i-1] = '\0';
     return array;
+    
 }
 
 char comparatipo (char a, char b){
@@ -157,19 +140,27 @@ void funnormal (char *token,Tipoval *alfabeto,SPointer s){
 
 }
 void arrayounormal (char *token,Tipoval *alfabeto,SPointer s){
-    Tipoval x = POPFALSO(s);
-    Tipoval y = POPFALSO2(s);
+    Tipoval x = POP(s);
     if (strcmp(token, ",") == 0){
+        PUSH(x,s);
          funarray(token,s);
-    }else if (x.tipo == 'a' || x.tipo == 's'){
+    }else if (x.tipo == 'a'){
+        PUSH(x,s);
         
         funarray(token,s);
 
     }else {
-        if (y.tipo == 'a'|| y.tipo == 's'){
+        Tipoval y = POP(s);
+        if (y.tipo == 'a'){
+            PUSH(y,s);
+            PUSH(x,s);
+            
             funarray(token,s);
         }
         else {
+            PUSH(y,s);
+            PUSH(x,s);
+            
             funnormal(token,alfabeto,s);
         }
     }
@@ -206,11 +197,6 @@ void parsenormal (char *token,Tipoval *alfabeto,SPointer s){
         variaveis(token,alfabeto,s);
     }
 }
-
-
-
-
-
 
 
 
@@ -263,9 +249,9 @@ void convertebinario(long x, int a[]){printf("entrei\n");
  * @param line A linha que foi lida na main para realizar o parser.
  */
 SPointer parser (char *line){
-    printf("entrei parse\n");
-    struct Stack s1;
-    SPointer s = &s1;
+    
+    
+    SPointer s = NULL;
     
     s = criaStack(s,10240);
     Tipoval alfabeto[26] = {
@@ -300,7 +286,7 @@ SPointer parser (char *line){
     char delimit[8] = " \n\t";
     char *token;
     char delim [3] = "[]";
-    for(token = get_token(line, delimit,&resto); resto != NULL ; token = get_token(resto,delimit,&resto) ){
+    for(token = __strtok_r(line, delimit,&resto); token != NULL ; token = __strtok_r(resto,delimit,&resto) ){
         
         if (strcmp(token,"[") == 0){
             
@@ -312,7 +298,7 @@ SPointer parser (char *line){
             x.tipo = 'a';
             x.array = new;
             PUSH(x,s);
-            printf("pointer : _______%p\n", (void *)new);
+            
 
         }
 

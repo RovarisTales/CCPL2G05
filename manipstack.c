@@ -16,7 +16,13 @@
 void manipstack (char *token, SPointer s){
     if (strncmp(token, "_",1) == 0) {
         Tipoval  Y = POP (s);
-        PUSH (Y,s);
+        Tipoval X = Y;
+        SPointer x = NULL;
+        if (Y.tipo == 's' || Y.tipo == 'a'){
+            x = copystack(Y.array,x);
+            X.array = x;
+            }
+        PUSH (X,s);
         PUSH (Y,s);
         
     }else if (strncmp(token, ";",1) == 0) {

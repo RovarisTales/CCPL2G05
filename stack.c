@@ -49,6 +49,30 @@ void MOVE (int a,SPointer s){
  * \brief Esta funçao retira o elemento mais acima na stack.
  * @return data que é o elemento mais acima na stack.
  */
+SPointer copystack(SPointer s,SPointer x){
+    x = criaStack(x,500);
+    Tipoval a[100];
+    int i = 0;
+    while (!vazio(s)){
+        a[i] = POP(s);
+        i++;
+    }
+    int xpto;
+    xpto = i;
+    while(i!= -1){
+        PUSH(a[i],s);
+        i--;
+    }
+    i = xpto;
+    while(i != -1){
+        PUSH(a[i],x);
+        i--;
+    }
+    return x;
+
+
+
+}
 
 Tipoval POP(SPointer s) {
     Tipoval data;

@@ -20,14 +20,19 @@ void variaveisA(char *token, Tipoval *alfabeto, SPointer s){
 
     
     if (strncmp(token,":",1) == 0) {
-        printf("entrei dois pontos \n");
+        
         int a = token[1];
 
         a = a-65;
         Tipoval x = POP(s);
-        printf("valor de a %g\n", alfabeto[a].valor);
+        
         alfabeto[a].valor = x.valor;
-        printf("valor de a %g\n", alfabeto[a].valor);
+        alfabeto[a].tipo = x.tipo;
+        if (x.tipo == 'a' || x.tipo == 's'){
+            SPointer aux = NULL;
+            aux = copystack(x.array,aux);
+            alfabeto[a].array = aux;
+        }
         PUSH(x,s);
     }  
 }
@@ -40,9 +45,17 @@ void variaveisB(char *token, Tipoval *alfabeto,SPointer s){
         int a = token[0];
 
         a=a-65;
-        printf("valor de a %g\n", alfabeto[a].valor);
-        Tipoval x = alfabeto[a];
-        printf("valor de a %g\n", alfabeto[a].valor);
+        Tipoval x;
+         x.valor = alfabeto[a].valor;
+         x.tipo = alfabeto[a].tipo;
+        if(alfabeto[a].tipo == 's' || alfabeto[a].tipo == 'a'){
+            SPointer aux = NULL;
+            aux = copystack(alfabeto[a].array,aux);
+            x.array = aux;
+        }
+        
+        
+        
         PUSH(x,s);
     }
 

@@ -43,10 +43,12 @@ void logicabin (char *token,SPointer s){
         PUSH(X,s);
 
        }else if (strncmp(token, "~",1) == 0) {
+        
         Tipoval  X = POP (s);
+        
         long A = X.valor;
         X.valor = ~A;
-
+        
         PUSH(X,s);
        }
 }

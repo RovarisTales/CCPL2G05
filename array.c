@@ -220,13 +220,13 @@ void comparaarrayinicio(SPointer s, Tipoval Y, Tipoval r){
     xis = r.array;
     ips = Y.array;
 
-    int i = 0;
+    int i = 1;
 
-    while(i != 1  && !vazio(xis) && !vazio(ips)){
+    while(i != 0  && !vazio(xis) && !vazio(ips)){
         um = POP(xis);
         dois = POP(ips);
-        if(um.valor > dois.valor) i = 1;
-        else i = 0;
+        if(um.valor > dois.valor) i = 0;
+        else i = 1;
     }
     Tipoval bolo;
     bolo.valor = i;

@@ -52,7 +52,7 @@ void aritimeticaresto (char *oper, SPointer s){
         Tipoval  Y = POP (s);
         Tipoval  X = POP (s);
         X.valor = pow (X.valor,Y.valor);
-        X.tipo = 'f';
+        X.tipo = comparatipo(X.tipo,Y.tipo);
         PUSH (X,s);
     } else if (strncmp(oper, "%",1) == 0) {
         Tipoval  Y = POP (s);

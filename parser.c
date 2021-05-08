@@ -184,23 +184,32 @@ void arrayounormal (char *token,Tipoval *alfabeto,SPointer s){
         
         funarray(token,s);
 
-    }else {
-        Tipoval y = POP(s);
-        if (y.tipo == 'a' || y.tipo == 's'){
-            PUSH(y,s);
-            PUSH(x,s);
+    }else if (x.tipo !='a' && vazio(s)){
+        PUSH(x,s);
+        funnormal(token,alfabeto,s);
+
+    }
+    else {
+        if(!vazio(s)){
+            Tipoval y = POP(s);
+            if (y.tipo == 'a' || y.tipo == 's'){
+                PUSH(y,s);
+                PUSH(x,s);
             
-            funarray(token,s);
-        }
-        else {
-            PUSH(y,s);
-            PUSH(x,s);
+                funarray(token,s);
+            }
+            else {
+                PUSH(y,s);
+                PUSH(x,s);
             
-            funnormal(token,alfabeto,s);
-        }
+                funnormal(token,alfabeto,s);
+            }
+     }else{
+         PUSH(x,s);
+          funnormal(token, alfabeto, s);
     }
 
-
+    }
 }
 
 

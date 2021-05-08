@@ -10,7 +10,7 @@
 
 /**
  *\brief Como o próprio nome indica cria uma stack 
- * @param s pointer para a stack
+ * @param s Pointer para a stack
  * @param tamanho Tamanho da stack que queremos criar
  * return s Retorna a stack criada
  */
@@ -111,9 +111,9 @@ Tipoval MOVEPOP (int a, SPointer s){
 }
 
 /**
- * \brief Esta funçao adiciona o elemento no topo da stack.
- * @param data elemento mais a cima na stack
- * @param a Tipo do valor
+ * \brief Esta funçao adiciona o elemento colocado como argumento para o topo da stack
+ * @param s Pointer para a stack principal
+ * @param a Valor que queremos colocar na stack
  */
 
 void PUSH(Tipoval a, SPointer s) {
@@ -125,9 +125,9 @@ void PUSH(Tipoval a, SPointer s) {
     
 }
 /**
- * \brief Esta função imprime todos os elementos da stack.
+ * \brief Esta função auxiliar ao print_stack que imprime o elemento colocado como argumento conforme o seu tipo
+ * @param data Valor que queremos dar print
  */
-
 
 void printnormal(Tipoval data){
         if(data.tipo == 'c'){
@@ -145,6 +145,10 @@ void printnormal(Tipoval data){
             }
 }
 
+/**
+ * \brief Esta funçao que imprime todos os elementos da stack
+ * @param s Pointer para s stack principal
+ */
 void print_stack(SPointer s){
     
     Tipoval data;

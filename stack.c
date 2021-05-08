@@ -14,9 +14,6 @@
  * @param tamanho Tamanho da stack que queremos criar
  * return s Retorna a stack criada
  */
-
-
-
 SPointer criaStack(SPointer s,int tamanho){
     s = malloc(sizeof(SPointer));
     s->top = -1;

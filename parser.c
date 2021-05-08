@@ -54,7 +54,7 @@ char *get_delimited (char *line, char *seps, char **resto){
     
     int par = 1;
     char *array;
-    array = malloc(100*sizeof(char));
+    array = malloc(1024*sizeof(char));
     char a = seps[0]; // [
     char b = seps[1]; // ]
     int i = 0; // andar na lista
@@ -89,7 +89,7 @@ char *get_delimited2 (char *token,char *line, char *seps, char **resto){
     
     
     char *string;
-    string = malloc(100*sizeof(char));
+    string = malloc(1024*sizeof(char));
     char a = seps[0]; // "
     int i = 1; // andar na lista
     while (token[i] != '\0' && token[i] != a){

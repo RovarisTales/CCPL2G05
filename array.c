@@ -6,7 +6,7 @@
 #include "parser.h"
 
 void concatigual (Tipoval x,Tipoval y, SPointer s){
-    Tipoval a[100];
+    Tipoval a[1024];
     SPointer dois = x.array;
     SPointer um  = y.array;
     int b;
@@ -26,7 +26,7 @@ void concatnumarray (Tipoval x,Tipoval y, SPointer s){
     PUSH(y,s);
 }
 void concatarraynum (Tipoval x ,Tipoval y, SPointer s){
-    Tipoval a[100];
+    Tipoval a[1024];
     int b;
     SPointer X;
     X = x.array;
@@ -57,7 +57,7 @@ void concat(SPointer s){
 
 void tiraarray(SPointer s,SPointer dois){
     
-    Tipoval a[100]= {{0}};
+    Tipoval a[1024];
     int b;
     for(b=1;dois->top!=-1;b++){
         a[b]=POP(dois);}
@@ -84,7 +84,7 @@ void multi(SPointer s){
 
 
 
-    Tipoval a[100];
+    Tipoval a[10240];
     int b;
     for(b=0;!vazio(dois);b++){
         a[b]=POP(dois);}
@@ -107,7 +107,7 @@ void bruhnormal(SPointer s,Tipoval X){
     int a = X.valor;
     
     SPointer new = NULL;
-    new = criaStack(new,150);
+    new = criaStack(new,1024);
     Tipoval Y;
     Y.valor = 0;
     Y.tipo = 'a';
@@ -150,7 +150,7 @@ void bruh (SPointer s){
 //----------------------------------------------
 //TOKEN <> EM ARRAYS
 void fimarray2(SPointer s,Tipoval y,Tipoval r){
-    Tipoval a[100]= {{0}};
+    Tipoval a[1024];
     SPointer Y = y.array;
     int b ;
     int c = r.valor;
@@ -198,7 +198,7 @@ void fimarray (SPointer s){
 }
 void inicioarray2(SPointer s,Tipoval y,Tipoval r){
     SPointer Y = y.array;
-    Tipoval a[100];
+    Tipoval a[1024];
     int b;
     for(b=0;Y->top!=-1;b++){
         a[b]=POP(Y);}
@@ -256,7 +256,7 @@ void inicioarray (SPointer s){
 
 
 void parentesesfechado2(SPointer secundaria, SPointer principal){
-        Tipoval a[100];
+        Tipoval a[1024];
         int b;
         for(b=0;secundaria->top!=-1;b++){
             a[b]=POP(secundaria);
@@ -275,7 +275,7 @@ void parentesesfechado2(SPointer secundaria, SPointer principal){
 
 void parentesesaberto2(SPointer secundaria, SPointer principal) {
         
-        Tipoval a[100];
+        Tipoval a[1024];
         int b;
         for(b=0;secundaria->top!=-1;b++){
             a[b]=POP(secundaria);

@@ -18,7 +18,7 @@
 SPointer criaStack(SPointer s,int tamanho){
     s = malloc(sizeof(SPointer));
     s->top = -1;
-    s-> stack = malloc(tamanho*sizeof(Tipoval));
+    s-> stack = malloc(tamanho * (sizeof(Tipoval)));
     
     return s;
 }
@@ -50,8 +50,8 @@ void MOVE (int a,SPointer s){
  * @return data que é o elemento mais acima na stack.
  */
 SPointer copystack(SPointer s,SPointer x){
-    x = criaStack(x,500);
-    Tipoval a[100];
+    x = criaStack(x,2048);
+    Tipoval a[2048];
     int i = 0;
     while (!vazio(s)){
         a[i] = POP(s);

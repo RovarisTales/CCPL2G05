@@ -9,8 +9,8 @@
 #include "parser.h"
 
 /**
- * \brief Função relacionada com as expressões matemáticas
- * @param oper Token dentro dos mencionados no parser ("-+/#%()")
+ * \brief Função relacionada com as expressões matemáticas simples
+ * @param oper Token dentro dos mencionados no parser ("-+/")
  */
 
 void aritimeticasimples (char *oper, SPointer s){
@@ -47,6 +47,11 @@ void aritimeticasimples (char *oper, SPointer s){
 
 }
 
+/**
+ * \brief Função relacionada com as expressões matemáticas que requerem cuidado com o resto
+ * @param oper Token dentro dos mencionados no parser ("#%()")
+ */
+
 void aritimeticaresto (char *oper, SPointer s){
     if (strncmp(oper, "#",1) == 0) {
         Tipoval  Y = POP (s);
@@ -74,7 +79,10 @@ void aritimeticaresto (char *oper, SPointer s){
 
 }
 
-
+/**
+ * \brief Função que vai reencaminhar para as suas subfunções (aritimeticasimples e aritimeticaresto)
+ * @param oper Token dentro dos mencionados no parser ("+*-/#%()")
+ */
 
 void aritimetica (char *oper, SPointer s){
     if (strstr ("+*/-",oper)){

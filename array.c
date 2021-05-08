@@ -343,7 +343,7 @@ void inicioarray (SPointer s){
 }
 //-------------------- # com dois arrays -- PROCURAR y em z --
 /**
- *\brief Faz a operação '<' entre arrays/strings.
+ *\brief Procura um array/strings dentro de um array/strings, ação relacionada com o token '#' em arrays/strings.
  * @param s Pointer para a stack
  * @param Y Array/string
  * @param r Array/string
@@ -389,6 +389,11 @@ void subarray(Tipoval Y,Tipoval Z, SPointer s){
             PUSH(aux,s);
 }
 
+/**
+ *\brief Função relacionada com a operação '#' , ela reencaminha para a sua subfunção (subarray).
+ * @param s Pointer para a stack
+ * @param token É o token que vamos verificar se coincide com '#'
+ */
 void sub (char *token,SPointer s){
     if(strncmp(token, "#",1) == 0){
         Tipoval Y = POP(s);
@@ -404,7 +409,11 @@ void sub (char *token,SPointer s){
 
 //(AINDA TENHO DE MUDAR ISTO)
 
-
+/**
+ *\brief Remove o ultimo elemento de um array/string e coloca na stack, ação relacionada com o token ')' em arrays/strings.
+ * @param principal Pointer para a stack
+ * @param secundaria Pointer para a stack do array/string
+ */
 void parentesesfechado2(SPointer secundaria, SPointer principal){
         Tipoval a[1024];
         int b;
@@ -422,7 +431,11 @@ void parentesesfechado2(SPointer secundaria, SPointer principal){
         PUSH(a[0],principal);
 } // ta certo
 
-
+/**
+ *\brief Remove o primeiro elemento de um array/string e coloca na stack, ação relacionada com o token '(' em arrays/strings.
+ * @param principal Pointer para a stack
+ * @param secundaria Pointer para a stack do array/string
+ */
 void parentesesaberto2(SPointer secundaria, SPointer principal) {
         
         Tipoval a[1024];
@@ -442,6 +455,11 @@ void parentesesaberto2(SPointer secundaria, SPointer principal) {
         PUSH(x,principal);
         PUSH(a[b-1],principal);
 }
+
+/**
+ *\brief Função relacionada com a operação ')' , ela reencaminha para a sua subfunção (subarray).
+ * @param s Pointer para a stack
+ */
 void parentesesfechado (SPointer s){
         
             Tipoval l = POP(s);
@@ -449,6 +467,10 @@ void parentesesfechado (SPointer s){
             parentesesfechado2(secundaria,s);
         
 }
+/**
+ *\brief Função relacionada com a operação '(' , ela reencaminha para a sua subfunção (subarray).
+ * @param s Pointer para a stack
+ */
 void parentesesaberto (SPointer s){
         
         Tipoval l = POP(s);
@@ -457,6 +479,12 @@ void parentesesaberto (SPointer s){
         
 }
 // -----------------------------------------------
+/**
+ *\brief Verifica se os arrays/strings são iguais, ação relacionada com o token '(' em arrays/strings.
+ * @param s Pointer para a stack
+ * @param x Array/strings
+ * @param y Array/strings
+ */
 void igualarray (Tipoval x, Tipoval y, SPointer s){
     Tipoval um, dois;
 
@@ -481,6 +509,12 @@ void igualarray (Tipoval x, Tipoval y, SPointer s){
 
 }
 
+/**
+ *\brief Vai pegar num numero/letra no array/string dependendo do numero colocado no input juntamente com esta, ação relacionada com o token '(' em arrays/strings com um numero.
+ * @param s Pointer para a stack
+ * @param x Numero
+ * @param y Array/strings
+ */
 void igualnum (Tipoval x, Tipoval y, SPointer s){
 
     int c = x.valor;
@@ -505,6 +539,12 @@ void igualnum (Tipoval x, Tipoval y, SPointer s){
 
 }
 
+
+/**
+ *\brief Função relacionada com a operação '=' , ela reencaminha para as suas subfunções (igualnum,igualarray) dependendo do imput (array e num ou array's).
+ * @param s Pointer para a stack
+ * @param token É o token que vamos verificar se coincide com '#'
+ */
 void igual (SPointer s){
 
     Tipoval X = POP(s);
@@ -521,6 +561,11 @@ void igual (SPointer s){
 
 
 
+/**
+ *\brief Função relacionada com as operações "()<>,*~+=" em arrays/strings , ela reencaminha para as suas subfunções correspondentes ao token introduzido.
+ * @param s Pointer para a stack
+ * @param token Token detetado
+ */
 void funarray (char *token, SPointer s){
     if (strcmp(token,"(") == 0) parentesesaberto(s);
     else if (strcmp(token,")") == 0) parentesesfechado(s);

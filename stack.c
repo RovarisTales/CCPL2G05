@@ -9,12 +9,11 @@
 
 
 /**
- *\brief Declaração de variaveis que correspondem ao tamanho maximo da stack,a struct, e o topo da stack respetivamente.
- *
+ *\brief Como o próprio nome indica cria uma stack 
+ * @param s Pointer para a stack
+ * @param tamanho Tamanho da stack que queremos criar
+ * return s Retorna a stack criada
  */
-
-
-
 SPointer criaStack(SPointer s,int tamanho){
     s = malloc(sizeof(SPointer));
     s->top = -1;
@@ -25,6 +24,7 @@ SPointer criaStack(SPointer s,int tamanho){
 
 /**
  * \brief Esta funçao verifica se a SPointer se encontra vazia.
+ * @param s Pointer para a stack principal
  * @return 1 se a stack estiver vazia e retorna 0 se tiver algum elemento.
  */
 
@@ -37,7 +37,8 @@ int vazio(SPointer s) {
 }
 
 /**
- * \brief Esta funçao retira o elemento mais acima na stack.
+ * \brief Esta funçao move o top do pointer da stack para uma posição especifica
+ * @param s Pointer para s stack principal
  * @param a Posição para onde vamos deslocar.
  */
 
@@ -46,8 +47,10 @@ void MOVE (int a,SPointer s){
 }
 
 /**
- * \brief Esta funçao retira o elemento mais acima na stack.
- * @return data que é o elemento mais acima na stack.
+ * \brief Esta função copia a stack 
+ * @param x Para onde vamos colocar a copia da stack
+ * @param s Pointer para a stack principal
+ * @return x Stack copiada
  */
 SPointer copystack(SPointer s,SPointer x){
     x = criaStack(x,2048);
@@ -74,6 +77,11 @@ SPointer copystack(SPointer s,SPointer x){
 
 }
 
+/**
+ * \brief Esta funçao remove o elemento no topo da stack
+ * @param s Pointer para s stack principal
+ * @return data Valor que vamos retirar
+ */
 Tipoval POP(SPointer s) {
     Tipoval data;
     if(!vazio(s)) {
@@ -86,33 +94,11 @@ Tipoval POP(SPointer s) {
     
     return data;
 }
-void PUSHARRAY(Tipoval a, SPointer s){
-    s->top = s->top + 1;
-    
-    s->stack[s->top] = a;
-    
-    
-    
-    
 
-}
-Tipoval POPFALSO2(SPointer s){
-    Tipoval data;
-    data = s->stack[s->top+1];
-    return data;
-}
-Tipoval POPFALSO(SPointer s){
-    Tipoval data;
-    data = s->stack[s->top];
-    return data;
-
-
-
-
-}
 /**
  * \brief Esta função serve para retirar um elemento numa posição espefica na stack.
  * @param a Posição onde queremos retirar o elemento.
+ * @param s Pointer para a stack principal
  * @return Retorna o elemento na posição da stack inserida.
  */
 
@@ -124,9 +110,9 @@ Tipoval MOVEPOP (int a, SPointer s){
 }
 
 /**
- * \brief Esta funçao adiciona o elemento no topo da stack.
- * @param data elemento mais a cima na stack
- * @param a Tipo do valor
+ * \brief Esta funçao adiciona o elemento colocado como argumento para o topo da stack
+ * @param s Pointer para a stack principal
+ * @param a Valor que queremos colocar na stack
  */
 
 void PUSH(Tipoval a, SPointer s) {
@@ -137,11 +123,14 @@ void PUSH(Tipoval a, SPointer s) {
     
     
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 66a9db34645337fc81027cb0fa9a48cb5df5b8b0
 /**
- * \brief Esta função imprime todos os elementos da stack.
+ * \brief Esta função auxiliar ao print_stack que imprime o elemento colocado como argumento conforme o seu tipo
+ * @param data Valor que queremos dar print
  */
-
 
 void printnormal(Tipoval data){
         if(data.tipo == 'c'){
@@ -159,6 +148,10 @@ void printnormal(Tipoval data){
             }
 }
 
+/**
+ * \brief Esta funçao que imprime todos os elementos da stack
+ * @param s Pointer para s stack principal
+ */
 void print_stack(SPointer s){
     
     Tipoval data;

@@ -338,10 +338,15 @@ void igualnum (Tipoval x, Tipoval y, SPointer s){
     um = y.array;
 
     Tipoval a[100];
-    int b;
+    int b = 0;
     
-    for(b=0;!vazio(um);b++){
-        a[b]=POP(um);}
+    while(!vazio(um)){
+        Tipoval r =POP(um);
+        if(r.tipo == 'i' || r.tipo == 'l' || r.tipo == 'f' || r.tipo == 'c' || r.tipo == 'a'|| r.tipo == 's' ){
+                a[b] = r;
+                b++;
+            }
+        }
 
     PUSH(a[b-c-1],s);
 

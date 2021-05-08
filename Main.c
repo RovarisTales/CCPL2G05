@@ -15,6 +15,36 @@
  * @return 0
  */
 int main (){
+    Tipoval alfabeto[26] = {
+        {10,'i',NULL},
+        {11,'i',NULL},
+        {12,'i',NULL},
+        {13,'i',NULL},
+        {14,'i',NULL},
+        {15,'i',NULL},
+        {0,'i',NULL},
+        {0,'i',NULL},
+        {0,'i',NULL},
+        {0,'i',NULL},
+        {0,'i',NULL},
+        {0,'i',NULL},
+        {0,'i',NULL},
+        {10,'c',NULL},
+        {0,'i',NULL},
+        {0,'i',NULL},
+        {0,'i',NULL}, 
+        {0,'i',NULL},
+        {32,'c',NULL},
+        {0,'i',NULL},
+        {0,'i',NULL},
+        {0,'i',NULL},
+        {0,'i',NULL},
+        {0,'i',NULL},
+        {1,'i',NULL},
+        {2,'i',NULL},
+            };
+
+
     char line[10240];
     
     assert(fgets(line,10240,stdin)!=NULL);
@@ -23,7 +53,7 @@ int main (){
 
     SPointer s;
 
-    s = parser(line);
+    s = parser(line,alfabeto);
     print_stack(s);
     putchar('\n');
     return 0;

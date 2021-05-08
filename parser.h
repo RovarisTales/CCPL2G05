@@ -3,9 +3,10 @@
  *
  */
 typedef struct Stack *SPointer;
+typedef struct Tipovalor Tipoval;
 char comparatipo (char a, char b);
 double convertelong (double x, char a);
-SPointer parser (char *line);
+SPointer parser (char *line, Tipoval *alfabeto);
 
 
 /* void convertebinario(long x, int a[]);

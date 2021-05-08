@@ -310,40 +310,13 @@ void convertebinario(long x, int a[]){printf("entrei\n");
  *
  * @param line A linha que foi lida na main para realizar o parser.
  */
-SPointer parser (char *line){
+SPointer parser (char *line,Tipoval *alfabeto){
     
     
     SPointer s = NULL;
     
     s = criaStack(s,10240);
-    Tipoval alfabeto[26] = {
-        {10,'i',NULL},
-        {11,'i',NULL},
-        {12,'i',NULL},
-        {13,'i',NULL},
-        {14,'i',NULL},
-        {15,'i',NULL},
-        {0,'i',NULL},
-        {0,'i',NULL},
-        {0,'i',NULL},
-        {0,'i',NULL},
-        {0,'i',NULL},
-        {0,'i',NULL},
-        {0,'i',NULL},
-        {10,'c',NULL},
-        {0,'i',NULL},
-        {0,'i',NULL},
-        {0,'i',NULL}, 
-        {0,'i',NULL},
-        {32,'c',NULL},
-        {0,'i',NULL},
-        {0,'i',NULL},
-        {0,'i',NULL},
-        {0,'i',NULL},
-        {0,'i',NULL},
-        {1,'i',NULL},
-        {2,'i',NULL},
-            };
+
     char *resto;
     char delimit[8] = " \n\t";
     char *token;
@@ -355,7 +328,7 @@ SPointer parser (char *line){
             
             SPointer new;
             
-            new = parser(get_delimited(resto,delim,&resto));
+            new = parser(get_delimited(resto,delim,&resto), alfabeto);
             Tipoval x;
             x.valor = 0;
             x.tipo = 'a';

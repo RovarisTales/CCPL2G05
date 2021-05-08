@@ -9,7 +9,7 @@
 #include "parser.h"
 /**
  * \brief Função relacionada com a logica.
- * @param token dentro dos mencionados no parser ("=&|<>?!")
+ * @param token dentro dos mencionados no parser ("=|<>?!")
  * @param s pointer para a stack
  */
 

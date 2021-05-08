@@ -9,8 +9,10 @@
 
 
 /**
- *\brief Declaração de variaveis que correspondem ao tamanho maximo da stack,a struct, e o topo da stack respetivamente.
- *
+ *\brief Como o próprio nome indica cria uma stack 
+ * @param s pointer para a stack
+ * @param tamanho Tamanho da stack que queremos criar
+ * return s Retorna a stack criada
  */
 
 
@@ -37,7 +39,8 @@ int vazio(SPointer s) {
 }
 
 /**
- * \brief Esta funçao retira o elemento mais acima na stack.
+ * \brief Esta funçao move o top do pointer da stack para uma posição especifica
+ * @param s Pointer para s stack principal
  * @param a Posição para onde vamos deslocar.
  */
 
@@ -46,8 +49,10 @@ void MOVE (int a,SPointer s){
 }
 
 /**
- * \brief Esta funçao retira o elemento mais acima na stack.
- * @return data que é o elemento mais acima na stack.
+ * \brief Esta função copia a stack 
+ * @param x Para onde vamos colocar a copia da stack
+ * @param s Pointer para a stack principal
+ * @return x Stack copiada
  */
 SPointer copystack(SPointer s,SPointer x){
     x = criaStack(x,2048);
@@ -74,6 +79,11 @@ SPointer copystack(SPointer s,SPointer x){
 
 }
 
+/**
+ * \brief Esta funçao remove o elemento no topo da stack
+ * @param s Pointer para s stack principal
+ * @return data Valor que vamos retirar
+ */
 Tipoval POP(SPointer s) {
     Tipoval data;
     if(!vazio(s)) {
@@ -86,30 +96,7 @@ Tipoval POP(SPointer s) {
     
     return data;
 }
-void PUSHARRAY(Tipoval a, SPointer s){
-    s->top = s->top + 1;
-    
-    s->stack[s->top] = a;
-    
-    
-    
-    
 
-}
-Tipoval POPFALSO2(SPointer s){
-    Tipoval data;
-    data = s->stack[s->top+1];
-    return data;
-}
-Tipoval POPFALSO(SPointer s){
-    Tipoval data;
-    data = s->stack[s->top];
-    return data;
-
-
-
-
-}
 /**
  * \brief Esta função serve para retirar um elemento numa posição espefica na stack.
  * @param a Posição onde queremos retirar o elemento.
@@ -137,7 +124,6 @@ void PUSH(Tipoval a, SPointer s) {
     
     
 }
-void print_stack(SPointer s);
 /**
  * \brief Esta função imprime todos os elementos da stack.
  */

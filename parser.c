@@ -124,7 +124,7 @@ char comparatipo (char a, char b){
 
     if (a == b) return a;
     else if (a == 'f' || b == 'f') return 'f';
-    else return 'l';
+    else return 'i';
 
 }
 

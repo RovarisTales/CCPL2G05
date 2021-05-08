@@ -47,7 +47,7 @@ void concat(SPointer s){
     Tipoval X = POP(s);
     Tipoval y = POP(s);
         if (X.tipo ==  y.tipo)concatigual(X,y,s);
-        else if (X.tipo != 'a' && y.tipo == 'a')concatnumarray(X,y,s);
+        else if (X.tipo != 'a' && (y.tipo == 'a' || y.tipo == 's'))concatnumarray(X,y,s);
         else concatarraynum(X,y,s);
 }
     
@@ -161,11 +161,39 @@ void fimarray2(SPointer s,Tipoval y,Tipoval r){
     y.array = Y;
     PUSH(y,s);
 }
+
+void comparaarrayfim(SPointer s, Tipoval Y, Tipoval r){
+    
+    Tipoval um, dois;
+
+    SPointer xis, ips;
+    xis = r.array;
+    ips = Y.array;
+
+    int i = 0;
+
+    while(i != 1  && !vazio(xis) && !vazio(ips)){
+        um = POP(xis);
+        dois = POP(ips);
+        if(um.valor < dois.valor) i = 1;
+        else i = 0;
+    }
+    Tipoval bolo;
+    bolo.valor = i;
+    bolo.tipo = 'i';
+    bolo.array = NULL;
+    PUSH(bolo,s);
+
+
+
+}
+
 void fimarray (SPointer s){
     
         Tipoval r = POP(s);
         Tipoval Y = POP(s);
-        if (Y.tipo == 'a' || Y.tipo == 's'){fimarray2(s,Y,r);}
+        if ((Y.tipo == 'a' || Y.tipo == 's') && r.tipo == 'i'){fimarray2(s,Y,r);}
+        else if (Y.tipo == r.tipo) comparaarrayfim(s,Y,r);
         
 }
 void inicioarray2(SPointer s,Tipoval y,Tipoval r){
@@ -184,12 +212,41 @@ void inicioarray2(SPointer s,Tipoval y,Tipoval r){
     
 }
 
+void comparaarrayinicio(SPointer s, Tipoval Y, Tipoval r){
+    
+    Tipoval um, dois;
+
+    SPointer xis, ips;
+    xis = r.array;
+    ips = Y.array;
+
+    int i = 0;
+
+    while(i != 1  && !vazio(xis) && !vazio(ips)){
+        um = POP(xis);
+        dois = POP(ips);
+        if(um.valor > dois.valor) i = 1;
+        else i = 0;
+    }
+    Tipoval bolo;
+    bolo.valor = i;
+    bolo.tipo = 'i';
+    bolo.array = NULL;
+    PUSH(bolo,s);
+
+
+
+}
+
 void inicioarray (SPointer s){
 
         Tipoval r = POP(s);
         Tipoval Y = POP(s);
-        if (Y.tipo == 'a' || Y.tipo == 's'){inicioarray2(s,Y,r);}
+        if ((Y.tipo == 'a' || Y.tipo == 's') && r.tipo == 'i'){inicioarray2(s,Y,r);}
+        else if (Y.tipo == r.tipo) comparaarrayinicio(s,Y,r);
 }
+//-------------------- < > com dois arrays
+
 
 
 

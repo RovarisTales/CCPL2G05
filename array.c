@@ -85,9 +85,14 @@ void multi(SPointer s){
 
 
     Tipoval a[10240];
-    int b;
-    for(b=0;!vazio(dois);b++){
-        a[b]=POP(dois);}
+    int b = 0;
+    while(!vazio(dois)){
+        Tipoval r = POP(dois);
+        if(r.tipo == 'i' || r.tipo == 'l' || r.tipo == 'f' || r.tipo == 'c' || r.tipo == 'a'|| r.tipo == 's'){
+                a[b]=r;
+                b++;
+            }
+        }
     int xpto=b;
     for(int c=0;c<fator.valor;c++){
         

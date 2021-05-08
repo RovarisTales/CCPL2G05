@@ -137,7 +137,7 @@ void PUSH(Tipoval a, SPointer s) {
     
     
 }
-void print_stack(SPointer s);
+
 /**
  * \brief Esta função imprime todos os elementos da stack.
  */

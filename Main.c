@@ -10,7 +10,7 @@
 #include "stack.h"
 /**
  * \brief Função principal do programa
- * Esta função le um input introduzido pelo ser misterioso e realiza a função parser.
+ * Esta função le um input introduzido pelo ser misterioso, realiza a função parser e imprime oque encontra-se na stack
  *
  * @return 0
  */
@@ -22,8 +22,6 @@ int main (){
     assert(line[strlen(line)- 1]== '\n');
 
     SPointer s;
-
-
 
     s = parser(line);
     print_stack(s);

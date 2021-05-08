@@ -11,9 +11,10 @@
 
 
 /**
- * \brief Função relacionada com as variáveis
+ * \brief Função relacionada com as variáveis com : (Guarda o que está no topo da stack na variável)
  * @param token dentro dos mencionados no parser (":ABCDEFGHIJKLMNOPQRSTUVWXYZ")
  * @param alfabeto Letra do alfabeto em maiuscula que corresponde ao codigo ascii (65-90)
+ * @param s Pointer para a stack
  */
 
 void variaveisA(char *token, Tipoval *alfabeto, SPointer s){
@@ -37,7 +38,12 @@ void variaveisA(char *token, Tipoval *alfabeto, SPointer s){
     }  
 }
    
-   
+/**
+ * \brief Função relacionada com as variáveis 
+ * @param token dentro dos mencionados no parser ("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+ * @param alfabeto Letra do alfabeto em maiuscula que corresponde ao codigo ascii (65-90)
+ * @param s Pointer para a stack
+ */   
 void variaveisB(char *token, Tipoval *alfabeto,SPointer s){
 
     
@@ -60,6 +66,12 @@ void variaveisB(char *token, Tipoval *alfabeto,SPointer s){
     }
 
 }
+/**
+ * \brief Função que vai reencaminhar para as suas subfunções (variaveisA (com :) e variaveisB(sem :))
+ * @param token dentro dos mencionados no parser (":ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+ * @param alfabeto Letra do alfabeto em maiuscula que corresponde ao codigo ascii (65-90)
+ * @param s Pointer para a stack
+ */
 void variaveis(char *token, Tipoval *alfabeto,SPointer s){
     if (strncmp(token,":",1) == 0) variaveisA(token, alfabeto,s);
     else variaveisB(token, alfabeto,s);

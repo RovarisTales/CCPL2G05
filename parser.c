@@ -49,7 +49,13 @@ char *gettoken (char *line , char **resto){
 
 }*/
 
-
+/**
+ * \brief Faz algo parecido com o strtok mas neste caso ele pega numa linha toda e quando encontra o token ele corta a linha e manda o conteudo até a posição do token
+ * @param line Linha que foi lida
+ * @param seps É o separador, ele é aumentado (+1) se detetar o "[" e se diminui (-1) detetar o "]" (útil para os casos com arrays dentro de arrays)
+ * @param resto O conteudo até o ("]")
+ * @return array Retorna o array que foi lido quando detetou os ("[]")
+ */
 char *get_delimited (char *line, char *seps, char **resto){
     
     int par = 1;
@@ -78,13 +84,20 @@ char *get_delimited (char *line, char *seps, char **resto){
     *resto = line +  i;
     
 
-    
+   
 
     array[i-1] = '\0';
     return array;
     
 }
-
+/**
+ * \brief Faz o mesmo que  o get_delimited mas coloca o token também 
+ * @param token Corresponde a parte do conteudo da string
+ * @param line Linha que foi lida
+ * @param seps É o separador mas é diferente do get_delimited porque neste caso não existem strings dentro de strings
+ * @param resto O conteudo até á ultima "
+ * @return string Retorna a string que foi lida quando detetou as ("")
+ */
 char *get_delimited2 (char *token,char *line, char *seps, char **resto){
     
     
@@ -119,7 +132,12 @@ char *get_delimited2 (char *token,char *line, char *seps, char **resto){
     }
     
 }
-
+/**
+ * \brief Compara tipos das variaveis
+ * @param a Tipo da primeira variavel
+ * @param b Tipo da segunda variavel
+ * @return Retorna o tipo de a quando tiverem tipos iguais, float quando pelo menos um for float e inteiro se n for nenhum dos casos previamente mencionados
+ */
 char comparatipo (char a, char b){
 
     if (a == b) return a;
@@ -148,8 +166,12 @@ double convertelong (double x, char a){
     return x;
 }
 
-
-
+/**
+ * \brief Reencaminha para diferentes funções dependendo do token detetado
+ * @param token Token que se encontra na linha introduzida
+ * @param alfabeto Alfabeto em maiuscula que corresponde ao codigo ascii (65-90)
+ * @param s Pointer para a stack
+ */
 void funnormal (char *token,Tipoval *alfabeto,SPointer s){
 
     if ((strstr("-+/*#%()",token) != NULL)) {
@@ -174,6 +196,12 @@ void funnormal (char *token,Tipoval *alfabeto,SPointer s){
         }
 
 }
+/**
+ * \brief Reencaminha para os funções conforme o tipo da variavel no topo (array ou "normal")
+ * @param token Token que se encontra na linha introduzida
+ * @param alfabeto Alfabeto em maiuscula que corresponde ao codigo ascii (65-90)
+ * @param s Pointer para a stack
+ */
 void arrayounormal (char *token,Tipoval *alfabeto,SPointer s){
     Tipoval x = POP(s);
     if (strcmp(token, ",") == 0){
@@ -212,7 +240,12 @@ void arrayounormal (char *token,Tipoval *alfabeto,SPointer s){
     }
 }
 
-
+/**
+ * \brief Parser para operações "normais" onde não existem strings e arrays envolvidos
+ * @param token Token introduzido
+ * @param alfabeto Alfabeto em maiuscula que corresponde ao codigo ascii (65-90)
+ * @param s Pointer para a stack princiapl
+ */
 void parsenormal (char *token,Tipoval *alfabeto,SPointer s){
     char *sobra;
     char *sobra2;
@@ -240,7 +273,11 @@ void parsenormal (char *token,Tipoval *alfabeto,SPointer s){
     }
 }
 
-
+/**
+ * \brief Parser para strings
+ * @param line Linha introduzida
+ * @return s Stack principal
+ */
 SPointer parserstring (char *line){
     
     
@@ -304,11 +341,10 @@ void convertebinario(long x, int a[]){printf("entrei\n");
 }
 */
 /**
- * \brief Realiza as operações utilizando as funçoes da stack.
- *
- * Estas operações dependem do caracter introduzido.
- *
+ * \brief Realiza as operações utilizando as funçoes da stack.Estas operações dependem do caracter introduzido.
  * @param line A linha que foi lida na main para realizar o parser.
+ * @param alfabeto Alfabeto em maiuscula que corresponde ao codigo ascii (65-90)
+ * @return s Stack principal
  */
 SPointer parser (char *line,Tipoval *alfabeto){
     

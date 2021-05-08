@@ -5,7 +5,14 @@
 
 // void stack (char *line); (nao existe funçao stack)
 
+/**
+ * \brief Estamos a definir uma struct para o Tipoval
+ */
 typedef struct Tipovalor Tipoval;
+
+/**
+ * \brief Estamos a definir um pointer para a stack
+ */
 typedef struct Stack *SPointer;
 
 /**

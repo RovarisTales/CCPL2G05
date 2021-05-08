@@ -10,7 +10,7 @@
 #include "stack.h"
 /**
  * \brief Função principal do programa
- * Esta função le um input introduzido pelo ser misterioso, realiza a função parser e imprime oque encontra-se na stack
+ * Esta função le um input introduzido pelo ser misterioso, realiza a função parser e imprime o que encontra-se na stack
  *
  * @return 0
  */

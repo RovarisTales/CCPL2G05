@@ -8,6 +8,12 @@
 #include "stack.h"
 #include "parser.h"
 
+/**
+ * \brief Função auxiliar do converte tipo
+ * @param x valor para ser convertido
+ * @param s pointer para a stack
+ */
+
 double converte(double x,char a){
         if (a == 'i'){
                 int X = x;
@@ -26,8 +32,9 @@ double converte(double x,char a){
         }
 }
 /**
- * \brief Função relacionada com a conversão do tipo-
+ * \brief Função relacionada com a conversão do tipo
  * @param token dentro dos mencionados no parser ("ifc")
+ * @param s pointer para a stack
  */
 
 void convertetipo (char *token, SPointer s){

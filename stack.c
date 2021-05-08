@@ -24,6 +24,7 @@ SPointer criaStack(SPointer s,int tamanho){
 
 /**
  * \brief Esta funçao verifica se a SPointer se encontra vazia.
+ * @param s Pointer para a stack principal
  * @return 1 se a stack estiver vazia e retorna 0 se tiver algum elemento.
  */
 
@@ -97,6 +98,7 @@ Tipoval POP(SPointer s) {
 /**
  * \brief Esta função serve para retirar um elemento numa posição espefica na stack.
  * @param a Posição onde queremos retirar o elemento.
+ * @param s Pointer para a stack principal
  * @return Retorna o elemento na posição da stack inserida.
  */
 

@@ -9,7 +9,8 @@
 #include "parser.h"
 /**
  * \brief Função relacionada com a logica.
- * @param token dentro dos mencionados no parser ("=e&e|e<e>?")
+ * @param token dentro dos mencionados no parser ("=|<>?!")
+ * @param s pointer para a stack
  */
 
 void logicanormal (char *token, SPointer s){
@@ -48,6 +49,12 @@ void logicanormal (char *token, SPointer s){
     }
 
 }
+
+/**
+ * \brief Função relacionada com a logica com shortcuts
+ * @param token dentro dos mencionados no parser ("e& e| e< e>")
+ * @param s pointer para a stack
+ */
 
 void logicaE (char *token, SPointer s){
     Tipoval false;
@@ -140,6 +147,11 @@ void logicaE (char *token, SPointer s){
     }
 }
 
+/**
+ * \brief Função que vai reencaminhar para as suas subfunções (logicaE e logicanormal)
+ * @param token dentro dos mencionados no parser ("=|<>!? e& e| e< e>")
+ * @param s pointer para a stack
+ */
 
 void logica (char *token, SPointer s){
     if (strstr("=?<>!",token)){

@@ -4,7 +4,7 @@
  */
 
 /**
- * \brief header da função principal do ficheiro aritimetica.c
+ * \brief head da função principal do ficheiro aritimetica.c
  * @param oper Token dentro dos mencionados no parser ("+*-/#%()")
  * @param s pointer para a stack
  */

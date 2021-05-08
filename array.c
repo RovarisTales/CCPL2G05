@@ -1,3 +1,8 @@
+/**
+ *@file Este ficheiro contem as funçoes utilizadas para arrays.
+ *
+ */
+
 // TOKEN + EM ARRAYS
 #include <stdio.h>
 #include <stdlib.h>
@@ -5,6 +10,12 @@
 #include "stack.h"
 #include "parser.h"
 
+/**
+ *\brief Coloca o conteudo de um array dentro do outro
+ * @param s Pointer para a stack
+ * @param x Array 
+ * @param y Array 
+ */
 void concatigual (Tipoval x,Tipoval y, SPointer s){
     Tipoval a[1024];
     SPointer dois = x.array;
@@ -19,12 +30,25 @@ void concatigual (Tipoval x,Tipoval y, SPointer s){
         y.array = um;
         PUSH(y,s);
 }
+
+/**
+ *\brief Coloca um numero dentro do array quando aparece um numero primeiro que um array
+ * @param s Pointer para a stack
+ * @param x Array ou numero
+ * @param y Array ou numero
+ */
 void concatnumarray (Tipoval x,Tipoval y, SPointer s){
     SPointer um = y.array;
     PUSH(x,um);
     y.array = um;
     PUSH(y,s);
 }
+/**
+ *\brief Coloca um numero dentro do array quando aparece um array primeiro que um numero
+ * @param s Pointer para a stack
+ * @param x Array ou numero
+ * @param y Array ou numero
+ */
 void concatarraynum (Tipoval x ,Tipoval y, SPointer s){
     Tipoval a[1024];
     int b;
@@ -43,6 +67,11 @@ void concatarraynum (Tipoval x ,Tipoval y, SPointer s){
 
 
 }
+/**
+ *\brief Quando é detado um array ou uma string juntamente de o token '+' esta função reencaminha para as suas subfunções (concatigual, concatnumarray,concatarraynum). 
+ * Estas ações depende do tipo do que se encontra no topo da stack.
+ * @param s Pointer para a stack
+ */
 void concat(SPointer s){
     Tipoval X = POP(s);
     Tipoval y = POP(s);
@@ -55,6 +84,11 @@ void concat(SPointer s){
 //..........................................
 //TOKEN ~ EM ARRAYS
 
+/**
+ *\brief Coloca todos os elementos no topo da stack
+ * @param s Pointer para a stack
+ * @param dois Array
+ */
 void tiraarray(SPointer s,SPointer dois){
     
     Tipoval a[1024];
@@ -65,6 +99,10 @@ void tiraarray(SPointer s,SPointer dois){
     for(b=xpto;b!=0;b--){
         PUSH(a[b],s);}
 }
+/**
+ *\brief Reencaminha para a sua subfunção (tiraarray) relacionada com o token '~' em arrays
+ * @param s Pointer para a stack
+ */
 void tiraarrayb ( SPointer s){
     Tipoval Y = POP(s);
     SPointer dois = Y.array;
@@ -74,6 +112,10 @@ void tiraarrayb ( SPointer s){
 }
 //---------------------------------------
 //TOKEN * EM ARRAYS
+/**
+ *\brief Repete um array/string dependendo do numero que lhe segue na stack. Esta ação ocorre quando um '*' é detetado juntamente com um array e um numero.
+ * @param s Pointer para a stack
+ */
 void multi(SPointer s){
 
     Tipoval fator,array;
@@ -107,6 +149,12 @@ void multi(SPointer s){
 
 //-------------------------------------------------
 //TOKEN , ARRAYS E NORMAL
+
+/**
+ *\brief Faz o range de um numero. Ação correspondente ao token ','.
+ * @param s Pointer para a stack
+ * @param X Numero no topo da stack
+ */
 void bruhnormal(SPointer s,Tipoval X){
     
     int a = X.valor;
@@ -126,6 +174,11 @@ void bruhnormal(SPointer s,Tipoval X){
     
 }
 
+/**
+ *\brief Indica o tamanho do array. Ação correspondente ao token ',' em arrays.
+ * @param s Pointer para a stack
+ * @param Y Array
+ */
 void bruharray(Tipoval Y, SPointer s){
     SPointer dois = Y.array;
     int b = 0;
@@ -145,6 +198,10 @@ void bruharray(Tipoval Y, SPointer s){
     PUSH(y,s);
 }
 
+/**
+ *\brief Quando é detado um array ou uma string juntamente de o token ',' esta função reencaminha para as suas subfunções (bruharray, bruhnormal).
+ * @param s Pointer para a stack
+ */
 void bruh (SPointer s){
     Tipoval Y = POP(s);
     
@@ -154,6 +211,13 @@ void bruh (SPointer s){
 }
 //----------------------------------------------
 //TOKEN <> EM ARRAYS
+
+/**
+ *\brief Coloca uma certa quantidade do conteudo no fim do array/string na stack (esta quantia está associada ao numero introduzido na linha juntamente com o array).
+ * @param s Pointer para a stack
+ * @param y Array/string
+ * @param r Numero relativamente á quantidade previamente mencionada
+ */
 void fimarray2(SPointer s,Tipoval y,Tipoval r){
     Tipoval a[1024];
     SPointer Y = y.array;
@@ -167,6 +231,12 @@ void fimarray2(SPointer s,Tipoval y,Tipoval r){
     PUSH(y,s);
 }
 
+/**
+ *\brief Faz a operação '>' entre arrays/strings.
+ * @param s Pointer para a stack
+ * @param Y Array/string
+ * @param r Array/string
+ */
 void comparaarrayfim(SPointer s, Tipoval Y, Tipoval r){
     
     Tipoval um, dois;
@@ -193,6 +263,10 @@ void comparaarrayfim(SPointer s, Tipoval Y, Tipoval r){
 
 }
 
+/**
+ *\brief Função relacionada com a operação '>' , ela reencaminha para as suas subfunções dependendo do tipo(arrays/strings/numeros) do topo da stack.
+ * @param s Pointer para a stack
+ */
 void fimarray (SPointer s){
     
         Tipoval r = POP(s);
@@ -201,6 +275,13 @@ void fimarray (SPointer s){
         else if (Y.tipo == r.tipo) comparaarrayfim(s,Y,r);
         
 }
+
+/**
+ *\brief Coloca uma certa quantidade do conteudo no inicio do array/string na stack (esta quantia está associada ao numero introduzido na linha juntamente com o array).
+ * @param s Pointer para a stack
+ * @param y Array/string
+ * @param r Numero relativamente á quantidade previamente mencionada
+ */
 void inicioarray2(SPointer s,Tipoval y,Tipoval r){
     SPointer Y = y.array;
     Tipoval a[1024];
@@ -217,6 +298,12 @@ void inicioarray2(SPointer s,Tipoval y,Tipoval r){
     
 }
 
+/**
+ *\brief Faz a operação '<' entre arrays/strings.
+ * @param s Pointer para a stack
+ * @param Y Array/string
+ * @param r Array/string
+ */
 void comparaarrayinicio(SPointer s, Tipoval Y, Tipoval r){
     
     Tipoval um, dois;
@@ -243,6 +330,10 @@ void comparaarrayinicio(SPointer s, Tipoval Y, Tipoval r){
 
 }
 
+/**
+ *\brief Função relacionada com a operação '<' , ela reencaminha para as suas subfunções dependendo do tipo(arrays/strings/numeros) do topo da stack.
+ * @param s Pointer para a stack
+ */
 void inicioarray (SPointer s){
 
         Tipoval r = POP(s);
@@ -251,6 +342,12 @@ void inicioarray (SPointer s){
         else if (Y.tipo == r.tipo) comparaarrayinicio(s,Y,r);
 }
 //-------------------- # com dois arrays -- PROCURAR y em z --
+/**
+ *\brief Faz a operação '<' entre arrays/strings.
+ * @param s Pointer para a stack
+ * @param Y Array/string
+ * @param r Array/string
+ */
 void subarray(Tipoval Y,Tipoval Z, SPointer s){
     SPointer ypslon = Y.array;
     SPointer ze = Z.array;

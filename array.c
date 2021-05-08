@@ -250,7 +250,55 @@ void inicioarray (SPointer s){
         if ((Y.tipo == 'a' || Y.tipo == 's') && r.tipo == 'i'){inicioarray2(s,Y,r);}
         else if (Y.tipo == r.tipo) comparaarrayinicio(s,Y,r);
 }
-//-------------------- < > com dois arrays
+//-------------------- # com dois arrays -- PROCURAR y em z --
+void subarray(Tipoval Y,Tipoval Z, SPointer s){
+    SPointer ypslon = Y.array;
+    SPointer ze = Z.array;
+    Tipoval y[100];
+    Tipoval z[100];
+            int b;
+            int a;
+            int contb;
+            int tamanho;
+            
+            for (b=0;!vazio(ypslon);b++){ // pega os elementos de y
+                y[b] = POP(ypslon);
+            }
+            b--;
+            contb = b;
+            for (a=0;!vazio(ze);a++){ // pega os elementos de z
+                z[a] = POP(ze); 
+            }
+            a--;
+            tamanho = a;
+            while (a!=-1 && b!= -1){ // procura de tras pra frente
+                
+                if(z[a].valor==y[b].valor){b--;a--;}
+                else { a--;b=contb;}
+                
+            }
+            printf("%d\n",a);
+            printf("%d\n",b);
+            printf("%d\n",tamanho);
+            if(a==-1 && b != -1) {
+                tamanho = 0;
+                a=0;
+                contb=0;
+            }
+            Tipoval aux;
+            aux.valor = tamanho - a -contb - 1;
+            aux.tipo = 'i';
+            aux.array = NULL;
+            PUSH(aux,s);
+}
+
+void sub (char *token,SPointer s){
+    if(strncmp(token, "#",1) == 0){
+        Tipoval Y = POP(s);
+        Tipoval Z = POP(s);
+      subarray(Y, Z,  s); 
+    }
+}
 
 
 
@@ -386,5 +434,5 @@ void funarray (char *token, SPointer s){
     else if (strcmp(token,"~") == 0) tiraarrayb(s);
     else if (strcmp(token,"+") == 0) concat(s);
     else if (strcmp(token,"=") == 0) igual(s);
-
+    else sub(token,s);
 }

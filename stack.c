@@ -123,10 +123,6 @@ void PUSH(Tipoval a, SPointer s) {
     
     
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> 66a9db34645337fc81027cb0fa9a48cb5df5b8b0
 /**
  * \brief Esta função auxiliar ao print_stack que imprime o elemento colocado como argumento conforme o seu tipo
  * @param data Valor que queremos dar print

@@ -230,7 +230,7 @@ void parsenormal (char *token,Tipoval *alfabeto,SPointer s){
             X.tipo = 'f';
             X.array = NULL;
             PUSH(X,s);
-    }else if (strstr("~+()<>*,=", token) != NULL){
+    }else if (strstr("~+()<>*,=#", token) != NULL){
         arrayounormal(token,alfabeto,s);
     }else if (strstr("le&e|e<e>?!ABCDEFGHIJKLMNOPQRSTUVWXYZifc_;\\@$&^~|-+/*#%()",token) != NULL){
         

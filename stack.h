@@ -8,11 +8,20 @@
 typedef struct Tipovalor Tipoval;
 typedef struct Stack *SPointer;
 
+/**
+ * \brief Estamos a definir um novo tipo (tipoValor) que como o nome indica tem um char (tipo) e um valor (double) relacionado.
+ */
+
 struct Tipovalor{
     double valor;
     char tipo ;
     SPointer array;
 };
+
+/**
+ * \brief Estamos a definir uma struct stack com um top (topo da stack) e um pointer stack
+ */
+
 struct Stack{
     Tipoval *stack;
     int top;

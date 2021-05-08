@@ -87,7 +87,7 @@ void concat(SPointer s){
 /**
  *\brief Coloca todos os elementos no topo da stack
  * @param s Pointer para a stack
- * @param dois Array
+ * @param dois Array/string
  */
 void tiraarray(SPointer s,SPointer dois){
     
@@ -177,7 +177,7 @@ void bruhnormal(SPointer s,Tipoval X){
 /**
  *\brief Indica o tamanho do array. Ação correspondente ao token ',' em arrays.
  * @param s Pointer para a stack
- * @param Y Array
+ * @param Y Array/string
  */
 void bruharray(Tipoval Y, SPointer s){
     SPointer dois = Y.array;

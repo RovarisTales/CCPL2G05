@@ -508,7 +508,7 @@ void igualarray (Tipoval x, Tipoval y, SPointer s){
 }
 
 /**
- *\brief Vai pegar num numero/letra no array/string dependendo do numero colocado no input juntamente com esta, ação relacionada com o token '(' em arrays/strings com um numero.
+ *\brief Vai pegar num numero/letra no array/string dependendo do numero colocado no input juntamente com esta, ação relacionada com o token '=' em arrays/strings com um numero.
  * @param s Pointer para a stack
  * @param x Numero
  * @param y Array/strings

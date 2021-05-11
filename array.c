@@ -374,9 +374,7 @@ void subarray(Tipoval Y,Tipoval Z, SPointer s){
                 else { a--;b=contb;}
                 
             }
-            printf("%d\n",a);
-            printf("%d\n",b);
-            printf("%d\n",tamanho);
+            
             if(a==-1 && b != -1) {
                 tamanho = 0;
                 a=0;
